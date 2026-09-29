@@ -1,0 +1,35 @@
+# =======================================================
+# Vercel Deployment Ignore Configuration - MVP Google Photos
+# =======================================================
+
+# Exclude presentation deck explicitly
+deck.txt
+
+# Design Docs & Project Specifications (reduce serverless deployment bundle size)
+problemStatement.txt
+problemStatement.md
+architecture.md
+implementationPlan.md
+edgeCases.md
+CONTRIBUTING.md
+docs/
+
+# Infrastructure as Code (Cloud Spanner / Terraform not needed in Vercel lambda)
+infra/
+
+# Tests & CI
+tests/
+vitest.config.ts
+.github/
+
+# Git metadata
+.git/
+.gitignore
+
+# Environment & Local secrets
+.env*
+!configs/*.env.example
+
+# OS files
+.DS_Store
+Thumbs.db

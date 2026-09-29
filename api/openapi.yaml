@@ -1,0 +1,617 @@
+openapi: 3.1.0
+info:
+  title: Google Photos AI Memory Context API
+  description: |
+    Production API specification for Google Photos AI Memory Context MVP service.
+    Enables cluster retrieval, memory context ingestion (voice/text), entity extraction,
+    hybrid multimodal search, and user privacy management.
+  version: 1.0.0
+  contact:
+    name: Google Photos Core Infrastructure Team
+    email: photos-memory-api@google.com
+
+servers:
+  - url: https://photos-memory.googleapis.com/v1
+    description: Production Cloud Run Gateway
+  - url: https://staging-photos-memory.googleapis.com/v1
+    description: Staging Environment
+  - url: http://localhost:8080/v1
+    description: Local Development Server
+
+security:
+  - GoogleOAuth2:
+      - https://www.googleapis.com/auth/photoslibrary.readonly
+      - https://www.googleapis.com/auth/photoslibrary.appendonly
+
+paths:
+  /memory/clusters:
+    get:
+      summary: List candidate memory clusters
+      description: Returns eligible photo clusters promptable for user memory context.
+      operationId: listMemoryClusters
+      tags: [Clusters]
+      parameters:
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 50
+        - name: page_token
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [pending, prompted, dismissed, completed]
+            default: pending
+      responses:
+        '200':
+          description: A list of candidate clusters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListClustersResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /memory/clusters/{cluster_id}:
+    get:
+      summary: Get cluster details
+      description: Returns cluster details including media items, timestamp ranges, and suggested prompt.
+      operationId: getClusterDetails
+      tags: [Clusters]
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detailed cluster info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryCluster'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /memory/clusters/{cluster_id}/dismiss:
+    post:
+      summary: Dismiss a prompt cluster
+      description: Records user dismissal with cooldown tracking ("Not Now" or "Never for this event").
+      operationId: dismissClusterPrompt
+      tags: [Clusters]
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason:
+                  type: string
+                  enum: [not_now, not_interested, sensitive_event, wrong_grouping]
+                cooldown_days:
+                  type: integer
+                  default: 14
+      responses:
+        '204':
+          description: Dismissal successfully registered
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /memory/contexts:
+    post:
+      summary: Create memory context
+      description: Ingests user voice/text memory context for a photo cluster and initiates async NLU extraction.
+      operationId: createMemoryContext
+      tags: [Memories]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMemoryContextRequest'
+      responses:
+        '202':
+          description: Accepted for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMemoryContextAcceptedResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+
+    get:
+      summary: List saved memories
+      description: Returns paginated list of active memory contexts created by the authenticated user.
+      operationId: listMemoryContexts
+      tags: [Memories]
+      parameters:
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: page_token
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paginated list of memories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMemoryContextsResponse'
+
+  /memory/contexts/{memory_id}:
+    get:
+      summary: Get memory context details
+      description: Fetches full memory details including extracted entities, summary, and linked media.
+      operationId: getMemoryContext
+      tags: [Memories]
+      parameters:
+        - name: memory_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Memory context details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryContext'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    patch:
+      summary: Edit memory context
+      description: Allows user to modify raw text, edit extracted entities, or update linked photo associations.
+      operationId: updateMemoryContext
+      tags: [Memories]
+      parameters:
+        - name: memory_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMemoryContextRequest'
+      responses:
+        '200':
+          description: Updated memory context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryContext'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      summary: Delete memory context
+      description: Permanently purges the memory context, dissociates photos, and deletes from vector index.
+      operationId: deleteMemoryContext
+      tags: [Memories]
+      parameters:
+        - name: memory_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Memory deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /memory/search:
+    post:
+      summary: Hybrid natural language search
+      description: Queries photos using semantic embeddings, memory context entities, and metadata index.
+      operationId: searchMemories
+      tags: [Search]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemorySearchRequest'
+      responses:
+        '200':
+          description: Ranked photo matches with matched memory explanations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemorySearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+  /memory/settings:
+    get:
+      summary: Get user memory preferences
+      description: Retrieves opt-in status, prompt frequencies, and sensitive memory filters.
+      operationId: getMemorySettings
+      tags: [Settings]
+      responses:
+        '200':
+          description: User memory settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+
+    put:
+      summary: Update user memory preferences
+      description: Updates user preferences and controls for memory prompt triggers.
+      operationId: updateMemorySettings
+      tags: [Settings]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSettings'
+      responses:
+        '200':
+          description: Successfully updated settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+
+components:
+  securitySchemes:
+    GoogleOAuth2:
+      type: oauth2
+      description: Google Identity OAuth 2.0 flow
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/photoslibrary.readonly: Read access to user photos
+            https://www.googleapis.com/auth/photoslibrary.appendonly: Add metadata to photos
+
+  schemas:
+    MemoryCluster:
+      type: object
+      required: [cluster_id, user_id, status, media_count, prompt_suggestion]
+      properties:
+        cluster_id:
+          type: string
+          example: "clust_7890a"
+        user_id:
+          type: string
+          example: "usr_google_4523"
+        status:
+          type: string
+          enum: [pending, prompted, dismissed, completed]
+        created_at:
+          type: string
+          format: date-time
+        media_count:
+          type: integer
+          example: 24
+        date_range:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+            end_date:
+              type: string
+              format: date-time
+        location_label:
+          type: string
+          example: "Lake Tahoe, California"
+        prompt_suggestion:
+          type: string
+          example: "Who joined you on this hike, and what was the highlight?"
+        media_preview_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+
+    ListClustersResponse:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryCluster'
+        next_page_token:
+          type: string
+
+    CreateMemoryContextRequest:
+      type: object
+      required: [cluster_id, user_text, input_method]
+      properties:
+        cluster_id:
+          type: string
+          example: "clust_7890a"
+        user_text:
+          type: string
+          maxLength: 2000
+          example: "We finally reached Emerald Bay after a 3-hour hike. Maya loved the sunset and we had blueberry cheesecake."
+        input_method:
+          type: string
+          enum: [voice, text]
+        client_timestamp:
+          type: string
+          format: date-time
+
+    CreateMemoryContextAcceptedResponse:
+      type: object
+      required: [memory_id, status, estimated_completion_ms]
+      properties:
+        memory_id:
+          type: string
+          example: "mem_a1b2c3d4e5f6"
+        status:
+          type: string
+          enum: [processing, ready]
+          example: "processing"
+        estimated_completion_ms:
+          type: integer
+          example: 1800
+
+    MemoryContext:
+      type: object
+      required: [memory_id, user_id, cluster_id, status, created_at]
+      properties:
+        memory_id:
+          type: string
+          example: "mem_a1b2c3d4e5f6"
+        user_id:
+          type: string
+        cluster_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [processing, ready, error, archived]
+        raw_input:
+          type: string
+        summary:
+          type: string
+          example: "Hike to Emerald Bay with Maya and campfire blueberry cheesecake"
+        extracted_entities:
+          type: object
+          properties:
+            people:
+              type: array
+              items:
+                type: string
+              example: ["Maya"]
+            places:
+              type: array
+              items:
+                type: string
+              example: ["Emerald Bay", "Lake Tahoe"]
+            events:
+              type: array
+              items:
+                type: string
+              example: ["Hike", "Campfire"]
+            objects_food:
+              type: array
+              items:
+                type: string
+              example: ["Blueberry cheesecake"]
+            emotions:
+              type: array
+              items:
+                type: string
+              example: ["Warm", "Joyful"]
+        keywords:
+          type: array
+          items:
+            type: string
+          example: ["Maya", "Lake Tahoe", "Emerald Bay", "hike", "cheesecake", "sunset"]
+        linked_media_ids:
+          type: array
+          items:
+            type: string
+
+    UpdateMemoryContextRequest:
+      type: object
+      properties:
+        summary:
+          type: string
+        raw_input:
+          type: string
+        extracted_entities:
+          type: object
+        added_media_ids:
+          type: array
+          items:
+            type: string
+        removed_media_ids:
+          type: array
+          items:
+            type: string
+
+    ListMemoryContextsResponse:
+      type: object
+      properties:
+        memories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryContext'
+        next_page_token:
+          type: string
+
+    MemorySearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          maxLength: 300
+          example: "that cafe where we had cheesecake in Tahoe"
+        max_results:
+          type: integer
+          default: 30
+          minimum: 1
+          maximum: 100
+        min_relevance_threshold:
+          type: number
+          format: float
+          default: 0.65
+        include_memory_context:
+          type: boolean
+          default: true
+
+    MemorySearchResultItem:
+      type: object
+      required: [media_id, relevance_score, media_url]
+      properties:
+        media_id:
+          type: string
+          example: "photo_982341"
+        relevance_score:
+          type: number
+          format: float
+          example: 0.942
+        media_url:
+          type: string
+          format: uri
+        thumbnail_url:
+          type: string
+          format: uri
+        matched_memory:
+          type: object
+          properties:
+            memory_id:
+              type: string
+            summary:
+              type: string
+            matched_concepts:
+              type: array
+              items:
+                type: string
+              example: ["cheesecake", "Tahoe"]
+        visual_confidence:
+          type: number
+          format: float
+          example: 0.88
+        semantic_confidence:
+          type: number
+          format: float
+          example: 0.96
+
+    MemorySearchResponse:
+      type: object
+      required: [results, total_results, search_strategy]
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemorySearchResultItem'
+        total_results:
+          type: integer
+          example: 12
+        search_strategy:
+          type: string
+          example: "hybrid_rrf_vector_keyword"
+
+    UserSettings:
+      type: object
+      required: [memory_prompts_enabled, voice_transcription_enabled]
+      properties:
+        memory_prompts_enabled:
+          type: boolean
+          default: true
+        voice_transcription_enabled:
+          type: boolean
+          default: true
+        max_prompts_per_week:
+          type: integer
+          default: 3
+          minimum: 1
+          maximum: 10
+        cooldown_days:
+          type: integer
+          default: 14
+        sensitive_detection_enabled:
+          type: boolean
+          default: true
+
+    ErrorEnvelope:
+      type: object
+      required: [code, message, status]
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+
+  responses:
+    BadRequestError:
+      description: Invalid request payload or parameter
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnauthorizedError:
+      description: Authentication credential missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFoundError:
+      description: Requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimitError:
+      description: User quota or prompt rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalServerError:
+      description: Unexpected server or AI service error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'

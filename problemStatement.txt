@@ -1,0 +1,600 @@
+MVP PROBLEM STATEMENT
+Google Photos — AI Memory Context
+
+BACKGROUND
+
+People capture hundreds or thousands of photos, videos, screenshots, and images every year.
+
+However, when they need to find something months later, they often remember the EXPERIENCE behind the photo rather than the metadata associated with it.
+
+They may remember:
+
+“I met my old friend at a café in Delhi.”
+“We had cake and talked about our childhood.”
+“It was a really pleasant sunny day.”
+“We walked towards Rajiv Chowk after leaving the café.”
+
+But they may not remember:
+
+- The exact date
+- The exact location
+- The café name
+- The filename
+- The album
+- The month
+- The exact words they originally searched for
+
+This creates a fundamental gap between how humans remember experiences and how digital photo libraries traditionally organize information.
+
+A photo library may know when and where a photo was captured, but the user's strongest memory may be the PURPOSE, CONTEXT, EMOTION, PEOPLE, ACTIVITY, or STORY behind that photo.
+
+THE CORE PROBLEM
+
+When people try to retrieve an old photo, they often search using the information they currently remember.
+
+But the information they remember may not exist as searchable context in their photo library.
+
+For example:
+
+A user takes 10 photos and 3 videos while meeting an old friend at a café in Delhi.
+
+Six months later, the user remembers:
+
+“I met my old friend after several years. We went to a café, had cake, talked about childhood, and then walked towards Rajiv Chowk.”
+
+The user may NOT remember:
+
+- The exact date
+- The café name
+- The exact location
+- Which photo was taken first
+- What month it was
+- What the file was called
+
+The user's brain has retained the MEMORY OF THE EXPERIENCE, but the photo library has primarily retained the DIGITAL RECORD OF THE PHOTOS.
+
+This creates a gap between:
+
+HUMAN MEMORY
+→ “What happened?”
+
+and
+
+PHOTO LIBRARY DATA
+→ “When/where was this photo captured?”
+
+The MVP should explore whether Google Photos can bridge this gap by allowing users to capture the meaning and context of their memories while that context is still fresh.
+
+MVP HYPOTHESIS
+
+If Google Photos captures a short natural-language memory/context summary from the user shortly after photos are captured, AI can transform that information into structured, searchable memory context and associate it with the relevant photos and videos.
+
+Later, when the user searches using the memory they actually remember, Google Photos can use that contextual information to retrieve the relevant visual memories.
+
+For example:
+
+USER MEMORY:
+
+“I met my friend Ramesh in a café in Delhi after two years. We talked about our childhood and had cake. It was a sunny day, and later we walked towards Rajiv Chowk.”
+
+AI MEMORY REPRESENTATION:
+
+People:
+- Ramesh
+
+Place:
+- Café
+- Delhi
+- Rajiv Chowk
+
+Activities:
+- Meeting a friend
+- Talking
+- Eating cake
+- Walking
+- Taking the metro
+
+Context:
+- Meeting an old friend after two years
+- Childhood memories
+- Pleasant afternoon
+
+Visual signals:
+- Café
+- Food/cake
+- People
+- Outdoor environment
+- Metro/walking context
+
+Memory keywords:
+- Old friend
+- Ramesh
+- Delhi café
+- Childhood
+- Cake
+- Sunny day
+- Rajiv Chowk
+- Catch-up
+
+The AI should then associate this contextual representation with the relevant photos and videos.
+
+THE MVP SOLUTION
+
+Build an AI-powered Google Photos feature called:
+
+“Add Memory Context”
+
+The feature should allow Google Photos to periodically ask users to provide a short contextual description of recently captured or received visual memories.
+
+The key principle is:
+
+CAPTURE THE MEMORY WHILE IT IS FRESH.
+
+The user should not be asked to manually organize every photo.
+
+Instead, Google Photos should intelligently identify a meaningful group of recent visual memories and ask the user for a lightweight contextual input.
+
+PRIMARY USE CASE — PHOTOS AND VIDEOS CAPTURED BY THE USER
+
+This is Priority 1.
+
+When a user captures a meaningful group of photos/videos during the day, Google Photos can identify the cluster.
+
+For example:
+
+10 photos + 3 videos captured during an outing.
+
+Later that evening, at an appropriate time, Google Photos may show a lightweight notification:
+
+“Remember this moment later?”
+
+“Today you captured 10 photos and 3 videos from your afternoon. Want to add a little context so you can find these memories more easily later?”
+
+Actions:
+
+[Add Memory]
+
+[Not Now]
+
+[Don't Ask Again]
+
+The experience should be completely optional.
+
+If the user selects “Not Now”, Google Photos continues working normally.
+
+If the user selects “Don't Ask Again”, this feature should stop prompting the user.
+
+If the user selects “Add Memory”, the user is shown a simple conversational AI interface.
+
+Example:
+
+“Tell us a little about these photos.”
+
+User:
+
+“I met my friend Ramesh at a café in Delhi after two years. We talked about our childhood, had cake, and later walked towards Rajiv Chowk.”
+
+The AI should then:
+
+1. Understand the natural-language description.
+2. Analyze the associated photos/videos.
+3. Identify relevant visual entities and scenes.
+4. Extract people, places, activities, objects, events, and contextual concepts.
+5. Combine user-provided context with visual understanding.
+6. Create a concise memory summary.
+7. Generate useful semantic keywords/concepts.
+8. Associate the memory context with the relevant photo/video cluster.
+9. Where appropriate, associate specific concepts with individual photos/videos.
+
+The user should see what the AI understood before saving.
+
+Example:
+
+“Here’s what I understood:
+
+Ramesh • Delhi café • Old friends • Childhood memories • Cake • Sunny afternoon • Rajiv Chowk”
+
+[Save Memory]
+
+[Edit]
+
+The AI should never silently invent personal facts.
+
+User-provided information must be treated as the primary source of personal context.
+
+AI-generated visual information should be clearly distinguishable from information provided by the user.
+
+SECONDARY USE CASE — SCREENSHOTS AND RECEIVED IMAGES
+
+This is Priority 2.
+
+Screenshots and received images should not necessarily trigger the same frequency of prompts as personally captured photos.
+
+Instead, Google Photos can wait until a meaningful group has accumulated.
+
+For example:
+
+8–10 screenshots collected over several days.
+
+Google Photos may ask:
+
+“You've saved several screenshots recently. Want to add a little context to help you find them later?”
+
+The user could respond:
+
+“Mostly screenshots of laptops and products I was comparing before buying a new laptop.”
+
+The AI could create:
+
+Purpose:
+- Product research
+- Laptop comparison
+
+Objects:
+- Laptop
+- Specifications
+- Product pages
+
+Context:
+- Purchase research
+
+Search concepts:
+- Laptop research
+- New laptop
+- Product comparison
+- Specifications
+
+This context can later help the user retrieve those screenshots using natural memory-based searches.
+
+PERSONAL RECEIVED IMAGES
+
+The MVP may also explore images received directly from individuals through messaging or social platforms.
+
+For example:
+
+A person sends the user several photos privately.
+
+Google Photos can eventually associate the received images with lightweight context such as:
+
+“Photos sent by Ramesh from our Delhi trip.”
+
+However, this should be treated as a secondary scenario and should respect privacy and platform permissions.
+
+The MVP should NOT assume that Google Photos can access private messages or private social-media content without explicit user permission and appropriate platform access.
+
+CORE AI EXPERIENCE
+
+The AI should behave less like a traditional search box and more like a memory-understanding layer.
+
+The system should combine three sources of information:
+
+1. USER MEMORY
+
+What the user explicitly tells Google Photos.
+
+Examples:
+
+“I met my college friend.”
+
+“We went to a café.”
+
+“It was my first day at the new office.”
+
+“I was comparing laptops.”
+
+“We went on a family trip.”
+
+2. VISUAL UNDERSTANDING
+
+What AI can reasonably understand from the photos/videos.
+
+Examples:
+
+- People
+- Objects
+- Places/scenes
+- Food
+- Products
+- Text
+- Screens
+- Documents
+- Visual similarity
+- Groups of related images
+
+3. EXISTING PHOTO METADATA
+
+Information already available to Google Photos, where permitted.
+
+Examples:
+
+- Capture date
+- Approximate location
+- Device metadata
+- Existing albums
+- Existing recognized entities
+- Existing search/index information
+
+The AI should combine these signals without allowing inferred information to overwrite explicit user-provided memory.
+
+MEMORY → SEARCH
+
+The ultimate purpose of this feature is retrieval.
+
+Months later, the user may search:
+
+“Photos from when I met Ramesh after two years.”
+
+or:
+
+“Photos where I went to that Delhi café with my old friend.”
+
+or:
+
+“That day we had cake and talked about childhood.”
+
+or:
+
+“Photos from the laptop research I did before buying my laptop.”
+
+The system should use the previously captured memory context to retrieve the relevant photos/videos.
+
+The user should NOT need to remember:
+
+- Exact date
+- Exact location
+- Exact filename
+- Album name
+- Exact search keywords
+
+The search experience should therefore move from:
+
+“Search by what the photo is”
+
+towards:
+
+“Search by what the memory means to you.”
+
+MVP USER JOURNEY
+
+STEP 1 — CAPTURE
+
+User takes photos/videos throughout the day.
+
+Example:
+
+10 photos + 3 videos.
+
+STEP 2 — AI IDENTIFIES A POTENTIAL MEMORY CLUSTER
+
+Google Photos recognizes that these photos/videos may represent a related event or activity.
+
+STEP 3 — LIGHTWEIGHT PROMPT
+
+At an appropriate time:
+
+“Remember this moment later?”
+
+“Add a little context to today's photos?”
+
+[Add Memory]
+
+[Not Now]
+
+STEP 4 — USER PROVIDES NATURAL MEMORY
+
+User writes or speaks naturally.
+
+Example:
+
+“I met Ramesh after two years at a café in Delhi. We talked about childhood and had cake.”
+
+The input should support both:
+
+- Text
+- Voice
+
+Voice input is especially important because the goal is to make memory capture extremely low effort.
+
+STEP 5 — AI UNDERSTANDS
+
+AI extracts:
+
+People
+Places
+Activities
+Objects
+Events
+Purpose
+Context
+Temporal references
+Relationships
+Semantic concepts
+
+STEP 6 — AI CONNECTS MEMORY TO VISUALS
+
+The system analyzes the related photos/videos and creates:
+
+Memory summary
++
+Semantic concepts
++
+Photo/video associations
+
+STEP 7 — USER CONFIRMS
+
+Example:
+
+“Memory saved”
+
+“Ramesh • Delhi café • Childhood • Cake • Old friends”
+
+[Done]
+
+STEP 8 — FUTURE RETRIEVAL
+
+Months later:
+
+User searches:
+
+“Ramesh café childhood”
+
+or:
+
+“the day I met my old friend after two years”
+
+Google Photos retrieves the associated visual memories.
+
+MVP SCOPE
+
+The MVP should focus on one clear problem:
+
+HELP USERS RETRIEVE PERSONALLY CAPTURED PHOTOS AND VIDEOS USING THE CONTEXTUAL MEMORY THEY REMEMBER LATER.
+
+Priority order:
+
+P0 / Core MVP:
+- Photos captured by the user
+- Videos captured by the user
+- Grouped memories/events
+- Natural-language memory input
+- AI-generated memory representation
+- Memory-to-photo association
+- Memory-based retrieval
+
+P1:
+- Screenshots
+- Documents
+- Product research screenshots
+- Other personally saved images
+
+P2 / Future:
+- Personally received images
+- More advanced cross-app/contextual signals
+- Automatic memory generation without user input
+- Deeper conversational memory search
+
+PRIVACY AND CONTROL
+
+Because this feature deals with personal memories, privacy must be a first-class part of the MVP.
+
+The user must control:
+
+- Whether the feature is enabled
+- Which memories are saved
+- Whether AI-generated context is stored
+- Whether a memory can be edited
+- Whether a memory can be deleted
+- Whether prompting is enabled
+- How frequently Google Photos asks
+
+The system should avoid creating unnecessary sensitive inferences.
+
+The AI should clearly distinguish:
+
+USER-PROVIDED CONTEXT
+from
+AI-INFERRED CONTEXT.
+
+The MVP should not claim to know something simply because an image model inferred it.
+
+DESIGN DIRECTION
+
+The feature must look and feel like a native Google Photos capability rather than a separate AI application.
+
+Use the existing Google Photos visual language and interaction patterns as the foundation.
+
+The interface should feel:
+
+- Familiar
+- Minimal
+- Calm
+- Personal
+- Trustworthy
+- AI-powered without feeling overly technical
+
+Do not create a generic futuristic AI dashboard.
+
+The experience should feel like:
+
+“Google Photos quietly helping me remember my own memories.”
+
+AI should appear naturally through conversational prompts, intelligent suggestions, semantic chips, and contextual summaries.
+
+The MVP should demonstrate a high-quality AI experience while maintaining the simplicity expected from Google Photos.
+
+KEY PRODUCT PRINCIPLE
+
+The feature is NOT designed to make users organize their photo library manually.
+
+It is designed to capture a small amount of human memory at the right moment so that AI can do the organizational work.
+
+The user provides the meaning.
+
+AI provides the understanding and organization.
+
+Google Photos provides the retrieval.
+
+THE PRODUCT LOOP
+
+CAPTURE
+↓
+MEMORY IS FRESH
+↓
+GOOGLE PHOTOS PROMPTS
+↓
+USER SHARES CONTEXT
+↓
+AI UNDERSTANDS MEMORY
+↓
+AI ANALYZES VISUALS
+↓
+MEMORY + VISUALS ARE CONNECTED
+↓
+MEMORY BECOMES SEARCHABLE
+↓
+MONTHS LATER
+↓
+USER SEARCHES USING NATURAL MEMORY
+↓
+RELEVANT PHOTOS ARE RETRIEVED
+
+SUCCESS CRITERIA FOR THE MVP
+
+The MVP should demonstrate that:
+
+1. Users can easily add contextual memory to a group of photos/videos.
+2. Users can express memories naturally rather than using predefined metadata.
+3. AI can transform natural-language memory into useful searchable concepts.
+4. AI can connect contextual information with the relevant photos/videos.
+5. Users can later retrieve those photos using memory-based queries.
+6. The interaction requires minimal manual effort.
+7. The feature feels native to Google Photos.
+8. Users remain in control of what memory context is saved.
+
+THE CORE PRODUCT INSIGHT
+
+People do not always remember photographs.
+
+They remember moments.
+
+They remember people.
+
+They remember places.
+
+They remember conversations.
+
+They remember why something mattered.
+
+They remember what happened around the photo.
+
+The MVP explores whether Google Photos can capture that human context while it is still fresh and attach it to the visual memory before the details disappear.
+
+The fundamental shift is:
+
+FROM:
+
+“Help me search my photos.”
+
+TO:
+
+“Help me find the photo using the memory I still have.”

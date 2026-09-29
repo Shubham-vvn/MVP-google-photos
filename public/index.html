@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Google Photos — AI Memory Context</title>
+  <meta name="description" content="Google Photos AI Memory Context MVP — bridge the gap between what photos show and what photos mean with intelligent memory capture and multimodal retrieval.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="desktop-backdrop">
+
+  <!-- Desktop Presentation Toolbar -->
+  <header class="desktop-toolbar" id="desktopToolbar" aria-label="Demo Presentation Controls">
+    <div class="toolbar-brand">
+      <div class="photos-logo-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" class="pinwheel-svg">
+          <path fill="#EA4335" d="M12 2a5 5 0 0 0-5 5v5h5a5 5 0 0 0 0-10z"/>
+          <path fill="#4285F4" d="M22 12a5 5 0 0 0-5-5h-5v5a5 5 0 0 0 10 0z"/>
+          <path fill="#FBBC04" d="M2 12a5 5 0 0 0 5 5h5v-5a5 5 0 0 0-10 0z"/>
+          <path fill="#34A853" d="M12 22a5 5 0 0 0 5-5v-5h-5a5 5 0 0 0 0 10z"/>
+        </svg>
+      </div>
+      <div class="toolbar-title-wrap">
+        <span class="toolbar-title">Google Photos</span>
+        <span class="toolbar-badge">AI Memory Context MVP</span>
+      </div>
+    </div>
+
+    <!-- Scenario Switcher -->
+    <div class="scenario-selector-wrap">
+      <label for="scenarioSelect" class="scenario-label">Scenario:</label>
+      <select id="scenarioSelect" class="scenario-dropdown" title="Select MVP Scenario">
+        <option value="goa_beach">🏖️ Goa Beach Trip with Friends (Sunset Waves & Shack)</option>
+        <option value="mom_birthday">🎂 Mom's 60th Birthday Celebration (3 Generations)</option>
+        <option value="himalaya_roadtrip">🏔️ Himalayan Pass with Rocky the Dog (4x4 Road Trip)</option>
+        <option value="diwali_celebration">🪔 Diwali Lights & Sparklers on Terrace (Family & Kurtas)</option>
+        <option value="cycling_morning">🚴 Morning Cycling at Cubbon Park (Weekend Fitness)</option>
+        <option value="delhi_cafe">☕ Afternoon at Delhi Café with Ramesh (Reunion)</option>
+        <option value="lake_tahoe">🌲 Emerald Bay Mountain Hike (Lake Tahoe with Maya)</option>
+        <option value="laptop_research">💻 Product Research: Laptops (Screenshots)</option>
+        <option value="custom_user_memory">📸 + Try With Your Own Photos...</option>
+      </select>
+    </div>
+
+    <!-- Quick Controls -->
+    <div class="toolbar-controls">
+      <button id="openCustomUploadBtn" class="tb-btn tb-upload-btn" title="Upload your own photos and test the AI memory feature">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        <span class="tb-btn-text">📸 Try Your Own Photos</span>
+      </button>
+
+      <button id="openExplainerBtn" class="tb-btn tb-highlight-btn" title="Learn what problem this MVP solves">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        <span class="tb-btn-text">💡 What is this MVP?</span>
+      </button>
+
+      <button id="startInteractiveTourBtn" class="tb-btn tb-tour-btn" title="Take a 60-second guided interactive demo">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <span class="tb-btn-text">🚀 60s Guided Demo</span>
+      </button>
+
+      <button id="toggleFrameBtn" class="tb-btn" title="Toggle Phone Frame Border">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+          <line x1="12" y1="18" x2="12" y2="18"/>
+        </svg>
+        <span class="tb-btn-text">Phone Frame</span>
+      </button>
+
+      <button id="toggleThemeBtn" class="tb-btn" title="Toggle Dark/Light Mode">
+        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span class="tb-btn-text" id="themeBtnText">Dark</span>
+      </button>
+
+      <button id="resetDemoBtn" class="tb-btn" title="Reset Demo Data">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        <span class="tb-btn-text">Reset</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Mobile App Frame Wrapper -->
+  <main class="app-viewport-container">
+    <div class="mobile-device-frame" id="mobileFrame">
+      
+      <!-- Phone Bezel Details -->
+      <div class="device-notch-island" id="dynamicIsland">
+        <div class="island-camera"></div>
+        <div class="island-sensor"></div>
+        <div class="island-pill-content" id="islandContent">
+          <span class="island-dot"></span>
+          <span class="island-text" id="islandStatusText">Google Photos</span>
+        </div>
+      </div>
+
+      <!-- Native Mobile Status Bar -->
+      <div class="mobile-status-bar">
+        <span class="status-time" id="statusClock">14:47</span>
+        <div class="status-icons">
+          <!-- 5G -->
+          <span class="status-cell">5G</span>
+          <!-- Wi-Fi -->
+          <svg class="status-wifi" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/>
+          </svg>
+          <!-- Battery -->
+          <div class="status-battery">
+            <div class="battery-level"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Screen Inside Device -->
+      <div class="app-screen" id="appScreen">
+
+        <!-- Top App Bar -->
+        <header class="app-top-bar" id="appTopBar">
+          <div class="top-bar-left">
+            <div class="google-photos-logo" title="Google Photos">
+              <svg viewBox="0 0 24 24" width="28" height="28" class="pinwheel-svg">
+                <path fill="#EA4335" d="M12 2a5 5 0 0 0-5 5v5h5a5 5 0 0 0 0-10z"/>
+                <path fill="#4285F4" d="M22 12a5 5 0 0 0-5-5h-5v5a5 5 0 0 0 10 0z"/>
+                <path fill="#FBBC04" d="M2 12a5 5 0 0 0 5 5h5v-5a5 5 0 0 0-10 0z"/>
+                <path fill="#34A853" d="M12 22a5 5 0 0 0 5-5v-5h-5a5 5 0 0 0 0 10z"/>
+              </svg>
+              <h1 class="app-brand-name">Photos</h1>
+            </div>
+          </div>
+
+          <div class="top-bar-right">
+            <!-- Memory Search Shortcut in Header -->
+            <button class="icon-btn search-trigger-btn" id="headerSearchBtn" title="Search with AI Memory">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </button>
+
+            <!-- Notification with unread dot -->
+            <button class="icon-btn notification-btn" id="headerNotifBtn" title="Memory Suggestions">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+              </svg>
+              <span class="unread-pip" id="headerNotifPip"></span>
+            </button>
+
+            <!-- User Avatar -->
+            <div class="user-avatar" id="userAvatar" title="Google Account: shubham@gmail.com">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profile" class="avatar-img">
+            </div>
+          </div>
+        </header>
+
+        <!-- Dynamic Views Container -->
+        <div class="app-body" id="appBody">
+
+          <!-- ================= TAB 1: PHOTOS (MAIN TIMELINE) ================= -->
+          <section class="tab-view active" id="tabPhotos">
+
+            <!-- Newcomer Spotlight: Explains the Feature Instantly -->
+            <div class="feature-spotlight-card" id="featureSpotlightCard">
+              <div class="spotlight-top-row">
+                <div class="spotlight-badge">
+                  <span class="spotlight-gemini-sparkle">✨</span>
+                  <span class="spotlight-badge-title">GOOGLE PHOTOS AI • EXPERIMENT</span>
+                </div>
+                <button class="spotlight-dismiss-btn" id="dismissSpotlightBtn" title="Dismiss announcement">×</button>
+              </div>
+              <h2 class="spotlight-heading">Photos capture what happened.<br>You know what it meant.</h2>
+              <p class="spotlight-subtext">
+                Standard Google Photos only detects objects like <em>"beach"</em> or <em>"dog"</em>. 
+                <strong>AI Memory Context</strong> links the personal story behind your outings in 10 seconds, so you can search your life using real human memories.
+              </p>
+              <div class="spotlight-button-row">
+                <button class="spotlight-cta-btn" id="spotlightTourBtn">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <span>Experience in 60s</span>
+                </button>
+                <button class="spotlight-secondary-btn" id="spotlightWhyBtn">
+                  <span>What This Solves</span>
+                </button>
+                <button class="spotlight-secondary-btn spotlight-custom-btn" id="spotlightCustomBtn">
+                  <span>📸 Try Your Own Photos</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Timeline Hero / Stories Strip -->
+            <div class="memories-carousel-strip">
+              <div class="carousel-title-row">
+                <span class="carousel-label">Recent Highlights</span>
+                <span class="ai-sparkle-pill">✨ AI Powered</span>
+              </div>
+              <div class="stories-scroll" id="storiesScroll">
+                <!-- Dynamically populated or seeded -->
+                <div class="story-item active-prompt" id="storyPromptTrigger">
+                  <div class="story-ring sparkle-ring">
+                    <img src="assets/delhi_cafe_friends.jpg" alt="Memory Cluster" class="story-thumb" id="storyThumbImg">
+                  </div>
+                  <span class="story-caption" id="storyCaptionText">Add Context</span>
+                </div>
+                <div class="story-item">
+                  <div class="story-ring">
+                    <img src="assets/laptop_specs_compare.jpg" alt="Saved" class="story-thumb">
+                  </div>
+                  <span class="story-caption">Research</span>
+                </div>
+                <div class="story-item">
+                  <div class="story-ring">
+                    <img src="assets/lake_tahoe_hike.jpg" alt="Tahoe" class="story-thumb">
+                  </div>
+                  <span class="story-caption">1 year ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CORE MVP FEATURE: The AI Memory Context Prompt Card -->
+            <div class="memory-prompt-card" id="memoryPromptCard">
+              <div class="prompt-card-glow"></div>
+              
+              <div class="prompt-card-header">
+                <div class="prompt-badge">
+                  <svg class="sparkle-icon" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="url(#sparkleGrad)" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+                    <defs>
+                      <linearGradient id="sparkleGrad" x1="2" y1="2" x2="22" y2="22">
+                        <stop offset="0%" stop-color="#4285F4"/>
+                        <stop offset="50%" stop-color="#9C27B0"/>
+                        <stop offset="100%" stop-color="#EA4335"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <span>Remember this moment later?</span>
+                </div>
+                <button class="prompt-dismiss-btn" id="promptDismissBtn" title="Dismiss" aria-label="Dismiss prompt">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Cluster Preview Content -->
+              <div class="prompt-card-content">
+                <div class="prompt-preview-stack" id="promptStack">
+                  <img src="assets/delhi_cafe_friends.jpg" alt="Cover photo" class="stack-img stack-img-1" id="promptCoverImg">
+                  <img src="assets/cafe_chocolate_cake.jpg" alt="Secondary" class="stack-img stack-img-2" id="promptSecImg">
+                  <div class="stack-count-badge" id="promptItemCount">+11</div>
+                </div>
+
+                <div class="prompt-text-group">
+                  <h3 class="prompt-title" id="promptTitleText">Afternoon in Connaught Place</h3>
+                  <p class="prompt-subtext" id="promptSubtitleText">
+                    Today you captured 10 photos & 3 videos. Add a little context while it's fresh so you can easily find these moments later.
+                  </p>
+                  <div class="prompt-meta-row" id="promptMetaRow">
+                    <span class="meta-tag">📍 Delhi</span>
+                    <span class="meta-tag">🕒 Today, 2:30 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Primary & Secondary Action Buttons -->
+              <div class="prompt-action-bar">
+                <button class="prompt-btn primary-sparkle-btn" id="speakMemoryBtn" title="Speak your memory">
+                  <svg class="btn-mic-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  </svg>
+                  <span>Speak Memory</span>
+                </button>
+
+                <button class="prompt-btn secondary-btn" id="addMemoryBtn" title="Write memory context">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                  <span>Write Context</span>
+                </button>
+              </div>
+
+              <!-- Tertiary dismissal row -->
+              <div class="prompt-tertiary-row">
+                <button class="tertiary-text-btn" id="notNowBtn">Not Now</button>
+                <span class="tertiary-dot">•</span>
+                <button class="tertiary-text-btn" id="dontAskBtn">Don't Ask Again</button>
+              </div>
+            </div>
+
+            <!-- Saved Memory Banner (Appears when memory is attached to cluster) -->
+            <div class="memory-saved-cluster-banner hidden" id="memorySavedBanner">
+              <div class="banner-left">
+                <div class="banner-sparkle-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
+                  <span>Memory Linked</span>
+                </div>
+                <p class="banner-story" id="bannerStoryText">"Met Ramesh at café in Delhi after 2 years. Cake & Rajiv Chowk walk."</p>
+                <div class="banner-chips-strip" id="bannerChipsStrip">
+                  <!-- Chips injected here -->
+                </div>
+              </div>
+              <button class="banner-edit-btn" id="bannerEditBtn" title="Edit Memory">Edit</button>
+            </div>
+
+            <!-- Photo Stream / Grid Section -->
+            <div class="timeline-section">
+              <div class="timeline-date-header">
+                <div class="date-header-left">
+                  <h2 class="section-date" id="timelineSectionTitle">Today</h2>
+                  <span class="section-location" id="timelineSectionLocation">New Delhi • 13 items</span>
+                </div>
+                <span class="selection-pill" id="timelineStatusPill">AI Clustered</span>
+              </div>
+
+              <!-- Responsive Photo Grid -->
+              <div class="photos-grid" id="mainPhotoGrid">
+                <!-- Injected dynamically by JS based on selected scenario -->
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= TAB 2: MEMORIES ================= -->
+          <section class="tab-view" id="tabMemories">
+            <div class="view-header">
+              <h2 class="view-title">Memories & Context</h2>
+              <p class="view-desc">AI-powered memory representations connected to your photo library.</p>
+            </div>
+
+            <!-- Active Memory Cards List -->
+            <div class="memories-list-container" id="memoriesList">
+              <!-- Dynamically populated cards -->
+            </div>
+          </section>
+
+          <!-- ================= TAB 3: SEARCH ================= -->
+          <section class="tab-view" id="tabSearch">
+            <div class="search-view-header">
+              <div class="search-input-box">
+                <svg class="search-box-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" id="memorySearchInput" class="search-input" placeholder="Search by what you remember..." autocomplete="off">
+                <button class="clear-search-btn hidden" id="clearSearchBtn" title="Clear">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+                <button class="search-mic-btn" id="searchMicBtn" title="Voice search">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Search Mode Comparison (Before vs After) -->
+            <div class="search-mode-comparison-bar">
+              <span class="mode-bar-label">Search Technology:</span>
+              <div class="search-mode-toggle" id="searchModeToggle">
+                <button class="mode-toggle-btn active" id="modeAiMemoryBtn" data-mode="ai_memory">
+                  <span>✨ AI Memory Context (MVP)</span>
+                </button>
+                <button class="mode-toggle-btn" id="modeStandardBtn" data-mode="standard">
+                  <span>Standard Google Photos</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Natural Query Inspiration Chips -->
+            <div class="search-chips-container" id="searchChipsWrap">
+              <span class="chips-hint">Try searching natural memories:</span>
+              <div class="search-suggest-chips">
+                <button class="query-chip" data-query="Goa beach sunset waves with friends">
+                  🏖️ "Goa beach sunset waves with friends"
+                </button>
+                <button class="query-chip" data-query="Mom's 60th birthday family celebration cake">
+                  🎂 "Mom's 60th birthday family celebration cake"
+                </button>
+                <button class="query-chip" data-query="Himalayan roadtrip with Rocky the dog">
+                  🐕 "Himalayan roadtrip with Rocky the dog"
+                </button>
+                <button class="query-chip" data-query="Diwali celebration on balcony with sparklers">
+                  🪔 "Diwali celebration on balcony with sparklers"
+                </button>
+                <button class="query-chip" data-query="Morning cycling with friends in Cubbon park">
+                  🚴 "Morning cycling with friends in Cubbon park"
+                </button>
+                <button class="query-chip" data-query="Delhi cafe with Ramesh having cake">
+                  ☕ "Delhi cafe with Ramesh having cake"
+                </button>
+                <button class="query-chip" data-query="Lake Tahoe hike sunset with Maya">
+                  🏔️ "Lake Tahoe hike sunset with Maya"
+                </button>
+                <button class="query-chip" data-query="laptop specs comparison research">
+                  💻 "laptop specs comparison research"
+                </button>
+              </div>
+            </div>
+
+            <!-- Search Results Area -->
+            <div class="search-results-container" id="searchResultsArea">
+              <!-- When search is triggered: "Matched via AI Memory Context" card appears -->
+              <div class="memory-search-match-card hidden" id="searchMatchCard">
+                <div class="match-card-badge">
+                  <span class="sparkle-gemini-icon">✨</span>
+                  <span class="match-badge-text">Matched via AI Memory Context</span>
+                  <span class="match-score-badge" id="matchScoreBadge">98% match</span>
+                </div>
+                <h4 class="match-memory-title" id="matchMemoryTitle">Afternoon with Ramesh at Delhi Café</h4>
+                <p class="match-memory-summary" id="matchMemorySummary">
+                  "I met my friend Ramesh at a café in Delhi after two years. We talked about childhood and had cake. Later walked towards Rajiv Chowk."
+                </p>
+                <div class="matched-concepts-row">
+                  <span class="matched-concepts-label">Matched concepts:</span>
+                  <div class="matched-chips-wrap" id="matchedChipsWrap">
+                    <!-- Highlighting chips -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Standard Search Limitation Notice (When comparing without memory context) -->
+              <div class="standard-search-card hidden" id="standardSearchCard">
+                <div class="standard-card-badge">
+                  <span class="warning-icon">⚠️</span>
+                  <span class="standard-badge-text">Standard Google Photos Search (Without Context)</span>
+                  <span class="standard-score-badge">Generic Match</span>
+                </div>
+                <h4 class="standard-title">Limited to Computer Vision Object Labels</h4>
+                <p class="standard-desc" id="standardSearchDesc">
+                  Standard search only reads raw image pixels. It detected tags like <em>"sand", "water", "people"</em>, but cannot recognize the human story or names.
+                </p>
+                <div class="comparison-difference-box">
+                  <div class="diff-item missing">
+                    <span class="diff-icon">❌</span>
+                    <span>Cannot identify personal names, relationships, or why you gathered</span>
+                  </div>
+                  <div class="diff-item missing">
+                    <span class="diff-icon">❌</span>
+                    <span>Misses feelings, milestones (60th birthday), or 2-year reunions</span>
+                  </div>
+                  <div class="diff-item resolved">
+                    <span class="diff-icon">✨</span>
+                    <button class="diff-cta-btn" id="switchToAiSearchBtn">Switch to AI Memory Context (MVP) to see full match</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Results Grid -->
+              <div class="search-grid-wrap" id="searchGridWrap">
+                <div class="search-grid-heading" id="searchGridHeading">Photos from this memory:</div>
+                <div class="photos-grid" id="searchResultsGrid">
+                  <!-- Photos shown here -->
+                </div>
+              </div>
+
+              <!-- Zero State -->
+              <div class="search-empty-state hidden" id="searchEmptyState">
+                <div class="empty-icon">🔍</div>
+                <h3 class="empty-title">No memory matches found</h3>
+                <p class="empty-desc">Try describing the experience, people, or feelings you remember.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= TAB 4: LIBRARY & SETTINGS ================= -->
+          <section class="tab-view" id="tabLibrary">
+            <div class="view-header">
+              <h2 class="view-title">Library & AI Settings</h2>
+              <p class="view-desc">Configure AI Memory Context behavior, prompt rules, and privacy.</p>
+            </div>
+
+            <!-- Privacy & Control Section -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1A73E8">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                </svg>
+                <h3 class="settings-card-title">Privacy & User Control</h3>
+              </div>
+              <p class="settings-card-desc">Your memory context is private to you. It is never used for advertising or shared without permission.</p>
+
+              <div class="setting-toggle-row">
+                <div class="toggle-text">
+                  <span class="toggle-label">Smart Memory Prompts</span>
+                  <span class="toggle-sub">Periodically ask for context on meaningful photo clusters</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="settingSmartPrompts" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <div class="setting-toggle-row">
+                <div class="toggle-text">
+                  <span class="toggle-label">Voice Transcription</span>
+                  <span class="toggle-sub">Allow speech-to-text for effortless memory recording</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="settingVoiceInput" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <div class="setting-toggle-row">
+                <div class="toggle-text">
+                  <span class="toggle-label">Screenshot Context Clustered</span>
+                  <span class="toggle-sub">Group product/receipt screenshots and prompt context</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="settingScreenshots" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Prompt Timing & Frequency -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">Prompt Frequency</h3>
+              <p class="settings-card-desc">Control how often Google Photos suggests adding memory context.</p>
+              
+              <div class="radio-pill-group" id="frequencyGroup">
+                <button class="radio-pill" data-freq="low">Low (1-2x / week)</button>
+                <button class="radio-pill active" data-freq="normal">Balanced (Daily Evening)</button>
+                <button class="radio-pill" data-freq="active">Frequent (Every Outing)</button>
+              </div>
+            </div>
+
+            <!-- Danger Zone / Data Management -->
+            <div class="settings-card danger-zone">
+              <h3 class="settings-card-title danger-text">Data & Memory Management</h3>
+              <p class="settings-card-desc">You have full ownership to export or delete your AI memory data at any time.</p>
+              <div class="danger-btn-row">
+                <button class="export-btn" id="exportDataBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                  <span>Export Memories (JSON)</span>
+                </button>
+                <button class="danger-delete-btn" id="deleteAllMemoriesBtn">Delete All Memories</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Native Bottom Navigation Bar -->
+        <nav class="app-bottom-nav" id="appBottomNav">
+          <button class="nav-item active" data-tab="tabPhotos" id="navBtnPhotos">
+            <div class="nav-icon-wrap">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Photos</span>
+          </button>
+
+          <button class="nav-item" data-tab="tabMemories" id="navBtnMemories">
+            <div class="nav-icon-wrap">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span class="nav-badge-dot"></span>
+            </div>
+            <span class="nav-label">Memories</span>
+          </button>
+
+          <button class="nav-item" data-tab="tabSearch" id="navBtnSearch">
+            <div class="nav-icon-wrap">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Search</span>
+          </button>
+
+          <button class="nav-item" data-tab="tabLibrary" id="navBtnLibrary">
+            <div class="nav-icon-wrap">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Library</span>
+          </button>
+        </nav>
+
+        <!-- Native Home Indicator Pill (iPhone Gesture bar) -->
+        <div class="home-indicator-bar">
+          <div class="home-indicator-pill"></div>
+        </div>
+
+      </div> <!-- /app-screen -->
+
+      <!-- ================= MODAL 1: MEMORY INPUT BOTTOM SHEET ================= -->
+      <div class="modal-backdrop hidden" id="inputSheetBackdrop"></div>
+      <div class="bottom-sheet hidden" id="memoryInputSheet" role="dialog" aria-modal="true" aria-labelledby="sheetPromptTitle">
+        <div class="sheet-drag-handle-wrap" id="sheetDragHandle">
+          <div class="sheet-drag-handle"></div>
+        </div>
+
+        <div class="sheet-header">
+          <button class="sheet-close-btn" id="sheetCloseBtn" title="Close" aria-label="Close sheet">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+          <div class="sheet-title-center">
+            <span class="sheet-super-title">AI Memory Context</span>
+            <h3 class="sheet-title" id="sheetPromptTitle">What made this moment memorable?</h3>
+          </div>
+          <button class="sheet-save-btn" id="sheetSubmitBtn">Save</button>
+        </div>
+
+        <div class="sheet-scrollable-body">
+          <!-- Cluster Photo Thumbnails Ribbon -->
+          <div class="sheet-cluster-ribbon" id="sheetClusterRibbon">
+            <!-- Dynamically populated thumbnails -->
+          </div>
+
+          <!-- Quick Autofill Suggestions (User can test in 1 tap) -->
+          <div class="quick-autofill-section">
+            <span class="autofill-hint">💡 Tap sample memory to test:</span>
+            <div class="autofill-pills" id="autofillPills">
+              <!-- Injected by scenario -->
+            </div>
+          </div>
+
+          <!-- Textarea / Speech Input Box -->
+          <div class="memory-input-wrapper">
+            <textarea 
+              id="memoryTextInput" 
+              class="memory-textarea" 
+              placeholder="Tell us a little about these photos (e.g. who you were with, where you went, what you talked about)..."
+              rows="4"
+              maxlength="400"
+            ></textarea>
+
+            <div class="textarea-footer">
+              <span class="char-count" id="charCount">0/400</span>
+              <span class="freshness-hint">🌱 Memories captured early are remembered 3x better</span>
+            </div>
+          </div>
+
+          <!-- Voice Dictation Visualizer Area -->
+          <div class="voice-dictation-card" id="voiceDictationCard">
+            <div class="voice-status-row">
+              <div class="recording-indicator" id="recIndicator">
+                <span class="rec-dot"></span>
+                <span class="rec-timer" id="recTimer">00:00</span>
+              </div>
+              <span class="voice-mode-text" id="voiceStatusText">Tap microphone to dictate your memory</span>
+            </div>
+
+            <!-- 16-Bar Animated Audio Visualizer -->
+            <div class="audio-waveform-bars" id="audioWaveform">
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+
+            <!-- Big Mic Action Button -->
+            <div class="voice-btn-container">
+              <button class="big-mic-btn" id="bigMicBtn" title="Start voice recording">
+                <div class="mic-ripple-ring"></div>
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Real-Time AI Extraction Live Preview -->
+          <div class="realtime-extraction-section" id="liveExtractionWrap">
+            <div class="extraction-section-header">
+              <span class="extraction-sparkle">✨</span>
+              <span class="extraction-title">Live AI Concept Preview</span>
+            </div>
+            <div class="live-chips-row" id="liveChipsRow">
+              <span class="chips-placeholder-text">Entities will appear here as you type or speak...</span>
+            </div>
+          </div>
+
+          <!-- Privacy Guarantee Notice -->
+          <div class="sheet-privacy-notice">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#5F6368">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <span>Stored in your private Google account. Never used for ads or external models.</span>
+          </div>
+
+          <!-- Sheet Action CTA -->
+          <div class="sheet-footer-actions">
+            <button class="sheet-cancel-btn" id="sheetCancelBtn">Cancel</button>
+            <button class="sheet-confirm-btn" id="sheetProcessBtn">
+              <svg class="sparkle-svg-btn" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
+              <span>Analyze & Save Memory</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= MODAL 2: CONFIRMATION & EXTRACTION REVIEW ================= -->
+      <div class="modal-backdrop hidden" id="reviewModalBackdrop"></div>
+      <div class="review-modal hidden" id="reviewModal" role="dialog" aria-modal="true">
+        <div class="review-modal-card">
+          <div class="review-header">
+            <div class="success-icon-wrap">
+              <svg class="check-svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#1E8E3E" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="review-header-text">
+              <h3 class="review-title">Here's what Google AI understood</h3>
+              <p class="review-subtitle">Review and edit concepts before saving to your photo memory</p>
+            </div>
+          </div>
+
+          <!-- AI Generated Concise Summary -->
+          <div class="review-summary-box">
+            <div class="summary-box-label">
+              <span class="sparkle-label">✨</span>
+              <span>Memory Summary</span>
+            </div>
+            <p class="summary-content" id="reviewSummaryContent">
+              "Meeting Ramesh at a Delhi café — old friends, childhood memories, cake, and walking to Rajiv Chowk."
+            </p>
+          </div>
+
+          <!-- Transparent AI: User Context vs Inferred Visuals -->
+          <div class="review-concepts-split">
+            <!-- User Explicit Context -->
+            <div class="concept-group">
+              <div class="concept-group-header">
+                <span class="group-dot user-dot"></span>
+                <span class="group-title">From Your Story (User Provided)</span>
+              </div>
+              <div class="concept-chips-container" id="reviewUserChips">
+                <!-- User chips -->
+              </div>
+            </div>
+
+            <!-- Inferred Visual Concepts -->
+            <div class="concept-group">
+              <div class="concept-group-header">
+                <span class="group-dot visual-dot"></span>
+                <span class="group-title">From Photo Visuals (AI Confirmed)</span>
+              </div>
+              <div class="concept-chips-container" id="reviewVisualChips">
+                <!-- Visual chips -->
+              </div>
+            </div>
+
+            <!-- Metadata Enrichment -->
+            <div class="concept-group">
+              <div class="concept-group-header">
+                <span class="group-dot meta-dot"></span>
+                <span class="group-title">Metadata Enrichment</span>
+              </div>
+              <div class="concept-chips-container" id="reviewMetaChips">
+                <!-- Metadata chips -->
+              </div>
+            </div>
+          </div>
+
+          <div class="linked-media-preview-row">
+            <span class="linked-media-label">Linked to:</span>
+            <span class="linked-media-count" id="reviewMediaCount">13 photos & videos in cluster</span>
+          </div>
+
+          <div class="review-actions-row">
+            <button class="review-edit-btn" id="reviewEditBtn">Edit Story</button>
+            <button class="review-save-btn" id="reviewSaveConfirmBtn">
+              <span>Save Memory</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= MODAL 3: PHOTO LIGHTBOX & MEMORY INSPECTOR ================= -->
+      <div class="lightbox-overlay hidden" id="photoLightbox" role="dialog" aria-modal="true">
+        <div class="lightbox-top-bar">
+          <button class="lightbox-close-btn" id="lightboxCloseBtn" title="Close" aria-label="Close preview">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+          <span class="lightbox-title" id="lightboxTitle">Photo Details</span>
+          <button class="lightbox-share-btn" title="Share">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#FFFFFF"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+          </button>
+        </div>
+
+        <div class="lightbox-image-wrap">
+          <img src="" alt="Full view" id="lightboxImg" class="lightbox-img">
+        </div>
+
+        <!-- Linked Memory Context Card inside Lightbox -->
+        <div class="lightbox-memory-card" id="lightboxMemoryCard">
+          <div class="lightbox-card-header">
+            <span class="sparkle-tag">✨ Linked Memory Context</span>
+            <span class="lightbox-relevance" id="lightboxRelevanceBadge">98% relevance</span>
+          </div>
+          <p class="lightbox-story" id="lightboxStory">"Met Ramesh at café in Delhi after 2 years. Had chocolate cake and talked about childhood."</p>
+          <div class="lightbox-detected-tags" id="lightboxTags">
+            <!-- Injected tags -->
+          </div>
+          <div class="lightbox-exif" id="lightboxExif">
+            <span>Oct 14, 2026 • 2:38 PM • Google Pixel 9 Pro</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Notification Alert -->
+      <div class="toast-notification hidden" id="appToast">
+        <span class="toast-message" id="toastMessage">Action completed</span>
+        <button class="toast-undo-btn hidden" id="toastUndoBtn">Undo</button>
+      </div>
+
+    </div> <!-- /mobile-device-frame -->
+  </main>
+
+  <!-- ================= MODAL 5: "TRY WITH YOUR OWN PHOTOS" MODAL ================= -->
+  <div class="modal-backdrop hidden" id="customUploadBackdrop"></div>
+  <div class="custom-upload-modal hidden" id="customUploadModal" role="dialog" aria-modal="true" aria-labelledby="customUploadTitle">
+    <div class="custom-upload-card">
+      <div class="custom-upload-header">
+        <div class="custom-title-row">
+          <div class="custom-badge-icon">📸</div>
+          <div class="custom-title-text">
+            <h3 class="custom-upload-title" id="customUploadTitle">Test with Your Own Photos</h3>
+            <p class="custom-upload-subtitle">Upload 1–5 photos from your phone or laptop & attach your story</p>
+          </div>
+          <button class="custom-close-btn" id="closeCustomUploadBtn" title="Close">×</button>
+        </div>
+        <div class="custom-privacy-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+          <span>100% Private on Your Device • Stored locally in your browser session</span>
+        </div>
+      </div>
+
+      <div class="custom-upload-body">
+        <!-- Photo Dropzone / Upload Area -->
+        <div class="upload-dropzone" id="uploadDropzone">
+          <input type="file" id="customFileInput" multiple accept="image/*" class="file-input-hidden">
+          <div class="dropzone-content" id="dropzonePrompt">
+            <div class="dropzone-icon-circle">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#1A73E8">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+            </div>
+            <p class="dropzone-main-text"><strong>Choose photos</strong> or drag & drop here</p>
+            <p class="dropzone-sub-text">PNG, JPG, HEIC up to 5 photos (instant local preview)</p>
+            <button type="button" class="dropzone-browse-btn" id="browsePhotosBtn">Browse Device</button>
+          </div>
+          <!-- Uploaded Thumbnails Strip -->
+          <div class="uploaded-previews-grid hidden" id="uploadedPreviewsGrid">
+            <!-- Injected thumbnails -->
+          </div>
+        </div>
+
+        <!-- Custom Moment Title / Location -->
+        <div class="custom-field-group">
+          <label for="customTitleInput" class="custom-field-label">Moment or Location Name (optional):</label>
+          <input type="text" id="customTitleInput" class="custom-text-field" placeholder="e.g. Kyoto Trip with Alex, Bruno's Adoption Day, Diwali Dinner...">
+        </div>
+
+        <!-- Memory Story Textarea with Dictation -->
+        <div class="custom-field-group">
+          <div class="custom-label-row">
+            <label for="customStoryInput" class="custom-field-label">What made this moment special?</label>
+            <span class="custom-char-count" id="customCharCount">0/400</span>
+          </div>
+          <div class="custom-story-wrapper">
+            <textarea id="customStoryInput" class="custom-textarea" rows="3" maxlength="400" placeholder="Describe who was there, what you celebrated, or little details you'd remember later..."></textarea>
+            <button type="button" class="custom-mic-btn" id="customMicBtn" title="Speak memory">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Concept Extraction Preview -->
+        <div class="custom-live-extraction">
+          <div class="extraction-header">
+            <span class="sparkle-ai">✨</span>
+            <span class="extraction-label">AI Concepts Extracted from Your Story:</span>
+          </div>
+          <div class="custom-chips-wrap" id="customExtractedChips">
+            <span class="chips-empty-hint">Type or speak above to see names, places, and emotions extracted...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-upload-footer">
+        <button type="button" class="custom-cancel-btn" id="cancelCustomUploadBtn">Cancel</button>
+        <button type="button" class="custom-submit-btn" id="submitCustomMemoryBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
+          <span>Link Memory & Test Search 🚀</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 4: "WHAT IS THIS MVP?" EXPLAINER MODAL ================= -->
+  <div class="modal-backdrop hidden" id="explainerModalBackdrop"></div>
+  <div class="explainer-modal hidden" id="explainerModal" role="dialog" aria-modal="true" aria-labelledby="explainerTitle">
+    <div class="explainer-card">
+      <div class="explainer-top">
+        <div class="explainer-badge-row">
+          <div class="google-photos-pill">
+            <svg viewBox="0 0 24 24" width="18" height="18" class="pinwheel-svg">
+              <path fill="#EA4335" d="M12 2a5 5 0 0 0-5 5v5h5a5 5 0 0 0 0-10z"/>
+              <path fill="#4285F4" d="M22 12a5 5 0 0 0-5-5h-5v5a5 5 0 0 0 10 0z"/>
+              <path fill="#FBBC04" d="M2 12a5 5 0 0 0 5 5h5v-5a5 5 0 0 0-10 0z"/>
+              <path fill="#34A853" d="M12 22a5 5 0 0 0 5-5v-5h-5a5 5 0 0 0 0 10z"/>
+            </svg>
+            <span>Google Photos AI Project</span>
+          </div>
+          <button class="explainer-close-btn" id="closeExplainerBtn" title="Close">×</button>
+        </div>
+        <h2 class="explainer-title" id="explainerTitle">What is AI Memory Context?</h2>
+        <p class="explainer-tagline">Bridging the gap between <strong>what photos show</strong> and <strong>what photos mean</strong>.</p>
+      </div>
+
+      <div class="explainer-body">
+        <!-- The Core Problem -->
+        <div class="explainer-section">
+          <div class="section-icon problem-icon">⚠️</div>
+          <div class="section-content">
+            <h3 class="section-title">The Problem in Google Photos Today</h3>
+            <p class="section-text">
+              Google Photos is world-class at computer vision: search <em>"beach"</em>, <em>"cake"</em>, or <em>"dog"</em>, and it finds them.
+              <strong>However, humans don't remember their lives in keywords.</strong> We remember:
+            </p>
+            <ul class="explainer-bullet-list">
+              <li><em>"Mom's surprise 60th birthday with the grandkids in Bangalore"</em></li>
+              <li><em>"That weekend Rocky the retriever saw snow for the first time"</em></li>
+              <li><em>"Reunion catch-up with Priya and Arjun in Goa after 2 years"</em></li>
+            </ul>
+            <p class="section-text subnote">
+              Traditional search fails because the camera only captured pixels — the real human story was locked in your head.
+            </p>
+          </div>
+        </div>
+
+        <!-- The 3-Step Solution -->
+        <div class="explainer-section">
+          <div class="section-icon solution-icon">✨</div>
+          <div class="section-content">
+            <h3 class="section-title">How This MVP Solves It</h3>
+            <div class="three-pillars-grid">
+              <div class="pillar-card">
+                <span class="pillar-num">1</span>
+                <h4>Proactive Prompt</h4>
+                <p>When you take photos at an event, Photos detects the cluster and gently asks for 10 seconds of story while it's fresh.</p>
+              </div>
+              <div class="pillar-card">
+                <span class="pillar-num">2</span>
+                <h4>Memory Fusion</h4>
+                <p>Gemini extracts people, emotions, and milestones — clearly separating your human story from computer vision tags.</p>
+              </div>
+              <div class="pillar-card">
+                <span class="pillar-num">3</span>
+                <h4>Human Retrieval</h4>
+                <p>Search by describing how you remember the moment. Photos instantly understands who, where, and why you were there.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience 3 Real Scenarios -->
+        <div class="explainer-section demo-links-section">
+          <div class="section-icon demo-icon">🚀</div>
+          <div class="section-content">
+            <h3 class="section-title">Try The Live Situations in This Prototype:</h3>
+            <div class="scenario-quick-links">
+              <button class="quick-scenario-chip" data-scenario="goa_beach">
+                🏖️ Goa Beach Reunion with Priya & Arjun
+              </button>
+              <button class="quick-scenario-chip" data-scenario="mom_birthday">
+                🎂 Mom's 60th Birthday Milestone
+              </button>
+              <button class="quick-scenario-chip" data-scenario="himalaya_roadtrip">
+                🐕 Rocky's First Snow in Himalayas
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-footer">
+        <button class="explainer-start-tour-btn" id="explainerTourActionBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Start 60-Second Guided Tour</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING 60-SECOND GUIDED TOUR WIDGET ================= -->
+  <div class="tour-guide-widget hidden" id="tourGuideWidget">
+    <div class="tour-widget-header">
+      <div class="tour-step-badge" id="tourStepBadge">Step 1 of 3</div>
+      <button class="tour-close-btn" id="tourCloseBtn" title="Exit Tour">×</button>
+    </div>
+    <div class="tour-widget-body">
+      <h4 class="tour-title" id="tourTitle">1. Notice the Smart Prompt</h4>
+      <p class="tour-desc" id="tourDesc">
+        Google Photos detected an outing (18 photos & 4 videos at Anjuna Beach). Instead of staying silent, it offers a quick prompt to capture the memory while it's fresh.
+      </p>
+    </div>
+    <div class="tour-widget-footer">
+      <button class="tour-action-btn secondary" id="tourPrevBtn">Previous</button>
+      <button class="tour-action-btn primary" id="tourNextBtn">
+        <span id="tourNextBtnText">Next: Add Context →</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

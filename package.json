@@ -1,0 +1,41 @@
+{
+  "name": "google-photos-ai-memory-context-api",
+  "version": "1.0.0",
+  "description": "Backend API Service for Google Photos AI Memory Context MVP",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc && node scripts/bundle_single_file.mjs",
+    "bundle:singlefile": "node scripts/bundle_single_file.mjs",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "node tests/run_all.mjs",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "google-photos",
+    "ai-memory",
+    "gemini",
+    "vector-search",
+    "cloud-spanner"
+  ],
+  "author": "Google Photos Team",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.15.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
