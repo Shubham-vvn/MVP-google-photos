@@ -2446,10 +2446,10 @@ function attachEventListeners() {
   });
 
   // Prompt Card Actions
-  DOM.speakMemoryBtn.addEventListener('click', () => openMemoryInputSheet(true));
-  DOM.addMemoryBtn.addEventListener('click', () => openMemoryInputSheet(false));
-  DOM.storyPromptTrigger.addEventListener('click', () => openMemoryInputSheet(false));
-  DOM.bannerEditBtn.addEventListener('click', () => openMemoryInputSheet(false));
+  DOM.speakMemoryBtn?.addEventListener('click', () => openMemoryInputSheet(true));
+  DOM.addMemoryBtn?.addEventListener('click', () => openMemoryInputSheet(false));
+  DOM.storyPromptTrigger?.addEventListener('click', () => openMemoryInputSheet(false));
+  DOM.bannerEditBtn?.addEventListener('click', () => openMemoryInputSheet(false));
 
   DOM.promptDismissBtn.addEventListener('click', () => dismissPrompt(false));
   DOM.notNowBtn.addEventListener('click', () => dismissPrompt(false));
