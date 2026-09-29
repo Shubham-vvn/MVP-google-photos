@@ -1,28 +1,24 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
       "source": "/app",
       "destination": "/index.html"
     },
     {
       "source": "/v1/:path*",
-      "destination": "/api"
+      "destination": "/api/handler"
     },
     {
       "source": "/healthz",
-      "destination": "/api"
+      "destination": "/api/handler"
     },
     {
       "source": "/readyz",
-      "destination": "/api"
+      "destination": "/api/handler"
     },
     {
       "source": "/memory/:path*",
-      "destination": "/api"
+      "destination": "/api/handler"
     }
   ]
 }
