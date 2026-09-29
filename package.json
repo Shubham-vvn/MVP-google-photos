@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend API Service for Google Photos AI Memory Context MVP",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "api/handler.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc && node scripts/bundle_single_file.mjs",
