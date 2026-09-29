@@ -33,8 +33,17 @@
     <div class="scenario-selector-wrap">
       <label for="scenarioSelect" class="scenario-label">Scenario:</label>
       <select id="scenarioSelect" class="scenario-dropdown" title="Select MVP Scenario">
-        <option value="all_photos" selected>🌟 All Photos (Full Library • 39 items)</option>
+        <option value="all_photos" selected>🌟 All Photos (Full Library • 97 items)</option>
         <option value="goa_beach">🏖️ Goa Beach Trip with Friends (Sunset Waves & Shack)</option>
+        <option value="wedding_sangeet">💍 Rohan & Sneha's Royal Sangeet (Jaipur)</option>
+        <option value="monsoon_trek">🌧️ Monsoon Waterfall Hike to Rajmachi</option>
+        <option value="paris_holiday">🗼 Paris Summer Vacation & Café Strolls</option>
+        <option value="home_cooking">🍕 Weekend Cooking: Wood-Fired Pizza</option>
+        <option value="puppy_adoption">🐕 Bringing Home Milo the Golden Puppy</option>
+        <option value="fitness_marathon">🏃 Bengaluru Midnight 10K Marathon</option>
+        <option value="baby_milestones">👶 Aarav's 1st Birthday & First Steps</option>
+        <option value="tech_hackathon">🚀 Startup Q3 Hackathon & Rooftop Demo</option>
+        <option value="old_delhi_bazaar">🍲 Chandni Chowk Food Walk & Bazaars</option>
         <option value="mom_birthday">🎂 Mom's 60th Birthday Celebration (3 Generations)</option>
         <option value="himalaya_roadtrip">🏔️ Himalayan Pass with Rocky the Dog (4x4 Road Trip)</option>
         <option value="diwali_celebration">🪔 Diwali Lights & Sparklers on Terrace (Family & Kurtas)</option>
@@ -159,8 +168,17 @@
           <!-- Mobile Centered Scenario Selector (Visible only on mobile screens) -->
           <div class="top-bar-center-mobile" id="topBarCenterMobile">
             <select id="mobileScenarioSelect" class="mobile-scenario-select" aria-label="Select Scenario">
-              <option value="all_photos" selected>🌟 All Photos (39)</option>
+              <option value="all_photos" selected>🌟 All Photos (97)</option>
               <option value="goa_beach">🏖️ Goa Beach</option>
+              <option value="wedding_sangeet">💍 Royal Sangeet</option>
+              <option value="monsoon_trek">🌧️ Waterfall Hike</option>
+              <option value="paris_holiday">🗼 Paris Vacation</option>
+              <option value="home_cooking">🍕 Sourdough Pizza</option>
+              <option value="puppy_adoption">🐕 Milo Puppy</option>
+              <option value="fitness_marathon">🏃 10K Marathon</option>
+              <option value="baby_milestones">👶 Aarav 1st Birthday</option>
+              <option value="tech_hackathon">🚀 Tech Hackathon</option>
+              <option value="old_delhi_bazaar">🍲 Chandni Chowk</option>
               <option value="mom_birthday">🎂 Mom's 60th</option>
               <option value="himalaya_roadtrip">🏔️ Himalayas</option>
               <option value="diwali_celebration">🪔 Diwali</option>
@@ -255,6 +273,15 @@
               <div class="photos-search-chips" id="photosSearchChips">
                 <span class="chips-label">Try:</span>
                 <button class="quick-search-chip" data-query="sunset shack with cold drinks and friends">🏖️ Sunset shack</button>
+                <button class="quick-search-chip" data-query="sangeet night at Jaipur palace with mehendi and jalebis">💍 Jaipur sangeet</button>
+                <button class="quick-search-chip" data-query="monsoon waterfall hike where we ate roasted corn in the rain">🌧️ Waterfall trek</button>
+                <button class="quick-search-chip" data-query="eating almond croissants at Montmartre sidewalk cafe with Tanya">🗼 Paris croissants</button>
+                <button class="quick-search-chip" data-query="homemade sourdough pizza night with balcony garden basil">🍕 Sourdough pizza</button>
+                <button class="quick-search-chip" data-query="the day we brought Milo the puppy home sleeping in red blanket">🐕 Milo puppy</button>
+                <button class="quick-search-chip" data-query="midnight 10K marathon in Bangalore with Nikhil finishing in 51 minutes">🏃 10K Marathon</button>
+                <button class="quick-search-chip" data-query="aarav first steps at 1st birthday into grandma dadi arms">👶 Baby first steps</button>
+                <button class="quick-search-chip" data-query="hackathon with Tanmay and Rhea winning 1st place at WeWork">🚀 Hackathon win</button>
+                <button class="quick-search-chip" data-query="eating giant hot jalebis in Chandni Chowk with Simran in rickshaw">🍲 Old Delhi jalebis</button>
                 <button class="quick-search-chip" data-query="mom blowing candles on 60th birthday cake">🎂 Mom's 60th</button>
                 <button class="quick-search-chip" data-query="Rocky dog in mountain snow on road trip">🐕 Rocky in snow</button>
                 <button class="quick-search-chip" data-query="terrace diwali night with sparklers and diyas">🪔 Diwali sparklers</button>
@@ -729,8 +756,17 @@
           <div class="demo-hub-section">
             <div class="demo-hub-section-label">CHOOSE AN OUTING:</div>
             <div class="demo-hub-scenarios-scroll" id="demoHubScenariosGrid">
-              <button class="demo-sc-pill active" data-scenario="all_photos">🌟 All Photos</button>
+              <button class="demo-sc-pill active" data-scenario="all_photos">🌟 All Photos (97)</button>
               <button class="demo-sc-pill" data-scenario="goa_beach">🏖️ Goa Beach</button>
+              <button class="demo-sc-pill" data-scenario="wedding_sangeet">💍 Sangeet</button>
+              <button class="demo-sc-pill" data-scenario="monsoon_trek">🌧️ Waterfall</button>
+              <button class="demo-sc-pill" data-scenario="paris_holiday">🗼 Paris</button>
+              <button class="demo-sc-pill" data-scenario="home_cooking">🍕 Pizza Night</button>
+              <button class="demo-sc-pill" data-scenario="puppy_adoption">🐕 Milo Puppy</button>
+              <button class="demo-sc-pill" data-scenario="fitness_marathon">🏃 10K Run</button>
+              <button class="demo-sc-pill" data-scenario="baby_milestones">👶 Aarav Birthday</button>
+              <button class="demo-sc-pill" data-scenario="tech_hackathon">🚀 Hackathon</button>
+              <button class="demo-sc-pill" data-scenario="old_delhi_bazaar">🍲 Chandni Chowk</button>
               <button class="demo-sc-pill" data-scenario="mom_birthday">🎂 Mom's 60th</button>
               <button class="demo-sc-pill" data-scenario="himalaya_roadtrip">🏔️ Himalayas</button>
               <button class="demo-sc-pill" data-scenario="diwali_celebration">🪔 Diwali</button>
