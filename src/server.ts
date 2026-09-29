@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { config } from './config/index.js';
 import { authMiddleware } from './middleware/auth.js';
 import { clusterRouter } from './routes/clusterRoutes.js';
@@ -42,17 +43,23 @@ export function createServer(): express.Express {
 
   // Dedicated UI Route
   app.get('/app', (_req: Request, res: Response) => {
-    res.sendFile(path.join(publicDir, 'index.html'));
+    const indexPath = path.join(publicDir, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+    return res.redirect('/');
   });
 
   // Root Info Route & Web UI entrypoint
   app.get('/', (req: Request, res: Response) => {
-    if (req.headers.accept && req.headers.accept.startsWith('text/html')) {
-      return res.sendFile(path.join(publicDir, 'index.html'));
+    const indexPath = path.join(publicDir, 'index.html');
+    if (req.headers.accept && req.headers.accept.startsWith('text/html') && fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
     }
     res.status(200).json({
       name: 'Google Photos AI Memory Context Service',
       version: '1.0.0-mvp',
+      status: 'UP',
       docs: '/api/openapi.yaml',
       health: '/healthz',
       ui: '/app',
@@ -81,6 +88,16 @@ export function createServer(): express.Express {
       code: 404,
       status: 'NOT_FOUND',
       message: 'The requested API endpoint does not exist.',
+    });
+  });
+
+  // Global Error Handler to prevent function invocation crashes
+  app.use((err: any, _req: Request, res: Response, _next: express.NextFunction) => {
+    console.error('Unhandled server error:', err);
+    res.status(500).json({
+      code: 500,
+      status: 'INTERNAL_SERVER_ERROR',
+      message: err?.message || 'Internal server error',
     });
   });
 
