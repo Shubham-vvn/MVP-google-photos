@@ -1273,7 +1273,7 @@ function handlePhotosQuickSearch(query) {
 
     // Filter timeline down to the matched section
     renderFullTimeline(bestScenarioKey);
-    showToast(`✨ Filtered 39 photos ➔ Found ${s.photos.length} matching photos!`);
+    showToast(`✨ Filtered 97 photos ➔ Found ${s.photos.length} matching photos!`);
   } else {
     if (DOM.photosSearchActiveBanner) DOM.photosSearchActiveBanner.classList.add('hidden');
     renderFullTimeline(null);

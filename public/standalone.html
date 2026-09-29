@@ -5045,7 +5045,7 @@ body.dark-mode .thought-badge {
               <div class="search-active-card">
                 <div class="search-active-top">
                   <span class="search-active-badge">✨ AI Memory Match • <span id="searchActiveScore">98%</span> Match</span>
-                  <button class="search-active-clear-btn" id="resetTimelineSearchBtn">✕ Show all 39 photos</button>
+                  <button class="search-active-clear-btn" id="resetTimelineSearchBtn">✕ Show all 97 photos</button>
                 </div>
                 <div class="search-active-title" id="searchActiveTitle">Found photos from Goa Beach Getaway with Friends</div>
                 <p class="search-active-story" id="searchActiveStory">"Trip to Goa with Priya, Arjun, Sneha... sunset waves at Anjuna and candlelit shack dinner"</p>
@@ -7444,7 +7444,7 @@ function handlePhotosQuickSearch(query) {
 
     // Filter timeline down to the matched section
     renderFullTimeline(bestScenarioKey);
-    showToast(`✨ Filtered 39 photos ➔ Found ${s.photos.length} matching photos!`);
+    showToast(`✨ Filtered 97 photos ➔ Found ${s.photos.length} matching photos!`);
   } else {
     if (DOM.photosSearchActiveBanner) DOM.photosSearchActiveBanner.classList.add('hidden');
     renderFullTimeline(null);
