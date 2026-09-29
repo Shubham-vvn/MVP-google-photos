@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/index.html"
+    },
+    {
       "source": "/v1/:path*",
       "destination": "/api"
     },
@@ -15,10 +23,6 @@
     {
       "source": "/memory/:path*",
       "destination": "/api"
-    },
-    {
-      "source": "/app",
-      "destination": "/index.html"
     }
   ]
 }
