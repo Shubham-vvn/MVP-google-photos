@@ -34,7 +34,13 @@ const SCENARIOS = {
     userConcepts: ['Ramesh', 'Delhi café', 'Met after 2 years', 'Childhood memories', 'Chocolate cake', 'Sunny afternoon', 'Rajiv Chowk walk'],
     visualConcepts: ['Café interior (98%)', 'Chocolate cake (96%)', 'Georgian colonnade (94%)', '2 people outdoors (92%)', 'Metro entrance (89%)'],
     metaConcepts: ['Oct 14, 2026', 'Connaught Place', '10 Photos, 3 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '10 photos & 3 videos'
+    mediaCountStr: '10 photos & 3 videos',
+    fadedMemory: {
+      thought: '“Catching up with Ramesh at that Connaught Place cafe after two years talking about childhood memories and eating chocolate cake.”',
+      query: 'reunion with Ramesh at Delhi cafe eating chocolate truffle cake',
+      standardResult: 'Standard Google Photos search found 0 results for "Ramesh" or "reunion". Standard vision models only tag generic pixels like "table" and "indoor cafe". It has no record of who Ramesh was or that you met after 2 years.',
+      aiMatchPills: ['👥 Ramesh Reunion', '☕ Delhi Café', '🍰 Chocolate Cake', '🚶 Rajiv Chowk Walk', '✨ 99% Match']
+    }
   },
 
   goa_beach: {
@@ -64,7 +70,13 @@ const SCENARIOS = {
     userConcepts: ['Goa beach trip', 'Priya', 'Arjun', 'Sneha', 'Rohan', 'Sunset waves', 'Anjuna beach', 'Beach shack dinner', 'Fresh coconuts', 'College reunion'],
     visualConcepts: ['Sunset beach waves (99%)', '4 Friends (98%)', 'Beach shack (98%)', 'Candlelight dinner (96%)', 'Ocean surf (94%)'],
     metaConcepts: ['Saturday, 5:45 PM', 'Anjuna Beach, Goa', '18 Photos, 4 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '18 photos & 4 videos'
+    mediaCountStr: '18 photos & 4 videos',
+    fadedMemory: {
+      thought: '“What was that wooden beach shack where Priya and Arjun ordered spicy butter garlic prawns with Rahul watching sunset waves?”',
+      query: 'that beach shack with spicy prawns and Rahul watching waves',
+      standardResult: 'Standard Google Photos search found 0 results for "Rahul", "prawns", or "shack". Standard vision models only tag generic items like "sand", "water", "sky". It has zero record of who was there or what you ate.',
+      aiMatchPills: ['📍 Anjuna Shack', '👥 Rahul & Priya', '🍤 Spicy Prawns Dinner', '🌊 Sunset Waves', '✨ 98% Match']
+    }
   },
 
   mom_birthday: {
@@ -94,7 +106,13 @@ const SCENARIOS = {
     userConcepts: ['Mom\'s 60th birthday', 'Sunita', 'Dad', 'Ananya', 'Grandkids', 'Family celebration', 'Mango cake', 'Marigold garlands', 'Bangalore house'],
     visualConcepts: ['Family celebration (99%)', 'Birthday cake (98%)', 'Marigold garland (96%)', '3 generations (95%)', 'Festive silk wear (93%)'],
     metaConcepts: ['Sunday, 1:15 PM', 'Indiranagar, Bangalore', '16 Photos, 3 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '16 photos & 3 videos'
+    mediaCountStr: '16 photos & 3 videos',
+    fadedMemory: {
+      thought: '“Mom laughing when she couldn\'t blow out all the candles on her 60th birthday mango cream cake with the grandkids.”',
+      query: 'mom laughing when she couldn\'t blow out the candles at 60th birthday',
+      standardResult: 'Standard search matches generic "cake" or "candle" across hundreds of unrelated events, but has zero knowledge of Mom\'s 60th milestone or who was laughing.',
+      aiMatchPills: ['🎂 Mom\'s 60th Birthday', '👨‍👩‍👧‍👦 3 Generations', '🥭 Mango Cream Cake', '💛 Marigold Garlands', '✨ 99% Match']
+    }
   },
 
   himalaya_roadtrip: {
@@ -124,7 +142,13 @@ const SCENARIOS = {
     userConcepts: ['Himalayan road trip', 'Kabir', 'Zara', 'Rocky the dog', 'Golden retriever', 'Rohtang Pass', '13,000 feet', 'Mountain snow', '4x4 SUV', 'Masala chai'],
     visualConcepts: ['Mountain pass (99%)', 'Golden retriever dog (98%)', '4x4 SUV vehicle (97%)', 'Snow peaks (96%)', 'Alpine valley (94%)'],
     metaConcepts: ['Sept 20, 2026', 'Rohtang Pass (13,050 ft)', '22 Photos, 5 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '22 photos & 5 videos'
+    mediaCountStr: '22 photos & 5 videos',
+    fadedMemory: {
+      thought: '“That road trip up the mountain pass where Rocky our golden retriever saw snow for the first time and we had hot masala chai at 13,000 feet.”',
+      query: 'mountain roadtrip where Rocky the dog was barking at snow sheep',
+      standardResult: 'Standard search tags generic "mountain", "snow", "vehicle". It cannot identify "Rocky the dog", Kabir, Zara, or the 13,000ft pass.',
+      aiMatchPills: ['🐕 Rocky the Dog', '🏔️ Rohtang Pass (13,000ft)', '🚙 4x4 Road Trip', '☕ Masala Chai', '✨ 98% Match']
+    }
   },
 
   diwali_celebration: {
@@ -154,7 +178,13 @@ const SCENARIOS = {
     userConcepts: ['Diwali celebration', 'Pooja', 'Vikram', 'Terrace at night', 'Sparklers', 'Phuljhadi', 'Clay diyas', 'Festive kurtas', 'Diwali sweets', 'Family festive'],
     visualConcepts: ['Diwali sparklers (99%)', 'Festive kurtas (98%)', 'Clay diyas (96%)', 'Balcony fairy lights (95%)', 'Night lights (93%)'],
     metaConcepts: ['Nov 1, 2026, 8:45 PM', 'South Delhi', '15 Photos, 4 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '15 photos & 4 videos'
+    mediaCountStr: '15 photos & 4 videos',
+    fadedMemory: {
+      thought: '“That Diwali evening on the terrace where everyone wore festive yellow kurtas, lit clay diyas, and spun golden sparklers.”',
+      query: 'terrace diwali night when grandma was holding sparklers and diyas',
+      standardResult: 'Standard search tags generic "firework" and "night". It has no memory of family members, festive kurtas, or the terrace setting.',
+      aiMatchPills: ['🪔 Clay Diyas', '✨ Golden Sparklers', '👕 Festive Kurtas', '👥 Vikram & Pooja', '✨ 97% Match']
+    }
   },
 
   cycling_morning: {
@@ -184,7 +214,13 @@ const SCENARIOS = {
     userConcepts: ['Morning cycling', 'Amit', 'Neha', 'Cubbon Park', 'Bangalore ride', '30km fitness', 'Banyan trees', 'Sunbeams', 'Filter coffee', 'Road bikes'],
     visualConcepts: ['Cyclists selfie (99%)', 'Road bikes (98%)', 'Sunbeams in park (97%)', 'Cycling jerseys (96%)', 'Lush greenery (94%)'],
     metaConcepts: ['Sunday, 6:45 AM', 'Cubbon Park, Bangalore', '12 Photos, 2 Videos', 'Pixel 9 Pro'],
-    mediaCountStr: '12 photos & 2 videos'
+    mediaCountStr: '12 photos & 2 videos',
+    fadedMemory: {
+      thought: '“That early morning 30km bicycle ride through Cubbon park with Amit and Neha under giant banyan trees followed by filter coffee.”',
+      query: 'early morning cycling ride at Cubbon park drinking tender coconut',
+      standardResult: 'Standard vision tags "bicycle" and "tree". It cannot differentiate this 30km morning sprint with Amit and Neha from any other bike ride.',
+      aiMatchPills: ['🚴 Cubbon Park 30km', '👥 Amit & Neha', '🌳 Banyan Sunbeams', '☕ Filter Coffee', '✨ 96% Match']
+    }
   },
 
   lake_tahoe: {
@@ -212,7 +248,13 @@ const SCENARIOS = {
     userConcepts: ['Maya', 'Emerald Bay', 'Lake Tahoe', 'Summer hike', 'Golden hour sunset', 'Campfire cheesecake'],
     visualConcepts: ['Turquoise bay (98%)', 'Pine forest (97%)', 'Hiking trail (94%)', 'Cheesecake dessert (91%)'],
     metaConcepts: ['July 15, 2026', 'Emerald Bay State Park', '24 Photos, 2 Videos'],
-    mediaCountStr: '24 photos & 2 videos'
+    mediaCountStr: '24 photos & 2 videos',
+    fadedMemory: {
+      thought: '“Hiking up to Emerald Bay overlooking turquoise lake water with Maya and celebrating with campfire cheesecake at sunset.”',
+      query: 'emerald bay hike when Maya lost her water bottle at sunset',
+      standardResult: 'Standard vision tags "lake" and "forest". It cannot connect the photo to Maya, the Emerald Bay trailhead, or campfire cheesecake.',
+      aiMatchPills: ['🌲 Emerald Bay', '👥 Maya', '🍰 Campfire Cheesecake', '🌅 Golden Hour Sunset', '✨ 98% Match']
+    }
   },
 
   laptop_research: {
@@ -239,7 +281,13 @@ const SCENARIOS = {
     userConcepts: ['Laptop research', 'Buying new ultrabook', 'Work laptop', 'Spec comparison', 'Product reviews'],
     visualConcepts: ['Dual laptop screens (99%)', 'Benchmark charts (96%)', 'Keyboard & trackpad (93%)', 'Tech specs table (91%)'],
     metaConcepts: ['Yesterday, 6:15 PM', '8 Screenshots', 'Screen capture EXIF'],
-    mediaCountStr: '8 screenshots'
+    mediaCountStr: '8 screenshots',
+    fadedMemory: {
+      thought: '“Those screenshots comparing M3 vs Core Ultra laptop specs and battery benchmarks before buying a new work ultrabook.”',
+      query: 'comparing OLED laptop battery benchmarks for work ultrabook',
+      standardResult: 'Standard OCR search matches noisy literal characters. It has no semantic understanding of your buying decision or battery comparisons.',
+      aiMatchPills: ['💻 Laptop Research', '🔋 Battery Benchmarks', '⚙️ Ultrabook Specs', '📱 Work Purchase', '✨ 95% Match']
+    }
   },
 
   custom_user_memory: {
@@ -263,7 +311,13 @@ const SCENARIOS = {
     userConcepts: ['Personal memory', 'My photos'],
     visualConcepts: ['Personal Camera Photo (99%)', 'Real-world memory (96%)'],
     metaConcepts: ['Just Now', 'Your Device', 'Local Browser Session'],
-    mediaCountStr: 'Your photos'
+    mediaCountStr: 'Your photos',
+    fadedMemory: {
+      thought: '“My personal memory moment with my own photos and story uploaded from my device.”',
+      query: 'my personal memory moment',
+      standardResult: 'Standard Google Photos only reads image pixels. It has no knowledge of your custom story or personal memories.',
+      aiMatchPills: ['📸 Personal Memory', '✨ Instant Recall', '✨ 98% Match']
+    }
   }
 };
 
@@ -496,7 +550,26 @@ const DOM = {
   customStoryInput: document.getElementById('customStoryInput'),
   customCharCount: document.getElementById('customCharCount'),
   customMicBtn: document.getElementById('customMicBtn'),
-  customExtractedChips: document.getElementById('customExtractedChips')
+  customExtractedChips: document.getElementById('customExtractedChips'),
+
+  // 1 Year Later Time Machine Simulation
+  openTimeMachineBtn: document.getElementById('openTimeMachineBtn'),
+  timeMachineModal: document.getElementById('timeMachineModal'),
+  timeMachineBackdrop: document.getElementById('timeMachineBackdrop'),
+  closeTimeMachineBtn: document.getElementById('closeTimeMachineBtn'),
+  launchTimeMachineFromSearchBtn: document.getElementById('launchTimeMachineFromSearchBtn'),
+  tmThoughtQuote: document.getElementById('tmThoughtQuote'),
+  tmQueryDisplay: document.getElementById('tmQueryDisplay'),
+  tmStandardDesc: document.getElementById('tmStandardDesc'),
+  tmPreviewImg: document.getElementById('tmPreviewImg'),
+  tmMatchScoreBadge: document.getElementById('tmMatchScoreBadge'),
+  tmMemoryTitle: document.getElementById('tmMemoryTitle'),
+  tmMemorySnippet: document.getElementById('tmMemorySnippet'),
+  tmConceptsRow: document.getElementById('tmConceptsRow'),
+  tmTestLiveBtn: document.getElementById('tmTestLiveBtn'),
+  tmTryOtherScenarioBtn: document.getElementById('tmTryOtherScenarioBtn'),
+  tmScenarioChips: document.getElementById('tmScenarioChips'),
+  fadedQueriesScroll: document.getElementById('fadedQueriesScroll')
 };
 
 // ==========================================
@@ -989,6 +1062,9 @@ function confirmSaveMemory() {
 
   // Refresh current view
   renderCurrentScenario();
+
+  // Show 1-Year Simulation invitation
+  showPostSaveTimePrompt(s.title, state.currentScenarioKey);
 }
 
 // ==========================================
@@ -1195,6 +1271,24 @@ function performMemorySearch(rawQuery) {
       });
     });
 
+    // 5. Check 1 Year Later Faded Memory query & thought (weight: 50)
+    if (s.fadedMemory) {
+      if (s.fadedMemory.query && (query.includes(s.fadedMemory.query.toLowerCase()) || s.fadedMemory.query.toLowerCase().includes(query))) {
+        score += 65;
+        currentMatches.push('1-Year Faded Memory');
+      }
+      tokens.forEach(tok => {
+        if (s.fadedMemory.query && s.fadedMemory.query.toLowerCase().includes(tok)) {
+          score += 25;
+          currentMatches.push(tok);
+        }
+        if (s.fadedMemory.thought && s.fadedMemory.thought.toLowerCase().includes(tok)) {
+          score += 15;
+          currentMatches.push(tok);
+        }
+      });
+    }
+
     if (score > highestScore) {
       highestScore = score;
       bestScenario = s;
@@ -1289,13 +1383,12 @@ const TOUR_STEPS = [
     }
   },
   {
-    badge: 'Step 3 of 3: Natural Human Retrieval',
+    badge: 'Step 3 of 4: Natural Human Retrieval',
     title: 'Recall Exactly How You Remember It',
     desc: 'Search for "friends sunset waves" or "meeting Ramesh cake". AI finds the exact moment using personal meaning. Toggle to "Standard Google Photos" to see what CV misses!',
-    nextText: 'Finish Tour 🎉',
+    nextText: 'Fast-Forward 1 Year ⏩',
     action: () => {
       const s = state.getScenario();
-      // Ensure scenario memory is saved in state
       state.saveMemory(s.id, {
         clusterId: s.id,
         title: s.title,
@@ -1320,6 +1413,19 @@ const TOUR_STEPS = [
       DOM.memorySearchInput.value = sampleQuery;
       performMemorySearch(sampleQuery);
       highlightElement(DOM.searchMatchCard);
+    }
+  },
+  {
+    badge: 'Step 4 of 4: The 1-Year Payoff',
+    title: 'Fast-Forward: Faded Memory Recall',
+    desc: '1 year later, you forget dates, folders, and tags. You only have a fragmented thought ("that beach shack with spicy prawns and Rahul"). See how AI retrieves the exact moment!',
+    nextText: 'Open 1-Year Time Machine 🕰️',
+    action: () => {
+      switchTab('tabSearch');
+      highlightElement(document.getElementById('fadedMemorySearchCard'));
+      setTimeout(() => {
+        openTimeMachineModal(state.currentScenarioKey);
+      }, 600);
     }
   }
 ];
@@ -1626,10 +1732,24 @@ function saveCustomMemoryAndSearch() {
 
   // Pre-populate search query with first user concept or key words
   const searchSeed = userConcepts[0] || story.split(' ').slice(0, 3).join(' ');
+
+  // Update dynamic faded memory for custom memory
+  SCENARIOS.custom_user_memory.fadedMemory = {
+    thought: `“${story.slice(0, 110)}${story.length > 110 ? '...' : ''}”`,
+    query: searchSeed,
+    standardResult: `Standard Google Photos only reads raw pixels. It has no record of "${userConcepts.slice(0, 2).join(', ')}" or the human story you lived.`,
+    aiMatchPills: userConcepts.slice(0, 4).concat(['✨ 98% Match'])
+  };
+
   DOM.memorySearchInput.value = searchSeed;
   performMemorySearch(searchSeed);
 
   showToast(`✨ Success! Linked your personal photos. Showing AI Memory search for "${searchSeed}".`);
+
+  // Prompt to simulate 1-year retrieval on their own memory
+  setTimeout(() => {
+    showPostSaveTimePrompt(title, 'custom_user_memory');
+  }, 1000);
 }
 
 // ==========================================
@@ -1673,6 +1793,152 @@ function showToast(message, allowUndo = false, onUndo = null) {
   toastTimeout = setTimeout(() => {
     DOM.appToast.classList.add('hidden');
   }, 4000);
+}
+
+// ==========================================
+// 1 YEAR LATER: TIME MACHINE CONTROLLER (FLOW 6)
+// ==========================================
+let currentTimeMachineScenario = 'goa_beach';
+
+function openTimeMachineModal(scenarioKey) {
+  currentTimeMachineScenario = scenarioKey || state.currentScenarioKey || 'goa_beach';
+  if (currentTimeMachineScenario === 'custom_user_memory' && (!state.savedMemories['cluster_custom_user'])) {
+    currentTimeMachineScenario = 'goa_beach';
+  }
+  renderTimeMachineModal(currentTimeMachineScenario);
+  DOM.timeMachineBackdrop?.classList.remove('hidden');
+  DOM.timeMachineModal?.classList.remove('hidden');
+}
+
+function closeTimeMachineModal() {
+  DOM.timeMachineModal?.classList.add('hidden');
+  DOM.timeMachineBackdrop?.classList.add('hidden');
+}
+
+function renderTimeMachineModal(scenarioKey) {
+  currentTimeMachineScenario = scenarioKey;
+  const s = SCENARIOS[scenarioKey] || SCENARIOS['goa_beach'];
+  const faded = s.fadedMemory || {
+    thought: `“${s.sampleText}”`,
+    query: s.userConcepts ? s.userConcepts.slice(0, 3).join(' ') : 'my personal memory',
+    standardResult: 'Standard search cannot connect personal names or human memories to raw image pixels.',
+    aiMatchPills: (s.userConcepts || []).slice(0, 4)
+  };
+
+  // Render scenario selector chips inside modal
+  if (DOM.tmScenarioChips) {
+    const scenarioKeys = ['goa_beach', 'mom_birthday', 'himalaya_roadtrip', 'diwali_celebration', 'cycling_morning', 'delhi_cafe', 'lake_tahoe', 'laptop_research'];
+    if (state.savedMemories['cluster_custom_user']) {
+      scenarioKeys.push('custom_user_memory');
+    }
+    DOM.tmScenarioChips.innerHTML = scenarioKeys.map(k => {
+      const sc = SCENARIOS[k];
+      const isActive = k === scenarioKey;
+      const emoji = sc.title.split(' ')[0] || '📸';
+      const shortTitle = sc.title.replace(/^[^\s]+\s+/, '').split(' (')[0].slice(0, 18);
+      return `<button class="tm-sc-chip ${isActive ? 'active' : ''}" data-tm-scenario="${k}">${emoji} ${shortTitle}</button>`;
+    }).join('');
+
+    DOM.tmScenarioChips.querySelectorAll('.tm-sc-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-tm-scenario');
+        renderTimeMachineModal(target);
+      });
+    });
+  }
+
+  // Populate thought and query
+  if (DOM.tmThoughtQuote) DOM.tmThoughtQuote.textContent = faded.thought;
+  if (DOM.tmQueryDisplay) DOM.tmQueryDisplay.textContent = faded.query;
+  if (DOM.tmStandardDesc) DOM.tmStandardDesc.textContent = faded.standardResult;
+
+  // Populate preview card
+  if (DOM.tmPreviewImg) DOM.tmPreviewImg.src = s.coverImg || (s.photos && s.photos[0] ? s.photos[0].src : 'assets/goa_beach_friends.jpg');
+  if (DOM.tmMemoryTitle) DOM.tmMemoryTitle.textContent = s.title;
+  if (DOM.tmMemorySnippet) DOM.tmMemorySnippet.textContent = `"${s.summary || s.sampleText}"`;
+  if (DOM.tmMatchScoreBadge) DOM.tmMatchScoreBadge.textContent = '✅ 98% Match';
+
+  if (DOM.tmConceptsRow) {
+    const pills = faded.aiMatchPills || (s.userConcepts ? s.userConcepts.slice(0, 4) : ['✨ 98% Match']);
+    DOM.tmConceptsRow.innerHTML = pills.map(p => `<span class="comp-concept-pill">${p}</span>`).join('');
+  }
+}
+
+function cycleTimeMachineScenario() {
+  const scenarioKeys = ['goa_beach', 'mom_birthday', 'himalaya_roadtrip', 'diwali_celebration', 'cycling_morning', 'delhi_cafe', 'lake_tahoe', 'laptop_research'];
+  const curIdx = scenarioKeys.indexOf(currentTimeMachineScenario);
+  const nextIdx = (curIdx + 1) % scenarioKeys.length;
+  renderTimeMachineModal(scenarioKeys[nextIdx]);
+}
+
+function testFadedSearchLive() {
+  const s = SCENARIOS[currentTimeMachineScenario] || SCENARIOS['goa_beach'];
+  const fadedQuery = s.fadedMemory ? s.fadedMemory.query : (s.userConcepts.slice(0, 3).join(' '));
+
+  // Save the scenario memory into state so it's guaranteed to be indexed
+  state.saveMemory(s.id, {
+    clusterId: s.id,
+    title: s.title,
+    text: s.sampleText,
+    story: s.sampleText,
+    userConcepts: s.userConcepts,
+    concepts: s.userConcepts,
+    visualConcepts: s.visualConcepts,
+    summary: s.summary,
+    dateSaved: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    photosCount: s.photos ? s.photos.length : 0,
+    coverImg: s.coverImg,
+    scenarioKey: currentTimeMachineScenario,
+    timestamp: new Date().toISOString()
+  });
+
+  closeTimeMachineModal();
+
+  // Switch to search tab
+  switchTab('tabSearch');
+  setSearchMode('ai_memory');
+
+  if (DOM.memorySearchInput) {
+    DOM.memorySearchInput.value = fadedQuery;
+    performMemorySearch(fadedQuery);
+  }
+
+  // Scroll to results and highlight
+  if (DOM.searchMatchCard) {
+    DOM.searchMatchCard.classList.remove('hidden');
+    DOM.searchMatchCard.classList.add('highlight-faded-retrieval');
+    setTimeout(() => {
+      DOM.searchMatchCard.classList.remove('highlight-faded-retrieval');
+    }, 2500);
+  }
+
+  showToast(`🕰️ Fast-Forward: Retrieved 1-year faded memory for "${fadedQuery.slice(0, 32)}..."`);
+}
+
+function showPostSaveTimePrompt(title, scenarioKey) {
+  const existing = document.getElementById('postSaveTimePrompt');
+  if (existing) existing.remove();
+
+  const promptEl = document.createElement('div');
+  promptEl.id = 'postSaveTimePrompt';
+  promptEl.className = 'post-save-time-prompt';
+  promptEl.innerHTML = `
+    <div class="post-save-prompt-text">
+      <strong>✨ Memory Linked!</strong> Experience how you'll retrieve this 1 year from now when details fade.
+    </div>
+    <button class="post-save-prompt-btn" id="postSavePromptActionBtn">Simulate 1 Year Later ⏩</button>
+  `;
+
+  if (DOM.memorySavedBanner) {
+    DOM.memorySavedBanner.insertAdjacentElement('afterend', promptEl);
+  } else if (DOM.mainPhotoGrid) {
+    DOM.mainPhotoGrid.insertAdjacentElement('beforebegin', promptEl);
+  }
+
+  document.getElementById('postSavePromptActionBtn')?.addEventListener('click', () => {
+    promptEl.remove();
+    openTimeMachineModal(scenarioKey);
+  });
 }
 
 // ==========================================
@@ -1831,6 +2097,51 @@ function attachEventListeners() {
     });
   });
 
+  // Faded Memory Query Pills in Search Tab
+  document.querySelectorAll('.faded-query-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const query = pill.getAttribute('data-query');
+      const scKey = pill.getAttribute('data-faded-scenario');
+      if (scKey && SCENARIOS[scKey]) {
+        state.currentScenarioKey = scKey;
+        if (DOM.scenarioSelect) DOM.scenarioSelect.value = scKey;
+        const s = SCENARIOS[scKey];
+        // Ensure memory is indexed
+        state.saveMemory(s.id, {
+          clusterId: s.id,
+          title: s.title,
+          text: s.sampleText,
+          story: s.sampleText,
+          userConcepts: s.userConcepts,
+          concepts: s.userConcepts,
+          visualConcepts: s.visualConcepts,
+          summary: s.summary,
+          dateSaved: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          photosCount: s.photos ? s.photos.length : 0,
+          coverImg: s.coverImg,
+          scenarioKey: scKey,
+          timestamp: new Date().toISOString()
+        });
+      }
+      setSearchMode('ai_memory');
+      DOM.memorySearchInput.value = query;
+      performMemorySearch(query);
+      if (DOM.searchMatchCard) {
+        DOM.searchMatchCard.classList.add('highlight-faded-retrieval');
+        setTimeout(() => DOM.searchMatchCard.classList.remove('highlight-faded-retrieval'), 2000);
+      }
+      showToast(`🕰️ Testing 1-Year Faded Memory retrieval for "${query.slice(0, 30)}..."`);
+    });
+  });
+
+  // Time Machine Modal Controls
+  DOM.openTimeMachineBtn?.addEventListener('click', () => openTimeMachineModal());
+  DOM.closeTimeMachineBtn?.addEventListener('click', closeTimeMachineModal);
+  DOM.timeMachineBackdrop?.addEventListener('click', closeTimeMachineModal);
+  DOM.launchTimeMachineFromSearchBtn?.addEventListener('click', () => openTimeMachineModal());
+  DOM.tmTestLiveBtn?.addEventListener('click', testFadedSearchLive);
+  DOM.tmTryOtherScenarioBtn?.addEventListener('click', cycleTimeMachineScenario);
+
   // Lightbox Close
   DOM.lightboxCloseBtn.addEventListener('click', closePhotoLightbox);
   DOM.photoLightbox.addEventListener('click', (e) => {
@@ -1884,6 +2195,7 @@ function attachEventListeners() {
       closeMemoryInputSheet();
       closeExplainerModal();
       closeCustomUploadModal();
+      closeTimeMachineModal();
       closeTour();
     }
   });

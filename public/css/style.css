@@ -2391,6 +2391,20 @@ input:checked + .slider:before {
   color: #FFFFFF;
 }
 
+.tb-time-machine-btn {
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.25), rgba(234, 67, 53, 0.25));
+  border: 1px solid rgba(251, 188, 4, 0.55);
+  color: #FFE082;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(251, 188, 4, 0.15);
+}
+.tb-time-machine-btn:hover {
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.4), rgba(234, 67, 53, 0.4));
+  border-color: #FDD663;
+  color: #FFFFFF;
+  box-shadow: 0 0 16px rgba(251, 188, 4, 0.3);
+}
+
 /* Feature Spotlight Card (In-Feed Announcement) */
 .feature-spotlight-card {
   margin: 12px 14px 14px;
@@ -3386,6 +3400,784 @@ body.dark-mode .diff-item.missing {
     width: auto;
     bottom: 80px;
     z-index: 10000;
+  }
+}
+
+/* ==========================================================================
+   FLOW 6: Faded Memory Simulation (1 Year Later)
+   ========================================================================== */
+
+/* Search Tab Faded Memory Card */
+.faded-memory-search-card {
+  margin: 12px 14px 10px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.08) 0%, rgba(234, 67, 53, 0.06) 100%);
+  border: 1px solid rgba(251, 188, 4, 0.35);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 16px rgba(251, 188, 4, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+body.dark-mode .faded-memory-search-card {
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.12) 0%, rgba(234, 67, 53, 0.09) 100%);
+  border-color: rgba(251, 188, 4, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.faded-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.faded-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.faded-clock-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(251, 188, 4, 0.3));
+}
+
+.faded-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.faded-card-subtitle {
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 2px 0 0;
+}
+
+.faded-sim-badge-btn {
+  background: linear-gradient(135deg, #FBBC04, #EA4335);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(234, 67, 53, 0.35);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.faded-sim-badge-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(234, 67, 53, 0.45);
+}
+
+.faded-queries-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 8px;
+}
+
+.faded-queries-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.faded-query-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: var(--md-sys-color-surface);
+  border: 1px solid rgba(251, 188, 4, 0.4);
+  border-radius: 16px;
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.3;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.faded-query-pill em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--md-sys-color-primary);
+}
+
+body.dark-mode .faded-query-pill {
+  background: var(--md-sys-color-surface-container);
+  border-color: rgba(251, 188, 4, 0.3);
+}
+
+.faded-query-pill:hover {
+  border-color: #FBBC04;
+  background: rgba(251, 188, 4, 0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(251, 188, 4, 0.2);
+}
+
+/* Time Machine Modal */
+.time-machine-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;
+  max-width: 680px;
+  max-height: 90vh;
+  background: var(--md-sys-color-surface);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(251, 188, 4, 0.35);
+  animation: tmModalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tmModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.time-machine-card {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.time-machine-header {
+  padding: 16px 20px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.12), rgba(234, 67, 53, 0.1));
+  border-bottom: 1px solid var(--md-sys-color-outline);
+}
+
+.tm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tm-icon-badge {
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(251, 188, 4, 0.4));
+}
+
+.tm-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tm-subtitle {
+  font-size: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 3px 0 0;
+}
+
+.tm-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.tm-close-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--md-sys-color-on-surface);
+}
+
+.time-machine-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Time Travel Timeline */
+.time-travel-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--md-sys-color-surface-container);
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--md-sys-color-outline);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.timeline-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #34A853;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(52, 168, 83, 0.3);
+}
+
+.timeline-dot.current {
+  background: linear-gradient(135deg, #FBBC04, #EA4335);
+  box-shadow: 0 0 10px rgba(251, 188, 4, 0.6);
+  animation: pulseCurrentDot 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseCurrentDot {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(251, 188, 4, 0.6); }
+  50% { transform: scale(1.15); box-shadow: 0 0 18px rgba(234, 67, 53, 0.8); }
+}
+
+.timeline-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+.step-label {
+  font-size: 10px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.timeline-connector-animated {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 10px;
+  height: 20px;
+}
+
+.time-elapsed-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #EA4335;
+  background: rgba(234, 67, 53, 0.1);
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(234, 67, 53, 0.3);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* Decay explanation card */
+.tm-decay-card {
+  background: rgba(66, 133, 244, 0.06);
+  border-left: 4px solid var(--md-sys-color-primary);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+}
+
+.tm-decay-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.decay-icon {
+  font-size: 14px;
+}
+
+.decay-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+}
+
+.decay-text {
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Scenario selector inside modal */
+.tm-scenario-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tm-scenario-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.tm-scenario-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.tm-sc-chip {
+  padding: 5px 10px;
+  border-radius: 16px;
+  background: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline);
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tm-sc-chip.active {
+  background: var(--md-sys-color-primary);
+  color: #FFFFFF;
+  border-color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+/* Thought Card */
+.tm-thought-card {
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.1), rgba(251, 188, 4, 0.04));
+  border: 1px solid rgba(251, 188, 4, 0.4);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.thought-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #B06000;
+  margin-bottom: 6px;
+}
+
+body.dark-mode .thought-badge {
+  color: #FDD663;
+}
+
+.thought-quote {
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.thought-query-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  background: var(--md-sys-color-surface);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+.query-box-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.query-box-code {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-primary);
+  background: rgba(66, 133, 244, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Head to Head Comparison */
+.tm-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tm-comp-col {
+  border-radius: 16px;
+  border: 1px solid var(--md-sys-color-outline);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--md-sys-color-surface);
+}
+
+.standard-col {
+  border-color: rgba(234, 67, 53, 0.3);
+  background: rgba(234, 67, 53, 0.02);
+}
+
+.ai-col {
+  border-color: rgba(52, 168, 83, 0.4);
+  background: rgba(52, 168, 83, 0.02);
+  box-shadow: 0 4px 16px rgba(52, 168, 83, 0.1);
+}
+
+.comp-col-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.comp-status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.comp-status-pill.error {
+  background: rgba(234, 67, 53, 0.12);
+  color: #D93025;
+}
+
+.comp-status-pill.success {
+  background: rgba(52, 168, 83, 0.12);
+  color: #1E8E3E;
+}
+
+.comp-subtext {
+  font-size: 10px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.comp-col-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.comp-result-preview.empty {
+  padding: 16px 12px;
+  text-align: center;
+  background: var(--md-sys-color-surface-container);
+  border-radius: 10px;
+  border: 1px dashed rgba(234, 67, 53, 0.4);
+}
+
+.comp-empty-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.comp-result-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #D93025;
+  margin-bottom: 4px;
+}
+
+.comp-result-desc {
+  font-size: 10px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.comp-failure-points, .comp-success-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.comp-failure-points li {
+  color: #D93025;
+}
+
+.comp-success-points li {
+  color: #1E8E3E;
+  font-weight: 500;
+}
+
+.comp-result-preview.success {
+  background: var(--md-sys-color-surface-container);
+  border-radius: 10px;
+  padding: 8px;
+  border: 1px solid rgba(52, 168, 83, 0.35);
+}
+
+.comp-success-card {
+  display: flex;
+  gap: 10px;
+}
+
+.comp-photo-thumb-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.comp-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comp-badge-retrieved {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #81C995;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px 0;
+}
+
+.comp-success-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.comp-success-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comp-success-snippet {
+  font-size: 10px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.comp-concepts-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.comp-concept-pill {
+  font-size: 9px;
+  background: rgba(66, 133, 244, 0.12);
+  color: var(--md-sys-color-primary);
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Time Machine Modal Footer */
+.time-machine-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--md-sys-color-outline);
+  background: var(--md-sys-color-surface-container);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tm-footer-info {
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.tm-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tm-btn-secondary {
+  padding: 8px 12px;
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tm-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tm-btn-primary {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #1A73E8, #9C27B0);
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(26, 115, 232, 0.35);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tm-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.45);
+}
+
+/* Highlight animation when returned from time machine */
+.highlight-faded-retrieval {
+  animation: fadedPulseHighlight 2s ease-out;
+}
+
+@keyframes fadedPulseHighlight {
+  0% {
+    box-shadow: 0 0 0 4px #FBBC04, 0 0 24px rgba(251, 188, 4, 0.6);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: none;
+    transform: scale(1);
+  }
+}
+
+/* Post-Save Time Machine Invitation Banner */
+.post-save-time-prompt {
+  margin: 10px 14px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.15), rgba(234, 67, 53, 0.1));
+  border: 1px solid rgba(251, 188, 4, 0.4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  animation: slideInPrompt 0.3s ease-out;
+}
+
+@keyframes slideInPrompt {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.post-save-prompt-text {
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.3;
+}
+
+.post-save-prompt-btn {
+  background: linear-gradient(135deg, #FBBC04, #EA4335);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Mobile responsive for Time Machine */
+@media (max-width: 600px) {
+  .time-machine-modal {
+    width: 95%;
+    max-height: 94vh;
+  }
+  .tm-comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .time-travel-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .timeline-connector-animated {
+    width: 100%;
+    margin: 4px 0;
+  }
+  .time-machine-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tm-footer-actions {
+    flex-direction: column;
+  }
+  .tm-btn-primary, .tm-btn-secondary {
+    width: 100%;
+    justify-content: center;
   }
 }
 

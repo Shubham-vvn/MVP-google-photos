@@ -68,6 +68,13 @@
         <span class="tb-btn-text">🚀 60s Guided Demo</span>
       </button>
 
+      <button id="openTimeMachineBtn" class="tb-btn tb-time-machine-btn" title="Fast-Forward 1 Year Later: Experience fragmented human memory retrieval">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        <span class="tb-btn-text">🕰️ 1 Year Later Demo</span>
+      </button>
+
       <button id="toggleFrameBtn" class="tb-btn" title="Toggle Phone Frame Border">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
@@ -372,6 +379,46 @@
                 </button>
                 <button class="mode-toggle-btn" id="modeStandardBtn" data-mode="standard">
                   <span>Standard Google Photos</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Faded Memory 1 Year Later Simulation Box in Search Tab -->
+            <div class="faded-memory-search-card" id="fadedMemorySearchCard">
+              <div class="faded-card-header">
+                <div class="faded-card-title-group">
+                  <span class="faded-clock-icon">🕰️</span>
+                  <div>
+                    <h3 class="faded-card-title">1 Year Later: Faded Memory Simulation</h3>
+                    <p class="faded-card-subtitle">How people search when exact dates & tags are long forgotten</p>
+                  </div>
+                </div>
+                <button class="faded-sim-badge-btn" id="launchTimeMachineFromSearchBtn" title="Open Interactive 1-Year Fast-Forward">
+                  <span>Fast-Forward 365 Days ⏩</span>
+                </button>
+              </div>
+              <div class="faded-queries-label">Tap a fragmented recollection to test instant retrieval:</div>
+              <div class="faded-queries-scroll" id="fadedQueriesScroll">
+                <button class="faded-query-pill" data-faded-scenario="goa_beach" data-query="that beach shack with spicy prawns and Rahul watching waves">
+                  🏖️ <em>"that beach shack with spicy prawns and Rahul watching waves"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="mom_birthday" data-query="mom laughing when she couldn't blow out the candles at 60th birthday">
+                  🎂 <em>"mom laughing when she couldn't blow out the candles at 60th birthday"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="himalaya_roadtrip" data-query="mountain roadtrip where Rocky the dog was barking at snow sheep">
+                  🐕 <em>"mountain roadtrip where Rocky the dog was barking at snow sheep"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="diwali_celebration" data-query="terrace diwali night when grandma was holding sparklers and diyas">
+                  🪔 <em>"terrace diwali night with sparklers, yellow kurtas and diyas"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="delhi_cafe" data-query="reunion with Ramesh at Delhi cafe eating chocolate truffle cake">
+                  ☕ <em>"reunion with Ramesh at Delhi cafe eating chocolate cake"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="cycling_morning" data-query="early morning cycling ride at Cubbon park drinking tender coconut">
+                  🚴 <em>"early morning cycling at Cubbon park with Amit under banyans"</em>
+                </button>
+                <button class="faded-query-pill" data-faded-scenario="lake_tahoe" data-query="emerald bay hike when Maya lost her water bottle at sunset">
+                  🏔️ <em>"emerald bay hike with Maya and campfire cheesecake"</em>
                 </button>
               </div>
             </div>
@@ -1007,6 +1054,155 @@
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           <span>Start 60-Second Guided Tour</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 6: "1 YEAR LATER" FADED MEMORY SIMULATION ================= -->
+  <div class="modal-backdrop hidden" id="timeMachineBackdrop"></div>
+  <div class="time-machine-modal hidden" id="timeMachineModal" role="dialog" aria-modal="true" aria-labelledby="timeMachineTitle">
+    <div class="time-machine-card">
+      <div class="time-machine-header">
+        <div class="tm-header-left">
+          <div class="tm-icon-badge">🕰️</div>
+          <div>
+            <h2 class="tm-title" id="timeMachineTitle">Fast-Forward: 1 Year Later</h2>
+            <p class="tm-subtitle">The Faded Memory Retrieval Simulation</p>
+          </div>
+        </div>
+        <button class="tm-close-btn" id="closeTimeMachineBtn" aria-label="Close Time Machine Modal">×</button>
+      </div>
+
+      <div class="time-machine-body">
+        <!-- Time Travel Progress Animation Strip -->
+        <div class="time-travel-timeline">
+          <div class="timeline-step passed">
+            <div class="timeline-dot">✓</div>
+            <div class="timeline-info">
+              <span class="step-time">Day 1</span>
+              <span class="step-label">Photos Captured</span>
+            </div>
+          </div>
+          <div class="timeline-step passed">
+            <div class="timeline-dot">✓</div>
+            <div class="timeline-info">
+              <span class="step-time">+10 Seconds</span>
+              <span class="step-label">Context Linked</span>
+            </div>
+          </div>
+          <div class="timeline-connector-animated">
+            <div class="pulse-beam"></div>
+            <span class="time-elapsed-badge">⏩ 365 Days Pass</span>
+          </div>
+          <div class="timeline-step active">
+            <div class="timeline-dot current">★</div>
+            <div class="timeline-info">
+              <span class="step-time">Day 365</span>
+              <span class="step-label">Faded Human Recall</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Human Memory Decay Explanation -->
+        <div class="tm-decay-card">
+          <div class="tm-decay-header">
+            <span class="decay-icon">🧠</span>
+            <span class="decay-title">The Real Challenge: Human Memory is Associative & Fragmented</span>
+          </div>
+          <p class="decay-text">
+            After a year and 4,000+ new photos, nobody remembers the exact date, GPS coordinates, or file names. Humans recall moments through <strong>fragmented emotions, personal names, a specific dish, or funny dialogue</strong>.
+          </p>
+        </div>
+
+        <!-- Scenario Selector Inside Modal -->
+        <div class="tm-scenario-bar">
+          <span class="tm-scenario-label">Choose scenario to simulate:</span>
+          <div class="tm-scenario-chips" id="tmScenarioChips">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
+
+        <!-- Fragmented Thought vs Retrieval Challenge -->
+        <div class="tm-challenge-container">
+          <!-- What you remember -->
+          <div class="tm-thought-card">
+            <div class="thought-badge">💭 What your brain naturally remembers 1 year later:</div>
+            <div class="thought-quote" id="tmThoughtQuote">
+              "What was that wooden beach shack where Priya and Arjun ordered spicy butter garlic prawns with Rahul watching waves?"
+            </div>
+            <div class="thought-query-box">
+              <span class="query-box-label">Conversational search query:</span>
+              <code class="query-box-code" id="tmQueryDisplay">that beach shack with spicy prawns and Rahul watching waves</code>
+            </div>
+          </div>
+
+          <!-- Head-to-Head Comparison Grid -->
+          <div class="tm-comparison-grid">
+            <!-- Standard Search Column -->
+            <div class="tm-comp-col standard-col">
+              <div class="comp-col-header">
+                <span class="comp-status-pill error">❌ Standard Google Photos</span>
+                <span class="comp-subtext">Computer Vision Only</span>
+              </div>
+              <div class="comp-col-body">
+                <div class="comp-result-preview empty">
+                  <div class="comp-empty-icon">🔍</div>
+                  <div class="comp-result-title">0 Exact Matches Found</div>
+                  <p class="comp-result-desc" id="tmStandardDesc">
+                    Vision models only tag generic pixels: "sand", "water", "sky". It has zero idea who "Rahul" or "Priya" is, or what food was on the table.
+                  </p>
+                </div>
+                <ul class="comp-failure-points">
+                  <li>❌ Doesn't know personal names or relationships</li>
+                  <li>❌ Misses emotional significance and conversation context</li>
+                  <li>❌ Returns either 0 results or 500 random beach photos</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- AI Memory Context Column -->
+            <div class="tm-comp-col ai-col">
+              <div class="comp-col-header">
+                <span class="comp-status-pill success">✨ AI Memory Context (MVP)</span>
+                <span class="comp-subtext">Multimodal Semantic Retrieval</span>
+              </div>
+              <div class="comp-col-body">
+                <div class="comp-result-preview success">
+                  <div class="comp-success-card">
+                    <div class="comp-photo-thumb-wrap">
+                      <img id="tmPreviewImg" src="assets/goa_beach_friends.jpg" alt="Retrieved memory preview" class="comp-thumb-img">
+                      <span class="comp-badge-retrieved" id="tmMatchScoreBadge">✅ 98% Match</span>
+                    </div>
+                    <div class="comp-success-meta">
+                      <h4 class="comp-success-title" id="tmMemoryTitle">Goa Beach Getaway with Friends</h4>
+                      <p class="comp-success-snippet" id="tmMemorySnippet">"Trip to Goa with Priya, Arjun... Anjuna beach shack under fairy lights..."</p>
+                      <div class="comp-concepts-row" id="tmConceptsRow">
+                        <!-- Pills -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul class="comp-success-points">
+                  <li>✨ Instantly connects fragmented thought to stored memory</li>
+                  <li>✨ Multi-modal fusion links names, dishes & visual frames</li>
+                  <li>✨ Surfaces the exact 18 photos & 4 videos in 1 second</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="time-machine-footer">
+        <div class="tm-footer-info">
+          <span>💡 Experience this exact search live in the phone app below:</span>
+        </div>
+        <div class="tm-footer-actions">
+          <button class="tm-btn-secondary" id="tmTryOtherScenarioBtn">Try Another Scenario 🎲</button>
+          <button class="tm-btn-primary" id="tmTestLiveBtn">
+            <span>🚀 Test This Faded Search Live in App</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
