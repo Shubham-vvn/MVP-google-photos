@@ -399,12 +399,14 @@ const DOM = {
   dynamicIsland: document.getElementById('dynamicIsland'),
   islandStatusText: document.getElementById('islandStatusText'),
 
-  // Mobile App Top Bar & Demo Showcase Hub
+  // Demo Showcase Hub (Web & Mobile)
+  openDemoHubDesktopBtn: document.getElementById('openDemoHubDesktopBtn'),
   mobileScenarioSelect: document.getElementById('mobileScenarioSelect'),
   openMobileDemoHubBtn: document.getElementById('openMobileDemoHubBtn'),
   mobileDemoHubBackdrop: document.getElementById('mobileDemoHubBackdrop'),
   mobileDemoHubSheet: document.getElementById('mobileDemoHubSheet'),
   closeMobileDemoHubBtn: document.getElementById('closeMobileDemoHubBtn'),
+  dismissDemoHubBtn: document.getElementById('dismissDemoHubBtn'),
   hubStartTourBtn: document.getElementById('hubStartTourBtn'),
   hubOpenTimeMachineBtn: document.getElementById('hubOpenTimeMachineBtn'),
   hubOpenCustomUploadBtn: document.getElementById('hubOpenCustomUploadBtn'),
@@ -602,6 +604,13 @@ function initApp() {
 
   // Attach All Event Listeners
   attachEventListeners();
+
+  // Auto-launch bottom-to-up Demo pop-up after 1.5 seconds on both mobile and web
+  setTimeout(() => {
+    if (!state.isTourActive) {
+      openMobileDemoHub();
+    }
+  }, 1500);
 }
 
 // Live Status Bar Clock
@@ -2030,9 +2039,11 @@ function attachEventListeners() {
     showDynamicIslandPill(`Scenario: ${e.target.options[e.target.selectedIndex].text}`);
   });
 
-  // Mobile Demo Hub Triggers
+  // Demo Hub Triggers (Mobile & Web)
   DOM.openMobileDemoHubBtn?.addEventListener('click', openMobileDemoHub);
+  DOM.openDemoHubDesktopBtn?.addEventListener('click', openMobileDemoHub);
   DOM.closeMobileDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
+  DOM.dismissDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
   DOM.mobileDemoHubBackdrop?.addEventListener('click', closeMobileDemoHub);
 
   // Demo Hub Scenario Pills

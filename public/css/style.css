@@ -3268,13 +3268,28 @@ body.dark-mode .diff-item.missing {
    Mobile-First Responsiveness (Laptop vs Mobile identical behavior)
    ========================================================================== */
 
-/* Desktop rules: hide mobile-only top bar elements */
+/* Desktop rules: hide mobile-only top bar elements, but show Demo Hub bottom-up sheet */
 @media (min-width: 821px) {
   .top-bar-center-mobile,
-  .mobile-demo-hub-btn,
-  #mobileDemoHubSheet,
-  #mobileDemoHubBackdrop {
+  .mobile-demo-hub-btn {
     display: none !important;
+  }
+
+  .mobile-demo-hub-sheet {
+    width: 440px !important;
+    max-width: 92vw !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 24px !important;
+    border-radius: 24px !important;
+    border: 1px solid var(--md-sys-color-outline-variant) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  .mobile-demo-hub-sheet.hidden {
+    transform: translateX(-50%) translateY(120%) !important;
+    pointer-events: none !important;
   }
 }
 

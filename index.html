@@ -47,6 +47,13 @@
 
     <!-- Quick Controls -->
     <div class="toolbar-controls">
+      <button id="openDemoHubDesktopBtn" class="tb-btn tb-highlight-btn" title="Open Demo Showcase Menu">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+        </svg>
+        <span class="tb-btn-text">⚡ Demo Hub</span>
+      </button>
+
       <button id="openCustomUploadBtn" class="tb-btn tb-upload-btn" title="Upload your photos and test AI memory">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
@@ -746,11 +753,14 @@
 
           <!-- Bottom Utility Controls -->
           <div class="demo-hub-footer-row">
+            <button class="hub-util-btn" id="dismissDemoHubBtn" title="Explore on your own">
+              <span>✕ Explore</span>
+            </button>
             <button class="hub-util-btn" id="hubToggleThemeBtn">
-              <span>🌓 Toggle Theme</span>
+              <span>🌓 Theme</span>
             </button>
             <button class="hub-util-btn danger" id="hubResetDemoBtn">
-              <span>🔄 Reset Demo</span>
+              <span>🔄 Reset</span>
             </button>
           </div>
         </div>

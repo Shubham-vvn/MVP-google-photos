@@ -3280,13 +3280,28 @@ body.dark-mode .diff-item.missing {
    Mobile-First Responsiveness (Laptop vs Mobile identical behavior)
    ========================================================================== */
 
-/* Desktop rules: hide mobile-only top bar elements */
+/* Desktop rules: hide mobile-only top bar elements, but show Demo Hub bottom-up sheet */
 @media (min-width: 821px) {
   .top-bar-center-mobile,
-  .mobile-demo-hub-btn,
-  #mobileDemoHubSheet,
-  #mobileDemoHubBackdrop {
+  .mobile-demo-hub-btn {
     display: none !important;
+  }
+
+  .mobile-demo-hub-sheet {
+    width: 440px !important;
+    max-width: 92vw !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 24px !important;
+    border-radius: 24px !important;
+    border: 1px solid var(--md-sys-color-outline-variant) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  .mobile-demo-hub-sheet.hidden {
+    transform: translateX(-50%) translateY(120%) !important;
+    pointer-events: none !important;
   }
 }
 
@@ -4559,6 +4574,13 @@ body.dark-mode .thought-badge {
 
     <!-- Quick Controls -->
     <div class="toolbar-controls">
+      <button id="openDemoHubDesktopBtn" class="tb-btn tb-highlight-btn" title="Open Demo Showcase Menu">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+        </svg>
+        <span class="tb-btn-text">⚡ Demo Hub</span>
+      </button>
+
       <button id="openCustomUploadBtn" class="tb-btn tb-upload-btn" title="Upload your photos and test AI memory">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
@@ -5258,11 +5280,14 @@ body.dark-mode .thought-badge {
 
           <!-- Bottom Utility Controls -->
           <div class="demo-hub-footer-row">
+            <button class="hub-util-btn" id="dismissDemoHubBtn" title="Explore on your own">
+              <span>✕ Explore</span>
+            </button>
             <button class="hub-util-btn" id="hubToggleThemeBtn">
-              <span>🌓 Toggle Theme</span>
+              <span>🌓 Theme</span>
             </button>
             <button class="hub-util-btn danger" id="hubResetDemoBtn">
-              <span>🔄 Reset Demo</span>
+              <span>🔄 Reset</span>
             </button>
           </div>
         </div>
@@ -6253,12 +6278,14 @@ const DOM = {
   dynamicIsland: document.getElementById('dynamicIsland'),
   islandStatusText: document.getElementById('islandStatusText'),
 
-  // Mobile App Top Bar & Demo Showcase Hub
+  // Demo Showcase Hub (Web & Mobile)
+  openDemoHubDesktopBtn: document.getElementById('openDemoHubDesktopBtn'),
   mobileScenarioSelect: document.getElementById('mobileScenarioSelect'),
   openMobileDemoHubBtn: document.getElementById('openMobileDemoHubBtn'),
   mobileDemoHubBackdrop: document.getElementById('mobileDemoHubBackdrop'),
   mobileDemoHubSheet: document.getElementById('mobileDemoHubSheet'),
   closeMobileDemoHubBtn: document.getElementById('closeMobileDemoHubBtn'),
+  dismissDemoHubBtn: document.getElementById('dismissDemoHubBtn'),
   hubStartTourBtn: document.getElementById('hubStartTourBtn'),
   hubOpenTimeMachineBtn: document.getElementById('hubOpenTimeMachineBtn'),
   hubOpenCustomUploadBtn: document.getElementById('hubOpenCustomUploadBtn'),
@@ -6456,6 +6483,13 @@ function initApp() {
 
   // Attach All Event Listeners
   attachEventListeners();
+
+  // Auto-launch bottom-to-up Demo pop-up after 1.5 seconds on both mobile and web
+  setTimeout(() => {
+    if (!state.isTourActive) {
+      openMobileDemoHub();
+    }
+  }, 1500);
 }
 
 // Live Status Bar Clock
@@ -7884,9 +7918,11 @@ function attachEventListeners() {
     showDynamicIslandPill(`Scenario: ${e.target.options[e.target.selectedIndex].text}`);
   });
 
-  // Mobile Demo Hub Triggers
+  // Demo Hub Triggers (Mobile & Web)
   DOM.openMobileDemoHubBtn?.addEventListener('click', openMobileDemoHub);
+  DOM.openDemoHubDesktopBtn?.addEventListener('click', openMobileDemoHub);
   DOM.closeMobileDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
+  DOM.dismissDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
   DOM.mobileDemoHubBackdrop?.addEventListener('click', closeMobileDemoHub);
 
   // Demo Hub Scenario Pills
