@@ -3268,28 +3268,11 @@ body.dark-mode .diff-item.missing {
    Mobile-First Responsiveness (Laptop vs Mobile identical behavior)
    ========================================================================== */
 
-/* Desktop rules: hide mobile-only top bar elements, but show Demo Hub bottom-up sheet */
+/* Desktop rules: hide mobile-only top bar elements */
 @media (min-width: 821px) {
   .top-bar-center-mobile,
   .mobile-demo-hub-btn {
     display: none !important;
-  }
-
-  .mobile-demo-hub-sheet {
-    width: 440px !important;
-    max-width: 92vw !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: 24px !important;
-    border-radius: 24px !important;
-    border: 1px solid var(--md-sys-color-outline-variant) !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
-    transform: translateX(-50%) translateY(0) !important;
-  }
-
-  .mobile-demo-hub-sheet.hidden {
-    transform: translateX(-50%) translateY(120%) !important;
-    pointer-events: none !important;
   }
 }
 
@@ -3516,27 +3499,25 @@ body.dark-mode .diff-item.missing {
    Mobile Demo Showcase Hub Bottom Sheet Styles
    ========================================================================== */
 .mobile-demo-hub-sheet {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100vw;
-  max-height: 86dvh;
+  width: 100%;
+  max-height: 88%;
   background: var(--md-sys-color-surface);
   border-radius: 24px 24px 0 0;
   box-shadow: 0 -8px 36px rgba(0, 0, 0, 0.45);
-  z-index: 1100;
+  z-index: 350;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border-top: 1px solid var(--md-sys-color-outline-variant);
-  transform: translateY(0);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: slideUpSheet 0.32s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 .mobile-demo-hub-sheet.hidden {
-  transform: translateY(105%);
-  pointer-events: none;
+  display: none !important;
 }
 
 .demo-hub-body {
