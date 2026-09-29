@@ -33,6 +33,7 @@
     <div class="scenario-selector-wrap">
       <label for="scenarioSelect" class="scenario-label">Scenario:</label>
       <select id="scenarioSelect" class="scenario-dropdown" title="Select MVP Scenario">
+        <option value="all_photos" selected>🌟 All Photos (Full Library • 39 items)</option>
         <option value="goa_beach">🏖️ Goa Beach Trip with Friends (Sunset Waves & Shack)</option>
         <option value="mom_birthday">🎂 Mom's 60th Birthday Celebration (3 Generations)</option>
         <option value="himalaya_roadtrip">🏔️ Himalayan Pass with Rocky the Dog (4x4 Road Trip)</option>
@@ -158,6 +159,7 @@
           <!-- Mobile Centered Scenario Selector (Visible only on mobile screens) -->
           <div class="top-bar-center-mobile" id="topBarCenterMobile">
             <select id="mobileScenarioSelect" class="mobile-scenario-select" aria-label="Select Scenario">
+              <option value="all_photos" selected>🌟 All Photos (39)</option>
               <option value="goa_beach">🏖️ Goa Beach</option>
               <option value="mom_birthday">🎂 Mom's 60th</option>
               <option value="himalaya_roadtrip">🏔️ Himalayas</option>
@@ -230,6 +232,47 @@
                 <button class="spotlight-secondary-btn spotlight-custom-btn" id="spotlightCustomBtn">
                   <span>📸 Try Your Photos</span>
                 </button>
+              </div>
+            </div>
+
+            <!-- Google Photos Modern Top Search Bar & Memory Search Suggestions -->
+            <div class="photos-top-search-bar" id="photosTopSearchBar">
+              <div class="photos-search-box">
+                <svg class="search-box-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/>
+                </svg>
+                <input type="text" id="photosQuickSearchInput" class="photos-search-input" placeholder="Search memories (e.g. sunset shack, mom's cake)..." autocomplete="off">
+                <button class="clear-search-btn hidden" id="clearPhotosSearchBtn" title="Clear search">×</button>
+                <button class="search-mic-btn" id="photosSearchMicBtn" title="Speak search">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Quick Tap Search Suggestions -->
+              <div class="photos-search-chips" id="photosSearchChips">
+                <span class="chips-label">Try:</span>
+                <button class="quick-search-chip" data-query="sunset shack with cold drinks and friends">🏖️ Sunset shack</button>
+                <button class="quick-search-chip" data-query="mom blowing candles on 60th birthday cake">🎂 Mom's 60th</button>
+                <button class="quick-search-chip" data-query="Rocky dog in mountain snow on road trip">🐕 Rocky in snow</button>
+                <button class="quick-search-chip" data-query="terrace diwali night with sparklers and diyas">🪔 Diwali sparklers</button>
+                <button class="quick-search-chip" data-query="reunion with Ramesh at cafe having chocolate cake">☕ Delhi cafe</button>
+                <button class="quick-search-chip" data-query="morning cycling ride under banyan trees with filter coffee">🚴 Morning cycling</button>
+              </div>
+            </div>
+
+            <!-- Active Search Filter Banner in Photos View -->
+            <div class="photos-search-active-banner hidden" id="photosSearchActiveBanner">
+              <div class="search-active-card">
+                <div class="search-active-top">
+                  <span class="search-active-badge">✨ AI Memory Match • <span id="searchActiveScore">98%</span> Match</span>
+                  <button class="search-active-clear-btn" id="resetTimelineSearchBtn">✕ Show all 39 photos</button>
+                </div>
+                <div class="search-active-title" id="searchActiveTitle">Found photos from Goa Beach Getaway with Friends</div>
+                <p class="search-active-story" id="searchActiveStory">"Trip to Goa with Priya, Arjun, Sneha... sunset waves at Anjuna and candlelit shack dinner"</p>
+                <div class="search-active-pills" id="searchActivePills"></div>
               </div>
             </div>
 
@@ -353,20 +396,9 @@
               </div>
             </div>
 
-            <!-- Photo Stream / Grid Section -->
-            <div class="timeline-section">
-              <div class="timeline-date-header">
-                <div class="date-header-left">
-                  <h2 class="section-date" id="timelineSectionTitle">Today</h2>
-                  <span class="section-location" id="timelineSectionLocation">New Delhi • 13 items</span>
-                </div>
-                <span class="selection-pill" id="timelineStatusPill">AI Clustered</span>
-              </div>
-
-              <!-- Responsive Photo Grid -->
-              <div class="photos-grid" id="mainPhotoGrid">
-                <!-- Injected dynamically by JS based on selected scenario -->
-              </div>
+            <!-- Full Google Photos Timeline Stream -->
+            <div class="timeline-container" id="timelineContainer">
+              <!-- Dynamically populated with all chronological date clusters -->
             </div>
           </section>
 
@@ -697,7 +729,8 @@
           <div class="demo-hub-section">
             <div class="demo-hub-section-label">CHOOSE AN OUTING:</div>
             <div class="demo-hub-scenarios-scroll" id="demoHubScenariosGrid">
-              <button class="demo-sc-pill active" data-scenario="goa_beach">🏖️ Goa Beach</button>
+              <button class="demo-sc-pill active" data-scenario="all_photos">🌟 All Photos</button>
+              <button class="demo-sc-pill" data-scenario="goa_beach">🏖️ Goa Beach</button>
               <button class="demo-sc-pill" data-scenario="mom_birthday">🎂 Mom's 60th</button>
               <button class="demo-sc-pill" data-scenario="himalaya_roadtrip">🏔️ Himalayas</button>
               <button class="demo-sc-pill" data-scenario="diwali_celebration">🪔 Diwali</button>

@@ -324,8 +324,9 @@ const SCENARIOS = {
 // Application State Store
 class MemoryAppState {
   constructor() {
-    this.currentScenarioKey = 'goa_beach';
+    this.currentScenarioKey = 'all_photos';
     this.activeTab = 'tabPhotos';
+    this.timelineSearchQuery = '';
     this.isRecording = false;
     this.recTimerInterval = null;
     this.recSeconds = 0;
@@ -358,7 +359,10 @@ class MemoryAppState {
   }
 
   getScenario() {
-    return SCENARIOS[this.currentScenarioKey];
+    if (this.currentScenarioKey === 'all_photos') {
+      return SCENARIOS['goa_beach'] || SCENARIOS['delhi_cafe'];
+    }
+    return SCENARIOS[this.currentScenarioKey] || SCENARIOS['goa_beach'];
   }
 
   isClusterLinked(clusterId) {
@@ -382,6 +386,18 @@ class MemoryAppState {
 }
 
 const state = new MemoryAppState();
+
+// Chronological timeline order of authentic memories
+const CHRONOLOGICAL_SCENARIOS = [
+  'delhi_cafe',
+  'laptop_research',
+  'goa_beach',
+  'diwali_celebration',
+  'himalaya_roadtrip',
+  'mom_birthday',
+  'cycling_morning',
+  'lake_tahoe'
+];
 
 // ==========================================
 // DOM ELEMENT REFERENCES
@@ -445,10 +461,25 @@ const DOM = {
   bannerEditBtn: document.getElementById('bannerEditBtn'),
   bannerTimeMachineBtn: document.getElementById('bannerTimeMachineBtn'),
 
-  // Photo Stream Grid
+  // Photo Stream Grid & Timeline Container
   timelineSectionTitle: document.getElementById('timelineSectionTitle'),
   timelineSectionLocation: document.getElementById('timelineSectionLocation'),
   mainPhotoGrid: document.getElementById('mainPhotoGrid'),
+  timelineContainer: document.getElementById('timelineContainer'),
+
+  // Photos Tab Quick Search Bar & Active Banner
+  photosTopSearchBar: document.getElementById('photosTopSearchBar'),
+  photosQuickSearchInput: document.getElementById('photosQuickSearchInput'),
+  clearPhotosSearchBtn: document.getElementById('clearPhotosSearchBtn'),
+  photosSearchMicBtn: document.getElementById('photosSearchMicBtn'),
+  photosSearchChips: document.getElementById('photosSearchChips'),
+  photosSearchActiveBanner: document.getElementById('photosSearchActiveBanner'),
+  searchActiveScore: document.getElementById('searchActiveScore'),
+  searchActiveTitle: document.getElementById('searchActiveTitle'),
+  searchActiveStory: document.getElementById('searchActiveStory'),
+  searchActivePills: document.getElementById('searchActivePills'),
+  resetTimelineSearchBtn: document.getElementById('resetTimelineSearchBtn'),
+  storiesScroll: document.getElementById('storiesScroll'),
 
   // Memories Tab
   memoriesList: document.getElementById('memoriesList'),
@@ -676,10 +707,11 @@ function renderCurrentScenario() {
     if (DOM.headerNotifPip) DOM.headerNotifPip.style.display = 'block';
   }
 
-  // Update Timeline Grid
-  DOM.timelineSectionTitle.textContent = s.dateText.split(',')[0];
-  DOM.timelineSectionLocation.textContent = `${s.location} • ${s.photos.length} items shown`;
-  renderPhotosGrid(DOM.mainPhotoGrid, s.photos, isLinked);
+  // Render Full Chronological Timeline or Single Outing
+  renderFullTimeline(null);
+
+  // Render Stories Highlights Strip at Top
+  renderStoriesCarousel();
 
   // Update Bottom Sheet Ribbon & Quick Pills
   renderSheetClusterRibbon(s.photos);
@@ -689,13 +721,104 @@ function renderCurrentScenario() {
   renderMemoriesManager();
 }
 
+// Render Full Chronological Timeline with Multiple Date Sections
+function renderFullTimeline(matchedScenarioKey = null) {
+  if (!DOM.timelineContainer) return;
+
+  const clusterKeys = [];
+  if (state.currentScenarioKey === 'all_photos') {
+    if (SCENARIOS.custom_user_memory && SCENARIOS.custom_user_memory.photos && SCENARIOS.custom_user_memory.photos.length > 0 && SCENARIOS.custom_user_memory.title !== 'Your Personal Memory Moment') {
+      clusterKeys.push('custom_user_memory');
+    }
+    CHRONOLOGICAL_SCENARIOS.forEach(k => {
+      if (SCENARIOS[k]) clusterKeys.push(k);
+    });
+  } else {
+    clusterKeys.push(state.currentScenarioKey);
+  }
+
+  DOM.timelineContainer.innerHTML = '';
+
+  clusterKeys.forEach(key => {
+    const s = SCENARIOS[key];
+    if (!s) return;
+    const isLinked = state.isClusterLinked(s.id);
+    const isMatch = matchedScenarioKey === key;
+    const isDimmed = matchedScenarioKey && matchedScenarioKey !== key;
+
+    const clusterSection = document.createElement('div');
+    clusterSection.className = `timeline-cluster-section ${isMatch ? 'is-matched' : ''} ${isDimmed ? 'is-dimmed' : ''}`;
+    clusterSection.dataset.scenario = key;
+    clusterSection.id = `cluster_sec_${key}`;
+
+    const dateTitle = s.dateText || s.title;
+    const locText = s.location ? `${s.location} • ${s.photos.length} items` : `${s.photos.length} items`;
+
+    clusterSection.innerHTML = `
+      <div class="timeline-date-header">
+        <div class="date-header-left">
+          <h2 class="section-date">${dateTitle}</h2>
+          <span class="section-location">${locText}</span>
+        </div>
+        <span class="selection-pill">${isMatch ? '✨ Match Found' : (isLinked ? '✨ Memory Saved' : 'AI Clustered')}</span>
+      </div>
+      <div class="photos-grid" id="grid_${key}"></div>
+    `;
+
+    DOM.timelineContainer.appendChild(clusterSection);
+    const gridEl = clusterSection.querySelector(`#grid_${key}`);
+    renderPhotosGrid(gridEl, s.photos, isLinked, isMatch);
+  });
+}
+
+// Render Stories Strip at Top of Photos Tab
+function renderStoriesCarousel() {
+  if (!DOM.storiesScroll) return;
+
+  const stories = [
+    { key: 'goa_beach', title: 'Goa Sunset', img: SCENARIOS.goa_beach.coverImg },
+    { key: 'mom_birthday', title: 'Mom 60th', img: SCENARIOS.mom_birthday.coverImg },
+    { key: 'himalaya_roadtrip', title: 'Himalayas', img: SCENARIOS.himalaya_roadtrip.coverImg },
+    { key: 'diwali_celebration', title: 'Diwali', img: SCENARIOS.diwali_celebration.coverImg },
+    { key: 'delhi_cafe', title: 'Delhi Café', img: SCENARIOS.delhi_cafe.coverImg },
+    { key: 'cycling_morning', title: 'Cycling', img: SCENARIOS.cycling_morning.coverImg },
+    { key: 'lake_tahoe', title: 'Tahoe', img: SCENARIOS.lake_tahoe.coverImg }
+  ];
+
+  DOM.storiesScroll.innerHTML = stories.map(st => {
+    const isLinked = state.isClusterLinked(SCENARIOS[st.key]?.id);
+    const isActive = state.currentScenarioKey === st.key;
+    return `
+      <div class="story-item ${isActive ? 'active-prompt' : ''}" data-story-scenario="${st.key}">
+        <div class="story-ring ${isLinked ? 'sparkle-ring' : ''}">
+          <img src="${st.img}" alt="${st.title}" class="story-thumb" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80';">
+        </div>
+        <span class="story-caption">${st.title}</span>
+      </div>
+    `;
+  }).join('');
+
+  DOM.storiesScroll.querySelectorAll('.story-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const scKey = item.dataset.storyScenario;
+      if (scKey && SCENARIOS[scKey]) {
+        state.currentScenarioKey = scKey;
+        renderCurrentScenario();
+        const secEl = document.getElementById(`cluster_sec_${scKey}`);
+        if (secEl) secEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
 // Render Photos Grid
-function renderPhotosGrid(container, photos, isLinked) {
+function renderPhotosGrid(container, photos, isLinked, isMatch = false) {
+  if (!container) return;
   container.innerHTML = photos.map((p, idx) => `
-    <div class="photo-cell ${p.featured ? 'featured-large' : ''}" data-index="${idx}">
+    <div class="photo-cell ${p.featured ? 'featured-large' : ''} ${isMatch ? 'matched-photo-highlight' : ''}" data-index="${idx}">
       <img src="${p.src}" alt="${p.caption}" class="cell-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80';">
       ${p.isVideo ? `<span class="cell-video-pill">▶ ${p.videoDuration}</span>` : ''}
-      ${isLinked ? `<span class="cell-memory-badge">✨ Memory</span>` : ''}
+      ${isMatch ? `<span class="cell-memory-badge">✨ Matched Memory</span>` : (isLinked ? `<span class="cell-memory-badge">✨ Memory</span>` : '')}
     </div>
   `).join('');
 
@@ -706,6 +829,119 @@ function renderPhotosGrid(container, photos, isLinked) {
       openPhotoLightbox(photos[idx]);
     });
   });
+}
+
+// Quick Search on Photos Tab (Instant "Needle in a Haystack" Filter)
+function handlePhotosQuickSearch(query) {
+  const q = (query || '').trim().toLowerCase();
+  state.timelineSearchQuery = q;
+
+  if (DOM.photosQuickSearchInput && DOM.photosQuickSearchInput.value !== query) {
+    DOM.photosQuickSearchInput.value = query;
+  }
+  if (DOM.clearPhotosSearchBtn) {
+    DOM.clearPhotosSearchBtn.classList.toggle('hidden', !q);
+  }
+
+  // Update chips active state
+  document.querySelectorAll('.quick-search-chip').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.query.toLowerCase() === q);
+  });
+
+  if (!q) {
+    // Reset back to full timeline
+    if (DOM.photosSearchActiveBanner) DOM.photosSearchActiveBanner.classList.add('hidden');
+    renderFullTimeline(null);
+    return;
+  }
+
+  // Multi-tier matching algorithm across all library memories
+  const tokens = q.split(/\s+/).filter(t => t.length > 2);
+  let bestScenarioKey = null;
+  let highestScore = 0;
+  let matchedConcepts = [];
+
+  Object.entries(SCENARIOS).forEach(([key, s]) => {
+    let score = 0;
+    const curMatches = [];
+
+    if (s.title.toLowerCase().includes(q) || s.summary.toLowerCase().includes(q)) {
+      score += 40;
+      curMatches.push(s.title);
+    }
+    tokens.forEach(tok => {
+      if (s.title.toLowerCase().includes(tok) || s.location.toLowerCase().includes(tok)) {
+        score += 15;
+        curMatches.push(tok);
+      }
+      if (s.sampleText.toLowerCase().includes(tok) || s.summary.toLowerCase().includes(tok)) {
+        score += 30;
+        curMatches.push(tok);
+      }
+    });
+
+    s.userConcepts.forEach(c => {
+      tokens.forEach(tok => {
+        if (c.toLowerCase().includes(tok) || tok.includes(c.toLowerCase())) {
+          score += 30;
+          curMatches.push(c);
+        }
+      });
+    });
+
+    s.visualConcepts.forEach(vc => {
+      tokens.forEach(tok => {
+        if (vc.toLowerCase().includes(tok)) {
+          score += 15;
+          curMatches.push(tok);
+        }
+      });
+    });
+
+    if (s.fadedMemory) {
+      if (s.fadedMemory.query && (q.includes(s.fadedMemory.query.toLowerCase()) || s.fadedMemory.query.toLowerCase().includes(q))) {
+        score += 65;
+        curMatches.push('1-Year Memory');
+      }
+      tokens.forEach(tok => {
+        if (s.fadedMemory.query && s.fadedMemory.query.toLowerCase().includes(tok)) {
+          score += 25;
+          curMatches.push(tok);
+        }
+        if (s.fadedMemory.thought && s.fadedMemory.thought.toLowerCase().includes(tok)) {
+          score += 15;
+          curMatches.push(tok);
+        }
+      });
+    }
+
+    if (score > highestScore) {
+      highestScore = score;
+      bestScenarioKey = key;
+      matchedConcepts = [...new Set(curMatches)];
+    }
+  });
+
+  if (highestScore >= 25 && bestScenarioKey) {
+    const s = SCENARIOS[bestScenarioKey];
+    if (DOM.photosSearchActiveBanner) {
+      DOM.photosSearchActiveBanner.classList.remove('hidden');
+      DOM.searchActiveScore.textContent = `${Math.min(99, Math.max(85, Math.round(highestScore)))}%`;
+      DOM.searchActiveTitle.textContent = `Found ${s.photos.length} photos from "${s.title}"`;
+      DOM.searchActiveStory.textContent = `"${s.summary}"`;
+      DOM.searchActivePills.innerHTML = matchedConcepts.slice(0, 4).map(c => `
+        <span class="search-match-pill">✨ ${c}</span>
+      `).join('');
+    }
+
+    // Filter timeline down to the matched section
+    renderFullTimeline(bestScenarioKey);
+    showToast(`✨ Filtered 39 photos ➔ Found ${s.photos.length} matching photos!`);
+  } else {
+    if (DOM.photosSearchActiveBanner) DOM.photosSearchActiveBanner.classList.add('hidden');
+    renderFullTimeline(null);
+    showToast('No specific memory match found. Showing all photos.', false);
+  }
 }
 
 // Render Thumbnails in Bottom Sheet
@@ -2155,8 +2391,58 @@ function attachEventListeners() {
   });
 
   DOM.headerSearchBtn.addEventListener('click', () => {
-    switchTab('tabSearch');
-    DOM.memorySearchInput.focus();
+    if (state.activeTab === 'tabPhotos' && DOM.photosQuickSearchInput) {
+      DOM.photosQuickSearchInput.focus();
+      DOM.photosQuickSearchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      switchTab('tabSearch');
+      DOM.memorySearchInput?.focus();
+    }
+  });
+
+  // Photos Tab Quick Search Bar & Chips
+  DOM.photosQuickSearchInput?.addEventListener('input', (e) => {
+    handlePhotosQuickSearch(e.target.value);
+  });
+
+  DOM.clearPhotosSearchBtn?.addEventListener('click', () => {
+    handlePhotosQuickSearch('');
+  });
+
+  DOM.resetTimelineSearchBtn?.addEventListener('click', () => {
+    handlePhotosQuickSearch('');
+  });
+
+  document.querySelectorAll('.quick-search-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const q = chip.dataset.query;
+      handlePhotosQuickSearch(q);
+    });
+  });
+
+  DOM.photosSearchMicBtn?.addEventListener('click', () => {
+    const sampleQueries = [
+      'sunset shack with cold drinks and friends',
+      'mom blowing candles on 60th birthday cake',
+      'Rocky dog in mountain snow on road trip',
+      'terrace diwali night with sparklers and diyas',
+      'reunion with Ramesh at cafe having chocolate cake',
+      'morning cycling ride under banyan trees with filter coffee'
+    ];
+    const randomQ = sampleQueries[Math.floor(Math.random() * sampleQueries.length)];
+    if (DOM.photosQuickSearchInput) DOM.photosQuickSearchInput.value = '';
+    showDynamicIslandPill('Listening to voice search...');
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < randomQ.length) {
+        if (DOM.photosQuickSearchInput) DOM.photosQuickSearchInput.value = randomQ.slice(0, i + 1);
+        i++;
+      } else {
+        clearInterval(interval);
+        showDynamicIslandPill('Voice search matched ✨');
+        handlePhotosQuickSearch(randomQ);
+      }
+    }, 35);
   });
 
   // Prompt Card Actions

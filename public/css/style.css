@@ -1031,6 +1031,247 @@ button, input, textarea, select {
 }
 
 /* ==========================================================================
+   Photos Tab Quick Search & Unified Timeline
+   ========================================================================== */
+
+.photos-top-search-bar {
+  padding: 8px 14px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.photos-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 28px;
+  padding: 6px 12px 6px 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.photos-search-box:focus-within {
+  border-color: #4285F4;
+  box-shadow: 0 2px 8px rgba(66, 133, 244, 0.25);
+  background: var(--md-sys-color-surface);
+}
+
+.photos-search-box .search-box-icon {
+  color: var(--md-sys-color-on-surface-variant);
+  flex-shrink: 0;
+}
+
+.photos-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+}
+
+.photos-search-input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.8;
+}
+
+.photos-search-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 2px 6px;
+  scrollbar-width: none;
+}
+
+.photos-search-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chips-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+
+.quick-search-chip {
+  background: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.quick-search-chip:hover {
+  background: var(--md-sys-color-surface-container-high);
+  border-color: #4285F4;
+  transform: translateY(-1px);
+}
+
+.quick-search-chip.active {
+  background: #E8F0FE;
+  color: #1A73E8;
+  border-color: #4285F4;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .quick-search-chip.active {
+  background: rgba(66, 133, 244, 0.22);
+  color: #8AB4F8;
+  border-color: #8AB4F8;
+}
+
+/* Active Search Banner in Timeline */
+.photos-search-active-banner {
+  margin: 6px 14px 14px;
+  animation: slideDownFade 0.24s ease forwards;
+}
+
+.search-active-card {
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
+  border: 1.5px solid rgba(66, 133, 244, 0.35);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+[data-theme="dark"] .search-active-card {
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.18) 0%, rgba(156, 39, 176, 0.18) 100%);
+  border-color: rgba(138, 180, 248, 0.4);
+}
+
+.search-active-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.search-active-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1A73E8;
+  background: rgba(26, 115, 232, 0.12);
+  padding: 3px 8px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+[data-theme="dark"] .search-active-badge {
+  color: #8AB4F8;
+  background: rgba(138, 180, 248, 0.2);
+}
+
+.search-active-clear-btn {
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.search-active-clear-btn:hover {
+  background: #EA4335;
+  color: #FFFFFF;
+  border-color: #EA4335;
+}
+
+.search-active-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+.search-active-story {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.search-active-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.search-match-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  background: rgba(26, 115, 232, 0.12);
+  color: #1A73E8;
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+
+[data-theme="dark"] .search-match-pill {
+  background: rgba(138, 180, 248, 0.18);
+  color: #8AB4F8;
+}
+
+/* Cluster section in full timeline */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-cluster-section {
+  margin-bottom: 22px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.timeline-cluster-section.is-matched {
+  position: relative;
+}
+
+.timeline-cluster-section.is-matched .photos-grid {
+  outline: 2px solid #4285F4;
+  outline-offset: 4px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(66, 133, 244, 0.25);
+}
+
+.timeline-cluster-section.is-dimmed {
+  display: none !important;
+}
+
+.timeline-cluster-section .timeline-date-header {
+  padding: 8px 14px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timeline-cluster-section .photos-grid {
+  padding: 0 14px;
+}
+
+/* ==========================================================================
    Bottom Navigation Bar
    ========================================================================== */
 
