@@ -38,7 +38,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“Catching up with Ramesh at that Connaught Place cafe after two years talking about childhood memories and eating chocolate cake.”',
       query: 'reunion with Ramesh at Delhi cafe eating chocolate truffle cake',
-      standardResult: 'Standard Google Photos search found 0 results for "Ramesh" or "reunion". Standard vision models only tag generic pixels like "table" and "indoor cafe". It has no record of who Ramesh was or that you met after 2 years.',
+      standardResult: 'Standard search found 0 results for "Ramesh" or "reunion". It only sees "table" and "indoor cafe", with no idea who Ramesh is or that you met after 2 years.',
       aiMatchPills: ['👥 Ramesh Reunion', '☕ Delhi Café', '🍰 Chocolate Cake', '🚶 Rajiv Chowk Walk', '✨ 99% Match']
     }
   },
@@ -74,7 +74,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“What was that wooden beach shack where Priya and Arjun ordered spicy butter garlic prawns with Rahul watching sunset waves?”',
       query: 'that beach shack with spicy prawns and Rahul watching waves',
-      standardResult: 'Standard Google Photos search found 0 results for "Rahul", "prawns", or "shack". Standard vision models only tag generic items like "sand", "water", "sky". It has zero record of who was there or what you ate.',
+      standardResult: 'Standard search found 0 results for "Rahul", "prawns", or "shack". It only sees "sand" and "water", with no idea who was there or what you ate.',
       aiMatchPills: ['📍 Anjuna Shack', '👥 Rahul & Priya', '🍤 Spicy Prawns Dinner', '🌊 Sunset Waves', '✨ 98% Match']
     }
   },
@@ -110,7 +110,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“Mom laughing when she couldn\'t blow out all the candles on her 60th birthday mango cream cake with the grandkids.”',
       query: 'mom laughing when she couldn\'t blow out the candles at 60th birthday',
-      standardResult: 'Standard search matches generic "cake" or "candle" across hundreds of unrelated events, but has zero knowledge of Mom\'s 60th milestone or who was laughing.',
+      standardResult: 'Standard search finds generic "cake" across hundreds of old photos, but has no idea it was Mom\'s 60th birthday or who was laughing.',
       aiMatchPills: ['🎂 Mom\'s 60th Birthday', '👨‍👩‍👧‍👦 3 Generations', '🥭 Mango Cream Cake', '💛 Marigold Garlands', '✨ 99% Match']
     }
   },
@@ -146,7 +146,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“That road trip up the mountain pass where Rocky our golden retriever saw snow for the first time and we had hot masala chai at 13,000 feet.”',
       query: 'mountain roadtrip where Rocky the dog was barking at snow sheep',
-      standardResult: 'Standard search tags generic "mountain", "snow", "vehicle". It cannot identify "Rocky the dog", Kabir, Zara, or the 13,000ft pass.',
+      standardResult: 'Standard search only sees "mountain" and "snow". It cannot find "Rocky the dog", Kabir, Zara, or the mountain pass.',
       aiMatchPills: ['🐕 Rocky the Dog', '🏔️ Rohtang Pass (13,000ft)', '🚙 4x4 Road Trip', '☕ Masala Chai', '✨ 98% Match']
     }
   },
@@ -182,7 +182,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“That Diwali evening on the terrace where everyone wore festive yellow kurtas, lit clay diyas, and spun golden sparklers.”',
       query: 'terrace diwali night when grandma was holding sparklers and diyas',
-      standardResult: 'Standard search tags generic "firework" and "night". It has no memory of family members, festive kurtas, or the terrace setting.',
+      standardResult: 'Standard search only sees "firework" and "night". It has no idea who was there, what you wore, or that it was Diwali on your terrace.',
       aiMatchPills: ['🪔 Clay Diyas', '✨ Golden Sparklers', '👕 Festive Kurtas', '👥 Vikram & Pooja', '✨ 97% Match']
     }
   },
@@ -218,7 +218,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“That early morning 30km bicycle ride through Cubbon park with Amit and Neha under giant banyan trees followed by filter coffee.”',
       query: 'early morning cycling ride at Cubbon park drinking tender coconut',
-      standardResult: 'Standard vision tags "bicycle" and "tree". It cannot differentiate this 30km morning sprint with Amit and Neha from any other bike ride.',
+      standardResult: 'Standard search only sees "bicycle" and "tree". It cannot tell this ride with Amit and Neha apart from any other bike ride.',
       aiMatchPills: ['🚴 Cubbon Park 30km', '👥 Amit & Neha', '🌳 Banyan Sunbeams', '☕ Filter Coffee', '✨ 96% Match']
     }
   },
@@ -252,7 +252,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“Hiking up to Emerald Bay overlooking turquoise lake water with Maya and celebrating with campfire cheesecake at sunset.”',
       query: 'emerald bay hike when Maya lost her water bottle at sunset',
-      standardResult: 'Standard vision tags "lake" and "forest". It cannot connect the photo to Maya, the Emerald Bay trailhead, or campfire cheesecake.',
+      standardResult: 'Standard search only sees "lake" and "forest". It cannot connect the photo to Maya, Emerald Bay, or campfire cheesecake.',
       aiMatchPills: ['🌲 Emerald Bay', '👥 Maya', '🍰 Campfire Cheesecake', '🌅 Golden Hour Sunset', '✨ 98% Match']
     }
   },
@@ -285,7 +285,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“Those screenshots comparing M3 vs Core Ultra laptop specs and battery benchmarks before buying a new work ultrabook.”',
       query: 'comparing OLED laptop battery benchmarks for work ultrabook',
-      standardResult: 'Standard OCR search matches noisy literal characters. It has no semantic understanding of your buying decision or battery comparisons.',
+      standardResult: 'Standard search matches random letters on the screen. It doesn\'t understand your buying choice or battery comparison.',
       aiMatchPills: ['💻 Laptop Research', '🔋 Battery Benchmarks', '⚙️ Ultrabook Specs', '📱 Work Purchase', '✨ 95% Match']
     }
   },
@@ -315,7 +315,7 @@ const SCENARIOS = {
     fadedMemory: {
       thought: '“My personal memory moment with my own photos and story uploaded from my device.”',
       query: 'my personal memory moment',
-      standardResult: 'Standard Google Photos only reads image pixels. It has no knowledge of your custom story or personal memories.',
+      standardResult: 'Standard search only sees colors and objects. It has no idea about your personal story.',
       aiMatchPills: ['📸 Personal Memory', '✨ Instant Recall', '✨ 98% Match']
     }
   }
@@ -1377,10 +1377,10 @@ function clearHighlightElements() {
 
 const TOUR_STEPS = [
   {
-    badge: 'Step 1 of 3: Smart Memory Prompt',
-    title: 'The 10-Second Context Window',
-    desc: 'Google Photos detects your recent burst of photos and ambiently asks for human context before memories fade. Tap below to capture the story.',
-    nextText: 'Capture Memory Context →',
+    badge: 'Step 1 of 4: Add a quick note',
+    title: 'Remember photos while they\'re fresh',
+    desc: 'Google Photos notices when you take photos at an event and asks for a quick note before you forget the details.',
+    nextText: 'Add a note →',
     action: () => {
       closeMemoryInputSheet();
       switchTab('tabPhotos');
@@ -1388,10 +1388,10 @@ const TOUR_STEPS = [
     }
   },
   {
-    badge: 'Step 2 of 3: Multimodal Extraction',
-    title: 'Turning Human Stories into Searchable Knowledge',
-    desc: 'Speak or type naturally. Watch Gemini extract key people, emotions, and milestone concepts in real-time, fusing with computer vision tags without manual tagging.',
-    nextText: 'Test Natural Search →',
+    badge: 'Step 2 of 4: Automatic memory tags',
+    title: 'AI connects your story to your photos',
+    desc: 'Type or speak a sentence. Google AI pulls out the people, places, and special moments—no manual tagging needed.',
+    nextText: 'Try searching →',
     action: () => {
       openMemoryInputSheet(false);
       const s = state.getScenario();
@@ -1403,10 +1403,10 @@ const TOUR_STEPS = [
     }
   },
   {
-    badge: 'Step 3 of 4: Natural Human Retrieval',
-    title: 'Recall Exactly How You Remember It',
-    desc: 'Search for "friends sunset waves" or "meeting Ramesh cake". AI finds the exact moment using personal meaning. Toggle to "Standard Google Photos" to see what CV misses!',
-    nextText: 'Fast-Forward 1 Year ⏩',
+    badge: 'Step 3 of 4: Search by memory',
+    title: 'Search the way you speak',
+    desc: 'Type whatever you recall, like "friends sunset waves". Google Photos finds the exact photos using your story.',
+    nextText: 'See 1 year later →',
     action: () => {
       const s = state.getScenario();
       state.saveMemory(s.id, {
@@ -1436,9 +1436,9 @@ const TOUR_STEPS = [
     }
   },
   {
-    badge: 'Step 4 of 4: The 1-Year Payoff',
-    title: 'Fast-Forward: Faded Memory Recall',
-    desc: '1 year later, you forget dates, folders, and tags. You only have a fragmented thought ("that beach shack with spicy prawns and Rahul"). See how AI retrieves the exact moment!',
+    badge: 'Step 4 of 4: The real magic',
+    title: 'Find photos 1 year later',
+    desc: 'A year from now, you won\'t remember dates. You\'ll only remember bits and pieces ("beach shack with spicy prawns and Rahul"). See how AI finds it instantly.',
     nextText: 'Open 1-Year Time Machine 🕰️',
     action: () => {
       switchTab('tabSearch');
@@ -1757,7 +1757,7 @@ function saveCustomMemoryAndSearch() {
   SCENARIOS.custom_user_memory.fadedMemory = {
     thought: `“${story.slice(0, 110)}${story.length > 110 ? '...' : ''}”`,
     query: searchSeed,
-    standardResult: `Standard Google Photos only reads raw pixels. It has no record of "${userConcepts.slice(0, 2).join(', ')}" or the human story you lived.`,
+    standardResult: `Standard search only sees shapes and colors. It has no idea who "${userConcepts.slice(0, 2).join(', ')}" is or what you celebrated.`,
     aiMatchPills: userConcepts.slice(0, 4).concat(['✨ 98% Match'])
   };
 
@@ -1841,7 +1841,7 @@ function renderTimeMachineModal(scenarioKey) {
   const faded = s.fadedMemory || {
     thought: `“${s.sampleText}”`,
     query: s.userConcepts ? s.userConcepts.slice(0, 3).join(' ') : 'my personal memory',
-    standardResult: 'Standard search cannot connect personal names or human memories to raw image pixels.',
+    standardResult: 'Standard search cannot connect friends\' names or memories to photos.',
     aiMatchPills: (s.userConcepts || []).slice(0, 4)
   };
 
