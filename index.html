@@ -148,7 +148,28 @@
             </div>
           </div>
 
+          <!-- Mobile Centered Scenario Selector (Visible only on mobile screens) -->
+          <div class="top-bar-center-mobile" id="topBarCenterMobile">
+            <select id="mobileScenarioSelect" class="mobile-scenario-select" aria-label="Select Scenario">
+              <option value="goa_beach">🏖️ Goa Beach</option>
+              <option value="mom_birthday">🎂 Mom's 60th</option>
+              <option value="himalaya_roadtrip">🏔️ Himalayas</option>
+              <option value="diwali_celebration">🪔 Diwali</option>
+              <option value="cycling_morning">🚴 Cycling</option>
+              <option value="delhi_cafe">☕ Delhi Café</option>
+              <option value="lake_tahoe">🌲 Lake Tahoe</option>
+              <option value="laptop_research">💻 Laptops</option>
+              <option value="custom_user_memory">📸 + Your Photos</option>
+            </select>
+          </div>
+
           <div class="top-bar-right">
+            <!-- Mobile Showcase Hub Trigger Button -->
+            <button class="mobile-demo-hub-btn" id="openMobileDemoHubBtn" title="Open Demo Showcase">
+              <span class="hub-sparkle-dot">⚡</span>
+              <span class="hub-btn-text">Demo</span>
+            </button>
+
             <!-- Memory Search Shortcut in Header -->
             <button class="icon-btn search-trigger-btn" id="headerSearchBtn" title="Search with AI Memory">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -177,8 +198,8 @@
           <!-- ================= TAB 1: PHOTOS (MAIN TIMELINE) ================= -->
           <section class="tab-view active" id="tabPhotos">
 
-            <!-- Newcomer Spotlight: Explains the Feature Instantly -->
-            <div class="feature-spotlight-card" id="featureSpotlightCard">
+            <!-- Newcomer Spotlight: Explains the Feature Instantly (Dismissed by default for clean native feel) -->
+            <div class="feature-spotlight-card hidden" id="featureSpotlightCard">
               <div class="spotlight-top-row">
                 <div class="spotlight-badge">
                   <span class="spotlight-gemini-sparkle">✨</span>
@@ -317,7 +338,12 @@
                   <!-- Chips injected here -->
                 </div>
               </div>
-              <button class="banner-edit-btn" id="bannerEditBtn" title="Edit Memory">Edit</button>
+              <div class="banner-actions">
+                <button class="banner-recall-btn" id="bannerTimeMachineBtn" title="Test Retrieval 1 Year Later">
+                  <span>🕰️ Test 1-Yr Recall</span>
+                </button>
+                <button class="banner-edit-btn" id="bannerEditBtn" title="Edit Memory">Edit</button>
+              </div>
             </div>
 
             <!-- Photo Stream / Grid Section -->
@@ -644,6 +670,91 @@
         </div>
 
       </div> <!-- /app-screen -->
+
+      <!-- ================= MODAL 0: MOBILE DEMO SHOWCASE HUB ================= -->
+      <div class="modal-backdrop hidden" id="mobileDemoHubBackdrop"></div>
+      <div class="bottom-sheet mobile-demo-hub-sheet hidden" id="mobileDemoHubSheet" role="dialog" aria-modal="true" aria-label="Demo Showcase Menu">
+        <div class="sheet-drag-handle-wrap" id="hubDragHandle"><div class="sheet-drag-handle"></div></div>
+        <div class="sheet-header">
+          <div class="demo-sheet-title-wrap">
+            <span class="hub-sparkle-icon">✨</span>
+            <div>
+              <h3 class="sheet-title">Google Photos AI MVP</h3>
+              <p class="sheet-sub">Interactive Showcase & Walkthroughs</p>
+            </div>
+          </div>
+          <button class="sheet-close-btn" id="closeMobileDemoHubBtn" aria-label="Close Demo Hub">×</button>
+        </div>
+        <div class="demo-hub-body">
+          <!-- Active Scenario Selector -->
+          <div class="demo-hub-section">
+            <div class="demo-hub-section-label">SWITCH OUTING SCENARIO:</div>
+            <div class="demo-hub-scenarios-scroll" id="demoHubScenariosGrid">
+              <button class="demo-sc-pill active" data-scenario="goa_beach">🏖️ Goa Beach</button>
+              <button class="demo-sc-pill" data-scenario="mom_birthday">🎂 Mom's 60th</button>
+              <button class="demo-sc-pill" data-scenario="himalaya_roadtrip">🏔️ Himalayas</button>
+              <button class="demo-sc-pill" data-scenario="diwali_celebration">🪔 Diwali</button>
+              <button class="demo-sc-pill" data-scenario="cycling_morning">🚴 Cycling</button>
+              <button class="demo-sc-pill" data-scenario="delhi_cafe">☕ Delhi Café</button>
+              <button class="demo-sc-pill" data-scenario="lake_tahoe">🌲 Lake Tahoe</button>
+              <button class="demo-sc-pill" data-scenario="laptop_research">💻 Laptops</button>
+              <button class="demo-sc-pill" data-scenario="custom_user_memory">📸 Your Photos</button>
+            </div>
+          </div>
+
+          <!-- Core Interactive Flows -->
+          <div class="demo-hub-section">
+            <div class="demo-hub-section-label">EXPERIENCE CORE FLOWS:</div>
+            <div class="demo-hub-actions-list">
+              <button class="demo-hub-action-card primary" id="hubStartTourBtn">
+                <div class="hub-action-icon">🚀</div>
+                <div class="hub-action-text">
+                  <strong>60-Second Guided Tour</strong>
+                  <span>See ambient prompt, multimodal extraction & recall in 4 steps</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card amber" id="hubOpenTimeMachineBtn">
+                <div class="hub-action-icon">🕰️</div>
+                <div class="hub-action-text">
+                  <strong>Fast-Forward 1 Year Later</strong>
+                  <span>Simulate faded memory recall vs standard search failure</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card blue" id="hubOpenCustomUploadBtn">
+                <div class="hub-action-icon">📸</div>
+                <div class="hub-action-text">
+                  <strong>Try With Your Own Photos</strong>
+                  <span>Upload personal camera photos from your phone & link your story</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card purple" id="hubOpenExplainerBtn">
+                <div class="hub-action-icon">💡</div>
+                <div class="hub-action-text">
+                  <strong>What Problem This Solves</strong>
+                  <span>Executive summary: The semantic gap in Google Photos</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Utility Controls -->
+          <div class="demo-hub-footer-row">
+            <button class="hub-util-btn" id="hubToggleThemeBtn">
+              <span>🌓 Toggle Theme</span>
+            </button>
+            <button class="hub-util-btn danger" id="hubResetDemoBtn">
+              <span>🔄 Reset Demo</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- ================= MODAL 1: MEMORY INPUT BOTTOM SHEET ================= -->
       <div class="modal-backdrop hidden" id="inputSheetBackdrop"></div>

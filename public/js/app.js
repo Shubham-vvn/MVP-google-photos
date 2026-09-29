@@ -399,6 +399,19 @@ const DOM = {
   dynamicIsland: document.getElementById('dynamicIsland'),
   islandStatusText: document.getElementById('islandStatusText'),
 
+  // Mobile App Top Bar & Demo Showcase Hub
+  mobileScenarioSelect: document.getElementById('mobileScenarioSelect'),
+  openMobileDemoHubBtn: document.getElementById('openMobileDemoHubBtn'),
+  mobileDemoHubBackdrop: document.getElementById('mobileDemoHubBackdrop'),
+  mobileDemoHubSheet: document.getElementById('mobileDemoHubSheet'),
+  closeMobileDemoHubBtn: document.getElementById('closeMobileDemoHubBtn'),
+  hubStartTourBtn: document.getElementById('hubStartTourBtn'),
+  hubOpenTimeMachineBtn: document.getElementById('hubOpenTimeMachineBtn'),
+  hubOpenCustomUploadBtn: document.getElementById('hubOpenCustomUploadBtn'),
+  hubOpenExplainerBtn: document.getElementById('hubOpenExplainerBtn'),
+  hubToggleThemeBtn: document.getElementById('hubToggleThemeBtn'),
+  hubResetDemoBtn: document.getElementById('hubResetDemoBtn'),
+
   // Header & Navigation
   headerSearchBtn: document.getElementById('headerSearchBtn'),
   headerNotifBtn: document.getElementById('headerNotifBtn'),
@@ -428,6 +441,7 @@ const DOM = {
   bannerStoryText: document.getElementById('bannerStoryText'),
   bannerChipsStrip: document.getElementById('bannerChipsStrip'),
   bannerEditBtn: document.getElementById('bannerEditBtn'),
+  bannerTimeMachineBtn: document.getElementById('bannerTimeMachineBtn'),
 
   // Photo Stream Grid
   timelineSectionTitle: document.getElementById('timelineSectionTitle'),
@@ -606,6 +620,12 @@ function renderCurrentScenario() {
   if (DOM.scenarioSelect && DOM.scenarioSelect.value !== state.currentScenarioKey) {
     DOM.scenarioSelect.value = state.currentScenarioKey;
   }
+  if (DOM.mobileScenarioSelect && DOM.mobileScenarioSelect.value !== state.currentScenarioKey) {
+    DOM.mobileScenarioSelect.value = state.currentScenarioKey;
+  }
+  document.querySelectorAll('.demo-sc-pill').forEach(pill => {
+    pill.classList.toggle('active', pill.dataset.scenario === state.currentScenarioKey);
+  });
   const isLinked = state.isClusterLinked(s.id);
   const isDismissed = state.dismissedClusters[s.id];
 
@@ -1973,17 +1993,97 @@ function toggleFrame() {
 }
 
 // ==========================================
+// MOBILE DEMO SHOWCASE HUB
+// ==========================================
+function openMobileDemoHub() {
+  if (DOM.mobileDemoHubBackdrop) DOM.mobileDemoHubBackdrop.classList.remove('hidden');
+  if (DOM.mobileDemoHubSheet) DOM.mobileDemoHubSheet.classList.remove('hidden');
+}
+
+function closeMobileDemoHub() {
+  if (DOM.mobileDemoHubBackdrop) DOM.mobileDemoHubBackdrop.classList.add('hidden');
+  if (DOM.mobileDemoHubSheet) DOM.mobileDemoHubSheet.classList.add('hidden');
+}
+
+// ==========================================
 // ATTACH EVENT LISTENERS
 // ==========================================
 function attachEventListeners() {
-  // Scenario selector
-  DOM.scenarioSelect.addEventListener('change', (e) => {
+  // Desktop Presenter Scenario selector
+  DOM.scenarioSelect?.addEventListener('change', (e) => {
     if (e.target.value === 'custom_user_memory') {
       openCustomUploadModal();
       return;
     }
     state.currentScenarioKey = e.target.value;
     renderCurrentScenario();
+  });
+
+  // Mobile In-App Scenario selector
+  DOM.mobileScenarioSelect?.addEventListener('change', (e) => {
+    if (e.target.value === 'custom_user_memory') {
+      openCustomUploadModal();
+      return;
+    }
+    state.currentScenarioKey = e.target.value;
+    renderCurrentScenario();
+    showDynamicIslandPill(`Scenario: ${e.target.options[e.target.selectedIndex].text}`);
+  });
+
+  // Mobile Demo Hub Triggers
+  DOM.openMobileDemoHubBtn?.addEventListener('click', openMobileDemoHub);
+  DOM.closeMobileDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
+  DOM.mobileDemoHubBackdrop?.addEventListener('click', closeMobileDemoHub);
+
+  // Demo Hub Scenario Pills
+  document.querySelectorAll('.demo-sc-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const scKey = pill.dataset.scenario;
+      if (scKey === 'custom_user_memory') {
+        closeMobileDemoHub();
+        openCustomUploadModal();
+        return;
+      }
+      state.currentScenarioKey = scKey;
+      renderCurrentScenario();
+      closeMobileDemoHub();
+      showDynamicIslandPill(`Scenario: ${pill.textContent}`);
+    });
+  });
+
+  // Demo Hub Action Cards
+  DOM.hubStartTourBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    startInteractiveTour();
+  });
+
+  DOM.hubOpenTimeMachineBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openTimeMachineModal();
+  });
+
+  DOM.hubOpenCustomUploadBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openCustomUploadModal();
+  });
+
+  DOM.hubOpenExplainerBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openExplainerModal();
+  });
+
+  DOM.hubToggleThemeBtn?.addEventListener('click', () => {
+    toggleTheme();
+  });
+
+  DOM.hubResetDemoBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    resetDemo();
+  });
+
+  // Fast-Forward 1-Year Recall button from saved memory banner
+  DOM.bannerTimeMachineBtn?.addEventListener('click', () => {
+    openTimeMachineModal();
   });
 
   // Custom User Photos Upload Controls

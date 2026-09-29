@@ -3280,139 +3280,465 @@ body.dark-mode .diff-item.missing {
    Mobile-First Responsiveness (Laptop vs Mobile identical behavior)
    ========================================================================== */
 
+/* Desktop rules: hide mobile-only top bar elements */
+@media (min-width: 821px) {
+  .top-bar-center-mobile,
+  .mobile-demo-hub-btn,
+  #mobileDemoHubSheet,
+  #mobileDemoHubBackdrop {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Mobile-First Responsiveness (Native Full-Bleed App Experience)
+   ========================================================================== */
+
 @media (max-width: 820px) {
+  html, body {
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .desktop-backdrop {
-    background: var(--md-sys-color-surface);
-    padding: 0;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
-  /* Make presenter toolbar fully accessible and sticky on mobile */
-  .desktop-toolbar {
+    background: var(--md-sys-color-surface) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    width: 100vw !important;
     display: flex !important;
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 8px 12px 10px;
-    border-radius: 0 0 16px 16px;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(18, 22, 31, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    position: sticky;
-    top: 0;
-    z-index: 500;
-    gap: 8px;
-    flex-shrink: 0;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
-  .toolbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
+  /* Hide laptop presenter toolbar on mobile: all controls unified into the mobile top bar & Demo Hub */
+  .desktop-toolbar {
+    display: none !important;
   }
 
-  .toolbar-title {
-    font-size: 14px;
-  }
-
-  .toolbar-badge {
-    font-size: 10px;
-  }
-
-  .scenario-selector-wrap {
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .scenario-label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #9AA0A6;
-    white-space: nowrap;
-  }
-
-  .scenario-dropdown {
-    flex: 1;
-    min-width: 0;
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    text-overflow: ellipsis;
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFFFFF;
-  }
-
-  .toolbar-controls {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 2px 0 4px;
-    gap: 6px;
-    scrollbar-width: none;
-  }
-
-  .toolbar-controls::-webkit-scrollbar {
-    display: none;
-  }
-
-  .tb-btn {
-    flex-shrink: 0;
-    white-space: nowrap;
-    padding: 5px 10px;
-    font-size: 11px;
-    border-radius: 8px;
-  }
-
-  #toggleFrameBtn {
-    display: none; /* Hide redundant phone frame button on mobile */
+  /* Real mobile phones have their own native status bar, notch & gesture pill */
+  .mobile-status-bar,
+  .device-notch-island,
+  .home-indicator-bar {
+    display: none !important;
   }
 
   .app-viewport-container {
-    padding: 0;
-    width: 100%;
-    flex: 1;
-    display: flex;
-    overflow: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    flex: 1 1 auto !important;
   }
 
   .mobile-device-frame {
-    width: 100vw;
-    height: 100%;
-    max-height: 100%;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    margin: 0 !important;
   }
 
-  .device-notch-island {
-    display: none; /* Mobile phone has its own native notch/island */
+  .app-screen {
+    width: 100vw !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .app-top-bar {
+    padding-top: calc(6px + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 8px !important;
+    height: auto !important;
+    min-height: 52px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    flex-shrink: 0 !important;
+    gap: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: var(--md-sys-color-surface) !important;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant) !important;
+    z-index: 200 !important;
+  }
+
+  .top-bar-left {
+    flex-shrink: 0;
+  }
+
+  .app-brand-name {
+    font-size: 17px !important;
+  }
+
+  .top-bar-center-mobile {
+    display: flex !important;
+    align-items: center;
+    max-width: 135px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobile-scenario-select {
+    width: 100%;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 8px;
+    border-radius: 18px;
+    background: rgba(26, 115, 232, 0.08);
+    color: var(--md-sys-color-primary, #1A73E8);
+    border: 1px solid rgba(26, 115, 232, 0.25);
+    outline: none;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  body.dark-mode .mobile-scenario-select {
+    background: rgba(138, 180, 248, 0.12);
+    color: #8AB4F8;
+    border-color: rgba(138, 180, 248, 0.3);
+  }
+
+  .top-bar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-demo-hub-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #1A73E8, #9C27B0);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+
+  .mobile-demo-hub-btn:active {
+    transform: scale(0.95);
+  }
+
+  .hub-sparkle-dot {
+    font-size: 12px;
+  }
+
+  .hub-btn-text {
+    letter-spacing: 0.2px;
+  }
+
+  .app-body {
+    flex: 1 1 0% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    position: relative !important;
+  }
+
+  .tab-view {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 16px)) !important;
+    min-height: 100% !important;
+  }
+
+  .app-bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    z-index: 850 !important;
+    padding-bottom: calc(4px + env(safe-area-inset-bottom, 8px)) !important;
+    background: var(--md-sys-color-surface) !important;
+    border-top: 1px solid var(--md-sys-color-outline-variant) !important;
   }
 
   .tour-guide-widget {
     left: 12px;
     right: 12px;
     width: auto;
-    bottom: 80px;
+    bottom: calc(74px + env(safe-area-inset-bottom, 12px));
     z-index: 10000;
   }
+
+  /* Modals on mobile: full viewable space, no cutoffs */
+  .review-modal,
+  .custom-upload-modal,
+  .explainer-modal,
+  .time-machine-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 88dvh !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* ==========================================================================
+   Mobile Demo Showcase Hub Bottom Sheet Styles
+   ========================================================================== */
+.mobile-demo-hub-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-height: 86dvh;
+  background: var(--md-sys-color-surface);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 36px rgba(0, 0, 0, 0.45);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  transform: translateY(0);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-demo-hub-sheet.hidden {
+  transform: translateY(105%);
+  pointer-events: none;
+}
+
+.demo-hub-body {
+  padding: 10px 16px 28px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.demo-sheet-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hub-sparkle-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 2px 8px rgba(66, 133, 244, 0.4));
+}
+
+.sheet-sub {
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 1px 0 0;
+}
+
+.demo-hub-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--md-sys-color-primary, #1A73E8);
+  margin-bottom: 8px;
+}
+
+.demo-hub-scenarios-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 2px 8px;
+  scrollbar-width: none;
+}
+.demo-hub-scenarios-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.demo-sc-pill {
+  flex-shrink: 0;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.demo-sc-pill.active {
+  background: var(--md-sys-color-primary);
+  color: #ffffff;
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 3px 10px rgba(26, 115, 232, 0.35);
+}
+
+.demo-hub-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-hub-action-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border-radius: 16px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container-low, rgba(0,0,0,0.03));
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  width: 100%;
+}
+
+body.dark-mode .demo-hub-action-card {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.demo-hub-action-card:active {
+  transform: scale(0.98);
+}
+
+.demo-hub-action-card.primary {
+  border-color: rgba(66, 133, 244, 0.35);
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
+}
+
+.demo-hub-action-card.amber {
+  border-color: rgba(251, 188, 4, 0.35);
+  background: linear-gradient(135deg, rgba(251, 188, 4, 0.08) 0%, rgba(234, 67, 53, 0.06) 100%);
+}
+
+.demo-hub-action-card.blue {
+  border-color: rgba(66, 133, 244, 0.3);
+}
+
+.demo-hub-action-card.purple {
+  border-color: rgba(156, 39, 176, 0.3);
+}
+
+.hub-action-icon {
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--md-sys-color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.hub-action-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.hub-action-text strong {
+  display: block;
+  font-size: 13px;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.hub-action-text span {
+  display: block;
+  font-size: 11px;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.3;
+}
+
+.hub-action-arrow {
+  font-size: 15px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 700;
+}
+
+.demo-hub-footer-row {
+  display: flex;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.hub-util-btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.hub-util-btn.danger {
+  color: #EA4335;
+  border-color: rgba(234, 67, 53, 0.3);
+}
+
+/* Banner recall button inside memory saved banner */
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.banner-recall-btn {
+  background: linear-gradient(135deg, #FBBC04, #EA4335);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(234, 67, 53, 0.3);
+  white-space: nowrap;
+  transition: transform 0.15s ease;
+}
+
+.banner-recall-btn:hover {
+  transform: scale(1.03);
 }
 
 /* ==========================================================================
@@ -4334,7 +4660,28 @@ body.dark-mode .thought-badge {
             </div>
           </div>
 
+          <!-- Mobile Centered Scenario Selector (Visible only on mobile screens) -->
+          <div class="top-bar-center-mobile" id="topBarCenterMobile">
+            <select id="mobileScenarioSelect" class="mobile-scenario-select" aria-label="Select Scenario">
+              <option value="goa_beach">🏖️ Goa Beach</option>
+              <option value="mom_birthday">🎂 Mom's 60th</option>
+              <option value="himalaya_roadtrip">🏔️ Himalayas</option>
+              <option value="diwali_celebration">🪔 Diwali</option>
+              <option value="cycling_morning">🚴 Cycling</option>
+              <option value="delhi_cafe">☕ Delhi Café</option>
+              <option value="lake_tahoe">🌲 Lake Tahoe</option>
+              <option value="laptop_research">💻 Laptops</option>
+              <option value="custom_user_memory">📸 + Your Photos</option>
+            </select>
+          </div>
+
           <div class="top-bar-right">
+            <!-- Mobile Showcase Hub Trigger Button -->
+            <button class="mobile-demo-hub-btn" id="openMobileDemoHubBtn" title="Open Demo Showcase">
+              <span class="hub-sparkle-dot">⚡</span>
+              <span class="hub-btn-text">Demo</span>
+            </button>
+
             <!-- Memory Search Shortcut in Header -->
             <button class="icon-btn search-trigger-btn" id="headerSearchBtn" title="Search with AI Memory">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -4363,8 +4710,8 @@ body.dark-mode .thought-badge {
           <!-- ================= TAB 1: PHOTOS (MAIN TIMELINE) ================= -->
           <section class="tab-view active" id="tabPhotos">
 
-            <!-- Newcomer Spotlight: Explains the Feature Instantly -->
-            <div class="feature-spotlight-card" id="featureSpotlightCard">
+            <!-- Newcomer Spotlight: Explains the Feature Instantly (Dismissed by default for clean native feel) -->
+            <div class="feature-spotlight-card hidden" id="featureSpotlightCard">
               <div class="spotlight-top-row">
                 <div class="spotlight-badge">
                   <span class="spotlight-gemini-sparkle">✨</span>
@@ -4503,7 +4850,12 @@ body.dark-mode .thought-badge {
                   <!-- Chips injected here -->
                 </div>
               </div>
-              <button class="banner-edit-btn" id="bannerEditBtn" title="Edit Memory">Edit</button>
+              <div class="banner-actions">
+                <button class="banner-recall-btn" id="bannerTimeMachineBtn" title="Test Retrieval 1 Year Later">
+                  <span>🕰️ Test 1-Yr Recall</span>
+                </button>
+                <button class="banner-edit-btn" id="bannerEditBtn" title="Edit Memory">Edit</button>
+              </div>
             </div>
 
             <!-- Photo Stream / Grid Section -->
@@ -4830,6 +5182,91 @@ body.dark-mode .thought-badge {
         </div>
 
       </div> <!-- /app-screen -->
+
+      <!-- ================= MODAL 0: MOBILE DEMO SHOWCASE HUB ================= -->
+      <div class="modal-backdrop hidden" id="mobileDemoHubBackdrop"></div>
+      <div class="bottom-sheet mobile-demo-hub-sheet hidden" id="mobileDemoHubSheet" role="dialog" aria-modal="true" aria-label="Demo Showcase Menu">
+        <div class="sheet-drag-handle-wrap" id="hubDragHandle"><div class="sheet-drag-handle"></div></div>
+        <div class="sheet-header">
+          <div class="demo-sheet-title-wrap">
+            <span class="hub-sparkle-icon">✨</span>
+            <div>
+              <h3 class="sheet-title">Google Photos AI MVP</h3>
+              <p class="sheet-sub">Interactive Showcase & Walkthroughs</p>
+            </div>
+          </div>
+          <button class="sheet-close-btn" id="closeMobileDemoHubBtn" aria-label="Close Demo Hub">×</button>
+        </div>
+        <div class="demo-hub-body">
+          <!-- Active Scenario Selector -->
+          <div class="demo-hub-section">
+            <div class="demo-hub-section-label">SWITCH OUTING SCENARIO:</div>
+            <div class="demo-hub-scenarios-scroll" id="demoHubScenariosGrid">
+              <button class="demo-sc-pill active" data-scenario="goa_beach">🏖️ Goa Beach</button>
+              <button class="demo-sc-pill" data-scenario="mom_birthday">🎂 Mom's 60th</button>
+              <button class="demo-sc-pill" data-scenario="himalaya_roadtrip">🏔️ Himalayas</button>
+              <button class="demo-sc-pill" data-scenario="diwali_celebration">🪔 Diwali</button>
+              <button class="demo-sc-pill" data-scenario="cycling_morning">🚴 Cycling</button>
+              <button class="demo-sc-pill" data-scenario="delhi_cafe">☕ Delhi Café</button>
+              <button class="demo-sc-pill" data-scenario="lake_tahoe">🌲 Lake Tahoe</button>
+              <button class="demo-sc-pill" data-scenario="laptop_research">💻 Laptops</button>
+              <button class="demo-sc-pill" data-scenario="custom_user_memory">📸 Your Photos</button>
+            </div>
+          </div>
+
+          <!-- Core Interactive Flows -->
+          <div class="demo-hub-section">
+            <div class="demo-hub-section-label">EXPERIENCE CORE FLOWS:</div>
+            <div class="demo-hub-actions-list">
+              <button class="demo-hub-action-card primary" id="hubStartTourBtn">
+                <div class="hub-action-icon">🚀</div>
+                <div class="hub-action-text">
+                  <strong>60-Second Guided Tour</strong>
+                  <span>See ambient prompt, multimodal extraction & recall in 4 steps</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card amber" id="hubOpenTimeMachineBtn">
+                <div class="hub-action-icon">🕰️</div>
+                <div class="hub-action-text">
+                  <strong>Fast-Forward 1 Year Later</strong>
+                  <span>Simulate faded memory recall vs standard search failure</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card blue" id="hubOpenCustomUploadBtn">
+                <div class="hub-action-icon">📸</div>
+                <div class="hub-action-text">
+                  <strong>Try With Your Own Photos</strong>
+                  <span>Upload personal camera photos from your phone & link your story</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+
+              <button class="demo-hub-action-card purple" id="hubOpenExplainerBtn">
+                <div class="hub-action-icon">💡</div>
+                <div class="hub-action-text">
+                  <strong>What Problem This Solves</strong>
+                  <span>Executive summary: The semantic gap in Google Photos</span>
+                </div>
+                <span class="hub-action-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Utility Controls -->
+          <div class="demo-hub-footer-row">
+            <button class="hub-util-btn" id="hubToggleThemeBtn">
+              <span>🌓 Toggle Theme</span>
+            </button>
+            <button class="hub-util-btn danger" id="hubResetDemoBtn">
+              <span>🔄 Reset Demo</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- ================= MODAL 1: MEMORY INPUT BOTTOM SHEET ================= -->
       <div class="modal-backdrop hidden" id="inputSheetBackdrop"></div>
@@ -5816,6 +6253,19 @@ const DOM = {
   dynamicIsland: document.getElementById('dynamicIsland'),
   islandStatusText: document.getElementById('islandStatusText'),
 
+  // Mobile App Top Bar & Demo Showcase Hub
+  mobileScenarioSelect: document.getElementById('mobileScenarioSelect'),
+  openMobileDemoHubBtn: document.getElementById('openMobileDemoHubBtn'),
+  mobileDemoHubBackdrop: document.getElementById('mobileDemoHubBackdrop'),
+  mobileDemoHubSheet: document.getElementById('mobileDemoHubSheet'),
+  closeMobileDemoHubBtn: document.getElementById('closeMobileDemoHubBtn'),
+  hubStartTourBtn: document.getElementById('hubStartTourBtn'),
+  hubOpenTimeMachineBtn: document.getElementById('hubOpenTimeMachineBtn'),
+  hubOpenCustomUploadBtn: document.getElementById('hubOpenCustomUploadBtn'),
+  hubOpenExplainerBtn: document.getElementById('hubOpenExplainerBtn'),
+  hubToggleThemeBtn: document.getElementById('hubToggleThemeBtn'),
+  hubResetDemoBtn: document.getElementById('hubResetDemoBtn'),
+
   // Header & Navigation
   headerSearchBtn: document.getElementById('headerSearchBtn'),
   headerNotifBtn: document.getElementById('headerNotifBtn'),
@@ -5845,6 +6295,7 @@ const DOM = {
   bannerStoryText: document.getElementById('bannerStoryText'),
   bannerChipsStrip: document.getElementById('bannerChipsStrip'),
   bannerEditBtn: document.getElementById('bannerEditBtn'),
+  bannerTimeMachineBtn: document.getElementById('bannerTimeMachineBtn'),
 
   // Photo Stream Grid
   timelineSectionTitle: document.getElementById('timelineSectionTitle'),
@@ -6023,6 +6474,12 @@ function renderCurrentScenario() {
   if (DOM.scenarioSelect && DOM.scenarioSelect.value !== state.currentScenarioKey) {
     DOM.scenarioSelect.value = state.currentScenarioKey;
   }
+  if (DOM.mobileScenarioSelect && DOM.mobileScenarioSelect.value !== state.currentScenarioKey) {
+    DOM.mobileScenarioSelect.value = state.currentScenarioKey;
+  }
+  document.querySelectorAll('.demo-sc-pill').forEach(pill => {
+    pill.classList.toggle('active', pill.dataset.scenario === state.currentScenarioKey);
+  });
   const isLinked = state.isClusterLinked(s.id);
   const isDismissed = state.dismissedClusters[s.id];
 
@@ -7390,17 +7847,97 @@ function toggleFrame() {
 }
 
 // ==========================================
+// MOBILE DEMO SHOWCASE HUB
+// ==========================================
+function openMobileDemoHub() {
+  if (DOM.mobileDemoHubBackdrop) DOM.mobileDemoHubBackdrop.classList.remove('hidden');
+  if (DOM.mobileDemoHubSheet) DOM.mobileDemoHubSheet.classList.remove('hidden');
+}
+
+function closeMobileDemoHub() {
+  if (DOM.mobileDemoHubBackdrop) DOM.mobileDemoHubBackdrop.classList.add('hidden');
+  if (DOM.mobileDemoHubSheet) DOM.mobileDemoHubSheet.classList.add('hidden');
+}
+
+// ==========================================
 // ATTACH EVENT LISTENERS
 // ==========================================
 function attachEventListeners() {
-  // Scenario selector
-  DOM.scenarioSelect.addEventListener('change', (e) => {
+  // Desktop Presenter Scenario selector
+  DOM.scenarioSelect?.addEventListener('change', (e) => {
     if (e.target.value === 'custom_user_memory') {
       openCustomUploadModal();
       return;
     }
     state.currentScenarioKey = e.target.value;
     renderCurrentScenario();
+  });
+
+  // Mobile In-App Scenario selector
+  DOM.mobileScenarioSelect?.addEventListener('change', (e) => {
+    if (e.target.value === 'custom_user_memory') {
+      openCustomUploadModal();
+      return;
+    }
+    state.currentScenarioKey = e.target.value;
+    renderCurrentScenario();
+    showDynamicIslandPill(`Scenario: ${e.target.options[e.target.selectedIndex].text}`);
+  });
+
+  // Mobile Demo Hub Triggers
+  DOM.openMobileDemoHubBtn?.addEventListener('click', openMobileDemoHub);
+  DOM.closeMobileDemoHubBtn?.addEventListener('click', closeMobileDemoHub);
+  DOM.mobileDemoHubBackdrop?.addEventListener('click', closeMobileDemoHub);
+
+  // Demo Hub Scenario Pills
+  document.querySelectorAll('.demo-sc-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const scKey = pill.dataset.scenario;
+      if (scKey === 'custom_user_memory') {
+        closeMobileDemoHub();
+        openCustomUploadModal();
+        return;
+      }
+      state.currentScenarioKey = scKey;
+      renderCurrentScenario();
+      closeMobileDemoHub();
+      showDynamicIslandPill(`Scenario: ${pill.textContent}`);
+    });
+  });
+
+  // Demo Hub Action Cards
+  DOM.hubStartTourBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    startInteractiveTour();
+  });
+
+  DOM.hubOpenTimeMachineBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openTimeMachineModal();
+  });
+
+  DOM.hubOpenCustomUploadBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openCustomUploadModal();
+  });
+
+  DOM.hubOpenExplainerBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    openExplainerModal();
+  });
+
+  DOM.hubToggleThemeBtn?.addEventListener('click', () => {
+    toggleTheme();
+  });
+
+  DOM.hubResetDemoBtn?.addEventListener('click', () => {
+    closeMobileDemoHub();
+    resetDemo();
+  });
+
+  // Fast-Forward 1-Year Recall button from saved memory banner
+  DOM.bannerTimeMachineBtn?.addEventListener('click', () => {
+    openTimeMachineModal();
   });
 
   // Custom User Photos Upload Controls
