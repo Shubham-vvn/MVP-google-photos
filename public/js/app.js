@@ -2081,6 +2081,13 @@ function renderTourStep() {
     }
   }
 
+  // On mobile: dock widget to top when bottom sheet (step 2) or modal (step 4) is open so buttons/photos are never covered
+  if (state.tourStep === 1 || state.tourStep === 3) {
+    DOM.tourGuideWidget?.classList.add('dock-top');
+  } else {
+    DOM.tourGuideWidget?.classList.remove('dock-top');
+  }
+
   // Execute step action
   step.action();
 }
@@ -2105,6 +2112,7 @@ function prevTourStep() {
 function closeTour() {
   state.isTourActive = false;
   clearHighlightElements();
+  DOM.tourGuideWidget?.classList.remove('dock-top');
   DOM.tourGuideWidget?.classList.add('hidden');
 }
 
@@ -2438,6 +2446,9 @@ function openTimeMachineModal(scenarioKey) {
 function closeTimeMachineModal() {
   DOM.timeMachineModal?.classList.add('hidden');
   DOM.timeMachineBackdrop?.classList.add('hidden');
+  if (state.isTourActive && state.tourStep !== 1) {
+    DOM.tourGuideWidget?.classList.remove('dock-top');
+  }
 }
 
 function renderTimeMachineModal(scenarioKey) {
