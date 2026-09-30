@@ -3738,10 +3738,10 @@ body.dark-mode .diff-item.missing {
   }
 
   /* Demo Hub 4-Section Modals on mobile: full viewable space, no cutoffs, strict flex containment */
-  .review-modal,
-  .custom-upload-modal,
-  .explainer-modal,
-  .time-machine-modal {
+  .review-modal:not(.hidden),
+  .custom-upload-modal:not(.hidden),
+  .explainer-modal:not(.hidden),
+  .time-machine-modal:not(.hidden) {
     width: 95vw !important;
     max-width: 95vw !important;
     max-height: 88dvh !important;
@@ -3750,6 +3750,19 @@ body.dark-mode .diff-item.missing {
     flex-direction: column !important;
     overflow: hidden !important;
     z-index: 10005 !important;
+  }
+
+  .hidden,
+  .review-modal.hidden,
+  .custom-upload-modal.hidden,
+  .explainer-modal.hidden,
+  .time-machine-modal.hidden,
+  .time-machine-backdrop.hidden,
+  .custom-upload-backdrop.hidden,
+  .explainer-backdrop.hidden,
+  .mobile-demo-hub-sheet.hidden,
+  .tour-guide-widget.hidden {
+    display: none !important;
   }
 
   .time-machine-backdrop,
@@ -4893,5 +4906,11 @@ body.dark-mode .thought-badge {
     width: 100%;
     justify-content: center;
   }
+}
+
+/* Global Hidden Override Guarantee */
+.hidden,
+[hidden] {
+  display: none !important;
 }
 

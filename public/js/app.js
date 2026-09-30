@@ -972,13 +972,6 @@ function initApp() {
 
   // Attach All Event Listeners
   attachEventListeners();
-
-  // Auto-launch bottom-to-up Demo pop-up after 1.5 seconds on both mobile and web
-  setTimeout(() => {
-    if (!state.isTourActive) {
-      openMobileDemoHub();
-    }
-  }, 1500);
 }
 
 // Live Status Bar Clock
