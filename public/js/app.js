@@ -972,6 +972,13 @@ function initApp() {
 
   // Attach All Event Listeners
   attachEventListeners();
+
+  // Auto-launch Demo Showcase Hub popup (with the 4 options) after 1.5s
+  setTimeout(() => {
+    if (!state.isTourActive) {
+      openMobileDemoHub();
+    }
+  }, 1500);
 }
 
 // Live Status Bar Clock
